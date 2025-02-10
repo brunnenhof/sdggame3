@@ -26,11 +26,13 @@ class HomeForm(HomeFormTemplate):
     pass
 
   def admin_pw_box_pressed_enter(self, **event_args):
-    alert(title="You entered", content=self.admin_pw_box.text, large=True, buttons=['OK', 'Cancel'])
+    alert(title="You entered ", content=self.admin_pw_box.text, large=True, buttons=['OK', 'Cancel'])
     if self.admin_pw_box.text == 'thalloma12':
       alert("Correct")
+      self.card_holder_admin.visible = True
+      self.card_holder_top.visible = False
     else:
-      alert("Wrong password. sorry")
+      alert("Wrong password. Sorry")
       
     """This method is called when the user presses Enter in this text box"""
     pass

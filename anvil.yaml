@@ -1,4 +1,13 @@
 allow_embedding: false
+db_schema:
+  sdg_vars:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: id
+      type: bool
+    server: full
+    title: sdg_vars
 dependencies: []
 metadata: {logo_img: 'asset:favicon.ico'}
 name: SDGgame

@@ -20,5 +20,13 @@ class HomeForm(HomeFormTemplate):
     webbrowser.open_new("http://sdggamehelp.blue-way.net")
 
   def btn_admin_click(self, **event_args):
+    self.admin_pw_box.visible=True
+    self.label_enter_pw.visible=True
     """This method is called when the button is clicked"""
+    pass
+
+  def admin_pw_box_pressed_enter(self, **event_args):
+    alert(title="You entered", content=self.admin_pw_box.text, large=True, buttons=['OK', 'Cancel'])
+    
+    """This method is called when the user presses Enter in this text box"""
     pass

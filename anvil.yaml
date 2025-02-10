@@ -1,11 +1,237 @@
 allow_embedding: false
 db_schema:
+  fill_roles:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: game_id
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: region
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: poverty
+      type: bool
+    - admin_ui: {order: 3, width: 200}
+      name: inequality
+      type: bool
+    - admin_ui: {order: 4, width: 200}
+      name: empowerment
+      type: bool
+    - admin_ui: {order: 5, width: 200}
+      name: food
+      type: bool
+    - admin_ui: {order: 6, width: 200}
+      name: energy
+      type: bool
+    - admin_ui: {order: 7, width: 200}
+      name: reg_avail
+      type: bool
+    server: full
+    title: fill_roles
+  games:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: id
+      type: number
+    - admin_ui: {order: 1, width: 200}
+      name: game_id
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: reg
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      name: pol
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: wert
+      type: number
+    - admin_ui: {order: 5, width: 200}
+      name: runde
+      type: number
+    - admin_ui: {order: 6, width: 200}
+      name: ta
+      type: string
+    server: full
+    title: games
+  games_info:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: id
+      type: number
+    - admin_ui: {order: 1, width: 200}
+      name: game_id
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: started_on
+      type: datetime
+    - admin_ui: {order: 3, width: 200}
+      name: updated
+      type: datetime
+    - admin_ui: {order: 4, width: 200}
+      name: next_step_p
+      type: number
+    - admin_ui: {order: 5, width: 200}
+      name: next_step_gm
+      type: number
+    - admin_ui: {order: 6, width: 200}
+      name: npbhp
+      type: string
+    server: full
+    title: games_info
+  ministries:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: id
+      type: number
+    - admin_ui: {order: 1, width: 200}
+      name: ministry
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: longname
+      type: string
+    server: full
+    title: ministries
+  policies:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: id
+      type: number
+    - admin_ui: {order: 1, width: 200}
+      name: abbreviation
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: name
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      name: tltl
+      type: number
+    - admin_ui: {order: 4, width: 200}
+      name: gl
+      type: number
+    - admin_ui: {order: 5, width: 200}
+      name: expl
+      type: string
+    - admin_ui: {order: 6, width: 200}
+      name: ta
+      type: string
+    server: full
+    title: policies
+  regions:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: id
+      type: number
+    - admin_ui: {order: 1, width: 200}
+      name: abbreviation
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: name
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      name: color
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: colhex
+      type: string
+    - admin_ui: {order: 5, width: 200}
+      name: pyidx
+      type: number
+    server: full
+    title: regions
+  runto:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: id
+      type: number
+    - admin_ui: {order: 1, width: 200}
+      name: title_used
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: end_year
+      type: number
+    - admin_ui: {order: 3, width: 200}
+      name: yr_picks
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: end_rowi
+      type: number
+    - admin_ui: {order: 5, width: 200}
+      name: title_yrs
+      type: string
+    - admin_ui: {order: 6, width: 200}
+      name: faint_yr
+      type: number
+    - admin_ui: {order: 7, width: 200}
+      name: tab_color
+      type: string
+    server: full
+    title: runto
+  sdg:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: id
+      type: number
+    - admin_ui: {order: 1, width: 200}
+      name: sdgNbr
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: sdg
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      name: sdg_dt
+      type: string
+    server: full
+    title: sdg
   sdg_vars:
     client: none
     columns:
     - admin_ui: {order: 0, width: 200}
       name: id
-      type: bool
+      type: number
+    - admin_ui: {order: 1, width: 200}
+      name: sdg_nbr
+      type: number
+    - admin_ui: {order: 2, width: 200}
+      name: sdg
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      name: indicator
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: vensim_name
+      type: string
+    - admin_ui: {order: 5, width: 200}
+      name: green
+      type: number
+    - admin_ui: {order: 6, width: 200}
+      name: red
+      type: number
+    - admin_ui: {order: 7, width: 200}
+      name: lowerbetter
+      type: number
+    - admin_ui: {order: 8, width: 200}
+      name: ymin
+      type: number
+    - admin_ui: {order: 9, width: 200}
+      name: ymax
+      type: number
+    - admin_ui: {order: 10, width: 200}
+      name: subtitle
+      type: string
+    - admin_ui: {order: 11, width: 200}
+      name: ta
+      type: string
+    - admin_ui: {order: 12, width: 200}
+      name: pct
+      type: number
     server: full
     title: sdg_vars
 dependencies: []

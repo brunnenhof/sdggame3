@@ -1,15 +1,24 @@
 components:
 - components:
-  - components: []
-    layout_properties: {grid_position: 'FZLASQ,YWVDWN'}
-    name: link_inspired
-    properties: {bold: true, icon: 'fa:link', text: inspired by Earth4All, url: 'https://earth4all.life/'}
-    type: Link
+  - layout_properties: {grid_position: 'IZXKRA,QOAXIQ'}
+    name: outlined_card_1
+    properties: {role: outlined-card}
+    type: ColumnPanel
   layout_properties: {slot: default}
   name: content_panel
   properties: {col_widths: '{}'}
   type: ColumnPanel
-- layout_properties: {slot: nav-right}
+- components:
+  - event_bindings: {click: btn_thanks_click}
+    layout_properties: {}
+    name: btn_thanks
+    properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:hand-o-up', role: elevated-button, text: Thanks}
+    type: Button
+  - layout_properties: {}
+    name: btn_help
+    properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:yelp', role: elevated-button, text: Help}
+    type: Button
+  layout_properties: {slot: nav-right}
   name: navbar_links
   properties: {}
   type: FlowPanel

@@ -11,3 +11,6 @@ class HomeForm(HomeFormTemplate):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+
+  def btn_thanks_click(self, **event_args):
+    alert(content="To our Alpha testers, Baesweiler", title="Thank you", large=True)

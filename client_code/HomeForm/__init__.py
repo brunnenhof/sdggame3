@@ -4,7 +4,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import webbrowser
-
+from ..apg import apg
 
 class HomeForm(HomeFormTemplate):
   def __init__(self, **properties):
@@ -27,6 +27,7 @@ class HomeForm(HomeFormTemplate):
 
   def admin_pw_box_pressed_enter(self, **event_args):
     alert(title="You entered", content=self.admin_pw_box.text, large=True, buttons=['OK', 'Cancel'])
-    
+    if self.admin_pw_box.text == 'thalloma12':
+      
     """This method is called when the user presses Enter in this text box"""
     pass

@@ -1,0 +1,17 @@
+components:
+- layout_properties: {grid_position: 'EKHMAD,PVRMLC'}
+  name: admin_pw_label
+  properties: {text: Enter the Admin password}
+  type: Label
+- event_bindings: {change: admin_pw_entry_change}
+  layout_properties: {grid_position: 'FPTOXK,FOQGVA'}
+  name: admin_pw_entry
+  properties: {}
+  type: TextBox
+- event_bindings: {click: admin_pw_btn_click}
+  layout_properties: {grid_position: 'JZSTGK,ZSKKOM'}
+  name: admin_pw_btn
+  properties: {text: Close or Enter}
+  type: Button
+container: {type: ColumnPanel}
+is_package: false

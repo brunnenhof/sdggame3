@@ -86,3 +86,11 @@ class HomeForm(HomeFormTemplate):
 
   def load_games_change(self, file, **event_args):
       self.load_csv_file_into_db(file, 'upload_games_change')
+
+  def btn_continue_game_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    alert(title="ToDo", content="does not yet work :(")
+
+  def btn_log_in_gm_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    pass

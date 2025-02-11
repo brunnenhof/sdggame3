@@ -193,10 +193,10 @@ db_schema:
   sdg_vars:
     client: none
     columns:
-    - admin_ui: {order: 0, width: 200}
+    - admin_ui: {order: 0, width: 80}
       name: id
       type: number
-    - admin_ui: {order: 1, width: 200}
+    - admin_ui: {order: 1, width: 82}
       name: sdg_nbr
       type: number
     - admin_ui: {order: 2, width: 200}
@@ -241,7 +241,7 @@ package_name: SDGgame
 renamed: true
 runtime_options:
   client_version: '3'
-  server_spec: {base: python310-minimal}
+  server_spec: {base: python310-standard}
   server_version: python3-sandbox
   version: 2
 services:

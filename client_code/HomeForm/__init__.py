@@ -51,8 +51,9 @@ class HomeForm(HomeFormTemplate):
 
   def load_sdg_var_change(self, file, **event_args):
     text = file.get_bytes()
-    print(type(text))
-    tsplit = text.splitlines(keepends=False)
+    text_str = text.decode('utf-8')
+    print(type(text_str))
+    tsplit = text_str.splitlines(keepends=False)
     print(type(tsplit))
     anvil.server.call('upload_sdg_var_change', tsplit)
     alert('The file has been uploaded and saved to table')

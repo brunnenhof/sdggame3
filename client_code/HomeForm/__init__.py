@@ -1,8 +1,10 @@
 from ._anvil_designer import HomeFormTemplate
 from anvil import *
+import anvil.server
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+import json
 import webbrowser
 from ..apg import apg
 
@@ -26,9 +28,11 @@ class HomeForm(HomeFormTemplate):
     pass
 
   def admin_pw_box_pressed_enter(self, **event_args):
-    alert(title="You entered ", content=self.admin_pw_box.text, large=True, buttons=['OK', 'Cancel'])
+#    alert(title="You entered ", content=self.admin_pw_box.text, large=True, buttons=['OK', 'Cancel'])
+    ###
+    # ToDo put the password into server code !!
+    ###
     if self.admin_pw_box.text == 'thalloma12':
-      alert("Correct")
       self.card_holder_admin.visible = True
       self.card_holder_top.visible = False
     else:
@@ -36,3 +40,25 @@ class HomeForm(HomeFormTemplate):
       
     """This method is called when the user presses Enter in this text box"""
     pass
+
+  def reload_sdg_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    pass
+
+  def reload_reg_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    pass
+
+  def load_sdg_var_change(self, file, **event_args):
+    text = file.get_bytes()
+    print(type(text))
+    tsplit = text.splitlines(keepends=False)
+    print(type(tsplit))
+    anvil.server.call('upload_sdg_var_change', tsplit)
+    alert('The file has been uploaded and saved to table')
+
+#  def upload_sdg_var_change(self, file, **event_args):
+#    text = file.get_bytes()
+#    tsplit = text.splitlines(keepends=False)
+#    anvil.server.call('upload_sdg_var_change', tsplit)
+#    alert('The file has been uploaded and saved to table')

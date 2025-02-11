@@ -8,4 +8,5 @@ unique_ids:
     apg: '1739207251416899969611125.8557'
   modules: {}
   scripts: {}
-  server_modules: {}
+  server_modules:
+    ServerModule1: '173926669447094049095954.76619'

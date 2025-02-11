@@ -66,7 +66,8 @@ class HomeForm(HomeFormTemplate):
 #    alert('The file has been uploaded and saved to table')
 
   def load_sdg_change(self, file, **event_args):
-    self.load_csv_file_into_db(self, file, 'upload_sdg_change')
+    self.load_csv_file_into_db(file, 'upload_sdg_change')
+#    self.load_csv_file_into_db(self, file, 'upload_sdg_change')
 
   def Load_runto_change(self, file, **event_args):
     """This method is called when a new file is loaded into this FileLoader"""

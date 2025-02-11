@@ -7,6 +7,8 @@ from anvil.tables import app_tables
 import json
 import webbrowser
 from ..apg import apg
+import random
+import string
 
 class HomeForm(HomeFormTemplate):
   def __init__(self, **properties):
@@ -92,5 +94,37 @@ class HomeForm(HomeFormTemplate):
     alert(title="ToDo", content="does not yet work :(")
 
   def btn_log_in_gm_click(self, **event_args):
+    self.gm_login_card.visible = True
+
+  def gm_login_box_pressed_enter(self, **event_args):
+    if self.gm_login_box.text == 'gol':
+      self.gm_login_card.visible = False
+      self.card_holder_gm.visible = True
+    else:
+      gm_pw = alert("Sorry, wrong password.", buttons=['Try again', 'Cancel'])
+      if gm_pw == 'Cancel':
+        self.gm_login_card.visible = False
+
+  def generate_custom_id(self):
+    global cid
+    cid = ''.join(random.choices(string.ascii_uppercase, k=5))
+    a = random.randint(100, 999)
+    d = random.randint(100, 999)
+    cid = cid + '-' + str(d) + '-' + str(a) 
+    # cid = 'TEST'  #  while testing ...
+    return f"{cid}"
+
+  def start_new_game_click(self, **event_args):
     """This method is called when the button is clicked"""
-    pass
+    global cid
+    cid = self.generate_custom_id()
+    self.label_glb_game_id.visible = True
+    self.box_glb_text.visible = True
+    self.label_glb_tell_players.visible = True
+    self.box_glb_text.text = cid
+    #set_new_game = anvil.server.call('start_new_game', cid)
+    self.btn_new_game2.visible = False
+    self.btn_continue_game.visible = False
+#    self.select_regions_label.visible = True
+    self.gm_reg_selection_card.visible = True
+    

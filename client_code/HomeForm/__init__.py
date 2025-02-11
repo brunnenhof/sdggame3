@@ -70,25 +70,19 @@ class HomeForm(HomeFormTemplate):
 #    self.load_csv_file_into_db(self, file, 'upload_sdg_change')
 
   def Load_runto_change(self, file, **event_args):
-    """This method is called when a new file is loaded into this FileLoader"""
-    pass
+    self.load_csv_file_into_db(file, 'upload_runto_change')
 
   def load_regions_change(self, file, **event_args):
-    """This method is called when a new file is loaded into this FileLoader"""
-    pass
+      self.load_csv_file_into_db(file, 'upload_regions_change')
 
   def load_policies_change(self, file, **event_args):
-    """This method is called when a new file is loaded into this FileLoader"""
-    pass
+      self.load_csv_file_into_db(file, 'upload_policies_change')
 
   def load_ministries_change(self, file, **event_args):
-    """This method is called when a new file is loaded into this FileLoader"""
-    pass
+      self.load_csv_file_into_db(file, 'upload_ministries_change')
 
   def load_games_info_change(self, file, **event_args):
-    """This method is called when a new file is loaded into this FileLoader"""
-    pass
+      self.load_csv_file_into_db(file, 'upload_game_info_change')
 
   def load_games_change(self, file, **event_args):
-    """This method is called when a new file is loaded into this FileLoader"""
-    pass
+      self.load_csv_file_into_db(file, 'upload_games_change')

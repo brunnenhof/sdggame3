@@ -5,6 +5,7 @@ import anvil.server
 import json
 import pandas as pd
 import csv
+import datetime
 
 @anvil.server.callable
 def upload_sdg_var_change(data):
@@ -113,5 +114,88 @@ def upload_games_change(data):
     #for j in range(0,7):#      print(str(i) + ' ' + str(j) + ' value: ' + dro[j] + ' type: ' + str(type(dro[j])))
 #id	game_id	acro_reg	wert	runde	acro_pol	ta
 #1	TEST-000-111	us	0	1	ExPS	Poverty
+
+@anvil.server.callable
+def start_new_game(cid, npbhpv, next_step_gmv):
+  nn_str = ' '.join(npbhpv)
+  jetzt = datetime.datetime.now()
+  app_tables.games_info.add_row(game_id=cid , npbhp=nn_str, next_step_gm= next_step_gmv , started_on = jetzt) 
+  return True
+
+def get_games_info_last_row(cid):
+  row = app_tables.games_info.get(game_id=cid)
+  print (row)
+  print (type(row))
+  return row
+  
+def make_list_from_str(npbhp):
+  a = npbhp.replace("['", '')
+  a = a.replace("']", '')
+  a = a.replace("', '", ' ')
+  return a.split(' ')
+    
+def set_up_role_assignments(game_id, npbhp, regions):
+  print (game_id)
+  print (npbhp)
+  conn = connect()
+  with conn.cursor() as cur:
+    sql = ("DELETE FROM `fill_roles` WHERE `id` > 0")
+    cur.execute(sql)
+    conn.commit()
+    sql = ("ALTER TABLE `fill_roles` AUTO_INCREMENT = 0;")
+    cur.execute(sql)
+    conn.commit()
+    for r in regions:
+      sql = ("INSERT INTO `fill_roles` (`game_id`, `region`, `poverty`, `inequality`,`empowerment`,`food`,`energy`,`future`,`reg_avail`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)")
+      if r not in npbhp:
+        cur.execute(sql, (game_id, r, 1, 1, 1, 1, 1, 1, 1))
+      else:
+        cur.execute(sql, (game_id, r, 0, 0, 0, 0, 0, 0, 0))    
+    conn.commit()
+
+def get_sql(table, col):
+#  names = [r['name'] for r in app_tables.people.search()]
+  if table == 'regions':
+    names = [r[col] for r in app_tables.regions.search()]
+  elif table == 'policies':
+    names = [r[col] for r in app_tables.policies.search()]
+  else:
+    print ("ooops - need to add an elif with table name")
+  return names
+
+@anvil.server.callable
+def set_up_game_db(runde, cid):
+  k = runde
+  ### 
+  gi = get_games_info_last_row(cid)
+  print(gi)
+#    npbhp = gi[0]['npbhp']
+#    if not npbhp == '[]':
+#      npbhp = make_list_from_str(npbhp)
+#      print(npbhp)
+#      game_id = gi[0]['game_id']
+#      regions = get_sql('regions', 'abbreviation')
+#     print(regions)
+#      policies = get_sql('policies', 'abbreviation')  # read policies as abbreviation
+#      tltl = get_sql('policies', 'tltl')  # read tltl values
+#      gl = get_sql('policies', 'gl')  # read gl values
+#      ta = get_sql('policies', 'ta')  # read tas as list as long as policies
+#      for i in regions:
+#        gg = 0
+#        for j in policies:
+#          print(str(k) + ' ' + i + ' ' + j)
+#          if i in npbhp:  # if this region is not played by human players set a random value
+#            mymin = tltl[gg]
+#            mymax = gl[gg]
+#            myhalf = (mymax - mymin) / 2
+#            wert = random.uniform(myhalf, mymax)  # random policy value biased towards GL
+#          else:
+#            wert = tltl[gg]
+#          sql = ("INSERT INTO `games` (`game_id`, `acro_reg`, `wert`, `acro_pol`,`runde`,`ta`) VALUES (%s, %s, %s, %s, %s, %s)")
+#          cur.execute(sql, (game_id, i, wert, j, k, ta[gg]))
+#          gg += 1
+#      conn.commit()
+#  set_up_role_assignments(game_id, npbhp, regions)
+
 
     

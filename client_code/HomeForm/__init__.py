@@ -94,8 +94,9 @@ class HomeForm(HomeFormTemplate):
     alert(title="ToDo", content="does not yet work :(")
 
   def btn_log_in_gm_click(self, **event_args):
+    self.card_holder_top.visible = False
     self.gm_login_card.visible = True
-
+    
   def gm_login_box_pressed_enter(self, **event_args):
     if self.gm_login_box.text == 'gol':
       self.gm_login_card.visible = False
@@ -127,4 +128,36 @@ class HomeForm(HomeFormTemplate):
     self.btn_continue_game.visible = False
 #    self.select_regions_label.visible = True
     self.gm_reg_selection_card.visible = True
+
+  def button_submit_not_played_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    global cid
+    npbhp = [] # not played by human players
+    if self.check_box_us.checked:
+      npbhp.append('us')
+    if self.check_box_af.checked:
+      npbhp.append('af')
+    if self.check_box_cn.checked:
+      npbhp.append('cn')
+    if self.check_box_me.checked:
+      npbhp.append('me')
+    if self.check_box_sa.checked:
+      npbhp.append('sa')
+    if self.check_box_la.checked:
+      npbhp.append('la')
+    if self.check_box_pa.checked:
+      npbhp.append('pa')
+    if self.check_box_ec.checked:
+      npbhp.append('ec')
+    if self.check_box_eu.checked:
+      npbhp.append('eu')
+    if self.check_box_se.checked:
+      npbhp.append('se')
+    anvil.server.call('start_new_game', cid, npbhp, 1)
+    anvil.server.call('set_up_game_db', cid, 1)
+    anvil.server.call('set_up_game_db', cid, 2)
+    anvil.server.call('set_up_game_db', cid, 3)
+    # fill in games
+    result = alert("Your selection has been saved. Now, tell your players to start their app: url goes here")
+
     

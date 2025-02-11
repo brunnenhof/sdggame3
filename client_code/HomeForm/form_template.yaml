@@ -167,7 +167,8 @@ components:
         name: check_box_se
         properties: {bold: true, font_size: 14, spacing_above: none, spacing_below: none, text: Southeast Asia}
         type: CheckBox
-      - layout_properties: {grid_position: 'YGMHSD,RKVOVS'}
+      - event_bindings: {click: button_submit_not_played_click}
+        layout_properties: {grid_position: 'YGMHSD,RKVOVS'}
         name: button_submit_not_played
         properties: {bold: true, foreground: '#D9365E', role: elevated-button, text: 'When you are done, click this button'}
         type: Button

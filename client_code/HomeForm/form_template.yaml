@@ -37,16 +37,41 @@ components:
       name: load_sdg_var
       properties: {text: Load sgd_var}
       type: FileLoader
-    - event_bindings: {click: reload_sdg_click}
-      layout_properties: {grid_position: 'WDQTSE,MDLGVV'}
-      name: reload_sdg
-      properties: {role: elevated-button, text: Reload the sdg data table}
-      type: Button
-    - event_bindings: {click: reload_reg_click}
-      layout_properties: {grid_position: 'WDQTSE,MWJLAI'}
-      name: reload_reg
-      properties: {role: elevated-button, text: Reload the reg data table}
-      type: Button
+    - event_bindings: {change: load_sdg_change}
+      layout_properties: {grid_position: 'WDQTSE,ALNQBY'}
+      name: load_sdg
+      properties: {text: Load sdg}
+      type: FileLoader
+    - event_bindings: {change: Load_runto_change}
+      layout_properties: {grid_position: 'WDQTSE,YIJYMB'}
+      name: Load_runto
+      properties: {text: Load runto}
+      type: FileLoader
+    - event_bindings: {change: load_regions_change}
+      layout_properties: {grid_position: 'WDQTSE,YUEJMU'}
+      name: load_regions
+      properties: {text: Load regions}
+      type: FileLoader
+    - event_bindings: {change: load_policies_change}
+      layout_properties: {grid_position: 'VOXKYV,YPXUWK'}
+      name: load_policies
+      properties: {text: Load policies}
+      type: FileLoader
+    - event_bindings: {change: load_ministries_change}
+      layout_properties: {grid_position: 'VOXKYV,OAMIQW'}
+      name: load_ministries
+      properties: {text: Load ministries}
+      type: FileLoader
+    - event_bindings: {change: load_games_info_change}
+      layout_properties: {grid_position: 'VOXKYV,IITDNW'}
+      name: load_games_info
+      properties: {text: Load games_info}
+      type: FileLoader
+    - event_bindings: {change: load_games_change}
+      layout_properties: {grid_position: 'VOXKYV,GBUMAP'}
+      name: load_games
+      properties: {text: Load games}
+      type: FileLoader
     layout_properties: {grid_position: 'HVNQUK,LEOZIT'}
     name: card_holder_admin
     properties: {background: 'theme:bw grey light', role: outlined-card, visible: false}

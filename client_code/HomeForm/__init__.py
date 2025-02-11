@@ -41,20 +41,21 @@ class HomeForm(HomeFormTemplate):
     """This method is called when the user presses Enter in this text box"""
     pass
 
-  def reload_sdg_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    pass
-
-  def reload_reg_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    pass
-
-  def load_sdg_var_change(self, file, **event_args):
+  def load_csv_file_into_db(self, file, server, **event_args):
     text = file.get_bytes()
     text_str = text.decode('utf-8')
-    print(type(text_str))
+#    print(type(text_str))
     tsplit = text_str.splitlines(keepends=False)
-    print(type(tsplit))
+#    print(type(tsplit))
+    anvil.server.call(server, tsplit)
+    alert('The file has been uploaded and saved to table')
+    
+  def load_sdg_var_change(self, file, server):
+    text = file.get_bytes()
+    text_str = text.decode('utf-8')
+#    print(type(text_str))
+    tsplit = text_str.splitlines(keepends=False)
+#    print(type(tsplit))
     anvil.server.call('upload_sdg_var_change', tsplit)
     alert('The file has been uploaded and saved to table')
 
@@ -63,3 +64,30 @@ class HomeForm(HomeFormTemplate):
 #    tsplit = text.splitlines(keepends=False)
 #    anvil.server.call('upload_sdg_var_change', tsplit)
 #    alert('The file has been uploaded and saved to table')
+
+  def load_sdg_change(self, file, **event_args):
+    self.load_csv_file_into_db(self, file, 'upload_sdg_change')
+
+  def Load_runto_change(self, file, **event_args):
+    """This method is called when a new file is loaded into this FileLoader"""
+    pass
+
+  def load_regions_change(self, file, **event_args):
+    """This method is called when a new file is loaded into this FileLoader"""
+    pass
+
+  def load_policies_change(self, file, **event_args):
+    """This method is called when a new file is loaded into this FileLoader"""
+    pass
+
+  def load_ministries_change(self, file, **event_args):
+    """This method is called when a new file is loaded into this FileLoader"""
+    pass
+
+  def load_games_info_change(self, file, **event_args):
+    """This method is called when a new file is loaded into this FileLoader"""
+    pass
+
+  def load_games_change(self, file, **event_args):
+    """This method is called when a new file is loaded into this FileLoader"""
+    pass

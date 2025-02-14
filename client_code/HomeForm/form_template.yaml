@@ -172,6 +172,10 @@ components:
         name: button_submit_not_played
         properties: {bold: true, foreground: '#D9365E', role: elevated-button, text: 'When you are done, click this button'}
         type: Button
+      - layout_properties: {grid_position: 'MFJWGS,QBEMFP'}
+        name: label_set_up_game_info
+        properties: {align: center, bold: true, icon: 'fa:check', text: game info set up ..., visible: false}
+        type: Label
       layout_properties: {grid_position: 'DDFXFQ,ZUEVZR'}
       name: gm_reg_selection_card
       properties: {background: 'theme:bw grey light', role: outlined-card, visible: false}
@@ -190,6 +194,11 @@ components:
     name: btn_thanks
     properties: {background: 'theme:Primary', foreground: 'theme:On Primary', icon: 'fa:hand-o-up', role: elevated-button, text: Thanks}
     type: Button
+  - event_bindings: {click: btn_poc_click}
+    layout_properties: {}
+    name: btn_poc
+    properties: {background: 'theme:Primary', bold: false, foreground: 'theme:On Primary', role: elevated-button, text: PoC}
+    type: Button
   - event_bindings: {click: btn_help_click}
     layout_properties: {}
     name: btn_help
@@ -201,7 +210,7 @@ components:
   type: FlowPanel
 - layout_properties: {slot: title}
   name: label_title
-  properties: {icon: 'fa:gamepad', role: headline, text: SDG Game - Proof of Concept}
+  properties: {icon: 'fa:gamepad', role: headline, text: ENDtimes}
   type: Label
 container:
   properties: {html: '@theme:standard-page.html'}

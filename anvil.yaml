@@ -79,6 +79,9 @@ db_schema:
     - admin_ui: {order: 6, width: 200}
       name: npbhp
       type: string
+    - admin_ui: {order: 7, width: 200}
+      name: closed
+      type: bool
     server: full
     title: games_info
   ministries:

@@ -119,8 +119,8 @@ def upload_games_change(data):
 def start_new_game(cid, npbhpv, next_step_gmv):
   nn_str = ' '.join(npbhpv)
   jetzt = datetime.datetime.now()
-  app_tables.games_info.add_row(game_id=cid , npbhp=nn_str, next_step_gm= next_step_gmv , started_on = jetzt) 
-  return True
+  app_tables.games_info.add_row(game_id=cid , npbhp=nn_str, next_step_gm= next_step_gmv , started_on = jetzt, closed = False) 
+  return True, nn_str
 
 def get_games_info_last_row(cid):
   row = app_tables.games_info.get(game_id=cid)
@@ -164,9 +164,8 @@ def get_sql(table, col):
   return names
 
 @anvil.server.callable
-def set_up_game_db(runde, cid):
+def set_up_game_db(runde, cid, npbhp):
   k = runde
-  ### 
   gi = get_games_info_last_row(cid)
   print(gi)
 #    npbhp = gi[0]['npbhp']

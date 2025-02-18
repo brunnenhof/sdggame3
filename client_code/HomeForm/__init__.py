@@ -155,10 +155,17 @@ class HomeForm(HomeFormTemplate):
     set_up_gi, npbhp_str = anvil.server.call('start_new_game', cid, npbhp, 1)
     if set_up_gi:
       self.label_set_up_game_info.visible = True
-      temp = anvil.server.call('set_up_game_db', 1, cid, npbhp)
-      anvil.server.call('set_up_game_db', cid, 2)
-      anvil.server.call('set_up_game_db', cid, 3)
-    #  set_up_role_assignments(game_id, npbhp, regions)
+      temp, regions = anvil.server.call('set_up_game_db', 1, cid, npbhp)
+      if temp:
+        self.label_rd1_setup1.visible = True
+      anvil.server.call('set_up_game_db', 2, cid, npbhp)
+      self.label_rd2_setup.visible = True
+      anvil.server.call('set_up_game_db', 3, cid, npbhp)
+      self.label_rd3_setup.visible = True
+      anvil.server.call('set_up_role_assignments', cid, npbhp, regions)
+      txt = 'role assignments are set up ... Now tell your players to join game ' + cid + ' and log in to their roles. You need to wait until all players have submitted their decisions for round 1, 2025 to 2040'
+      self.label_role_assign.text = txt
+      self.label_role_assign.visible = True
     # fill in games
       result = alert("Your selection has been saved. Now, tell your players to start their app: url goes here")
     else:

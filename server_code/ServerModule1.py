@@ -6,6 +6,7 @@ import json
 import pandas as pd
 import csv
 import datetime
+import random
 
 @anvil.server.callable
 def upload_sdg_var_change(data):
@@ -117,6 +118,7 @@ def upload_games_change(data):
 
 @anvil.server.callable
 def start_new_game(cid, npbhpv, next_step_gmv):
+  app_tables.games_info.delete_all_rows()
   nn_str = ' '.join(npbhpv)
   jetzt = datetime.datetime.now()
   app_tables.games_info.add_row(game_id=cid , npbhp=nn_str, next_step_gm= next_step_gmv , started_on = jetzt, closed = False) 
@@ -124,8 +126,8 @@ def start_new_game(cid, npbhpv, next_step_gmv):
 
 def get_games_info_last_row(cid):
   row = app_tables.games_info.get(game_id=cid)
-  print (row)
-  print (type(row))
+#  print ('in get_games_info_last_row')
+#  pp = row['game_id']
   return row
   
 def make_list_from_str(npbhp):
@@ -165,37 +167,33 @@ def get_sql(table, col):
 
 @anvil.server.callable
 def set_up_game_db(runde, cid, npbhp):
+  if runde == 1:
+    app_tables.games.delete_all_rows()
   k = runde
-  gi = get_games_info_last_row(cid)
-  print(gi)
-  print(npbhp)
-#    npbhp = gi[0]['npbhp']
-#    if not npbhp == '[]':
-#      npbhp = make_list_from_str(npbhp)
-#      print(npbhp)
-#      game_id = gi[0]['game_id']
-#      regions = get_sql('regions', 'abbreviation')
-#     print(regions)
-#      policies = get_sql('policies', 'abbreviation')  # read policies as abbreviation
-#      tltl = get_sql('policies', 'tltl')  # read tltl values
-#      gl = get_sql('policies', 'gl')  # read gl values
-#      ta = get_sql('policies', 'ta')  # read tas as list as long as policies
-#      for i in regions:
-#        gg = 0
-#        for j in policies:
-#          print(str(k) + ' ' + i + ' ' + j)
-#          if i in npbhp:  # if this region is not played by human players set a random value
-#            mymin = tltl[gg]
-#            mymax = gl[gg]
-#            myhalf = (mymax - mymin) / 2
-#            wert = random.uniform(myhalf, mymax)  # random policy value biased towards GL
-#          else:
-#            wert = tltl[gg]
-#          sql = ("INSERT INTO `games` (`game_id`, `acro_reg`, `wert`, `acro_pol`,`runde`,`ta`) VALUES (%s, %s, %s, %s, %s, %s)")
-#          cur.execute(sql, (game_id, i, wert, j, k, ta[gg]))
-#          gg += 1
-#      conn.commit()
-#  set_up_role_assignments(game_id, npbhp, regions)
-
-
-    
+  print ('in set_up_game_db')
+  if not npbhp == '[]':
+#    print(npbhp)
+    regions = get_sql('regions', 'abbreviation')
+#    print(regions)
+    policies = get_sql('policies', 'abbreviation')  # read policies as abbreviation
+#    print(policies)
+    tltl = get_sql('policies', 'tltl')  # read tltl values
+#    print(tltl)
+    gl = get_sql('policies', 'gl')  # read gl values
+#    print(gl)
+    ta = get_sql('policies', 'ta')  # read tas as list as long as policies
+#    print(ta)
+    for i in regions:
+      gg = 0
+      for j in policies:
+#        print(str(k) + ' ' + i + ' ' + j)
+        if i in npbhp:  # if this region is not played by human players set a random value
+          mymin = tltl[gg]
+          mymax = gl[gg]
+          myhalf = (mymax - mymin) / 2
+          wert = random.uniform(myhalf, mymax)  # random policy value biased towards GL
+        else:
+          wert = tltl[gg]
+          app_tables.games.add_row(game_id=cid, wert=wert, pol=j, runde=k, ta=ta[gg], reg=i)
+        gg += 1
+  return True, regions

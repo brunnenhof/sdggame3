@@ -172,6 +172,22 @@ components:
         name: label_set_up_game_info
         properties: {align: center, bold: true, icon: 'fa:check', text: game info set up ..., visible: false}
         type: Label
+      - layout_properties: {grid_position: 'LOAPHK,YFWYJL'}
+        name: label_rd1_setup1
+        properties: {align: center, bold: true, icon: 'fa:check', text: round 1 set up ..., visible: false}
+        type: Label
+      - layout_properties: {grid_position: 'OBYTYH,SBYESE'}
+        name: label_rd2_setup
+        properties: {align: center, bold: true, text: round 2 set up ..., visible: false}
+        type: Label
+      - layout_properties: {grid_position: 'AVUFMX,KMSGCY'}
+        name: label_rd3_setup
+        properties: {align: center, bold: true, text: round 3 set up ..., visible: false}
+        type: Label
+      - layout_properties: {grid_position: 'OZPNSR,EUVKTD'}
+        name: label_role_assign
+        properties: {align: center, bold: true, text: 'role assignments set up ... Now tell your players to join ', visible: false}
+        type: Label
       layout_properties: {grid_position: 'DDFXFQ,ZUEVZR'}
       name: gm_reg_selection_card
       properties: {background: 'theme:bw grey light', role: outlined-card, visible: false}

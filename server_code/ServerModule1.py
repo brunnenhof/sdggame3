@@ -168,6 +168,7 @@ def set_up_game_db(runde, cid, npbhp):
   k = runde
   gi = get_games_info_last_row(cid)
   print(gi)
+  print(npbhp)
 #    npbhp = gi[0]['npbhp']
 #    if not npbhp == '[]':
 #      npbhp = make_list_from_str(npbhp)

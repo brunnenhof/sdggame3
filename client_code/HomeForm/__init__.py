@@ -121,7 +121,6 @@ class HomeForm(HomeFormTemplate):
     cid = self.generate_custom_id()
     self.label_glb_game_id.visible = True
     self.box_glb_text.visible = True
-    self.label_glb_tell_players.visible = True
     self.box_glb_text.text = cid
     #set_new_game = anvil.server.call('start_new_game', cid)
     self.btn_new_game2.visible = False
@@ -156,7 +155,7 @@ class HomeForm(HomeFormTemplate):
     set_up_gi, npbhp_str = anvil.server.call('start_new_game', cid, npbhp, 1)
     if set_up_gi:
       self.label_set_up_game_info.visible = True
-      temp = anvil.server.call('set_up_game_db', cid, 1)
+      temp = anvil.server.call('set_up_game_db', 1, cid, npbhp)
       anvil.server.call('set_up_game_db', cid, 2)
       anvil.server.call('set_up_game_db', cid, 3)
     #  set_up_role_assignments(game_id, npbhp, regions)

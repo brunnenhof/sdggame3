@@ -152,6 +152,7 @@ class HomeForm(HomeFormTemplate):
       npbhp.append('eu')
     if self.check_box_se.checked:
       npbhp.append('se')
+    self.button_submit_not_played.visible = False
     set_up_gi, npbhp_str = anvil.server.call('start_new_game', cid, npbhp, 1)
     if set_up_gi:
       self.label_set_up_game_info.visible = True
@@ -163,17 +164,25 @@ class HomeForm(HomeFormTemplate):
       anvil.server.call('set_up_game_db', 3, cid, npbhp)
       self.label_rd3_setup.visible = True
       anvil.server.call('set_up_role_assignments', cid, npbhp, regions)
-      txt = 'role assignments are set up ... Now tell your players to join game ' + cid + ' and log in to their roles. You need to wait until all players have submitted their decisions for round 1, 2025 to 2040'
+      txt = 'Role assignments are set up ... Now tell your players to join game ' + cid + ' and log in to their roles. You need to wait until all players have submitted their decisions for round 1, 2025 to 2040'
       self.label_role_assign.text = txt
       self.label_role_assign.visible = True
-    # fill in games
-      result = alert("Your selection has been saved. Now, tell your players to start their app: url goes here")
     else:
       alert("Something went wrong setting up the game info")
 
   def btn_poc_click(self, **event_args):
     alert("Neither the user interface nor the server code is elegant nor efficient. Contact us if you can help making either or all better.",
          title="This app is a Proof of Concept")
+    """This method is called when the button is clicked"""
+    pass
+
+  def btn_join_game_click(self, **event_args):
+    # check if a game is ready
+    pick up latest game_id & game_info[next_step_p] == 1
+    
+    # delete gm cards
+    self.card_p.visible=True
+    
     """This method is called when the button is clicked"""
     pass
 

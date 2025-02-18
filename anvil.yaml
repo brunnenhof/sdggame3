@@ -55,9 +55,6 @@ db_schema:
   games_info:
     client: none
     columns:
-    - admin_ui: {order: 0, width: 200}
-      name: id
-      type: number
     - admin_ui: {order: 1, width: 200}
       name: game_id
       type: string

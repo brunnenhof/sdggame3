@@ -35,8 +35,6 @@ def upload_sdg_change(data):
   for i in range(1, laenge):
     dro = clean_csv(data[i])
     app_tables.sdg.add_row(id=float(dro[0]), sdgNbr=dro[1], sdg=dro[2], sdg_dt=dro[3])
-#    for j in range(0,4):
-      #      print(str(i) + ' ' + str(j) + ' value: ' + dro[j] + ' type: ' + str(type(dro[j])))
 
 @anvil.server.callable
 def upload_runto_change(data):
@@ -74,9 +72,6 @@ def upload_policies_change(data):
     dro = clean_csv(data[i])
     app_tables.policies.add_row(id=float(dro[0]), abbreviation=dro[1], name=dro[2], tltl=float(dro[3]),
                             gl=float(dro[4]), expl=dro[5], ta=dro[6])
-    #for j in range(0,7):#      print(str(i) + ' ' + str(j) + ' value: ' + dro[j] + ' type: ' + str(type(dro[j])))
-#id	abbreviation	name	tltl	gl	expl	ta
-#1	ExPS	Expand policy space	0	100	Cancels a percentage of Govt debt outstanding to private lenders in policy start year	Poverty
 
 @anvil.server.callable
 def upload_ministries_change(data):
@@ -86,9 +81,6 @@ def upload_ministries_change(data):
   for i in range(1, laenge):
     dro = clean_csv(data[i])
     app_tables.ministries.add_row(id=float(dro[0]), ministry=dro[1], longname=dro[2])
-    #for j in range(0,3):#      print(str(i) + ' ' + str(j) + ' value: ' + dro[j] + ' type: ' + str(type(dro[j])))
-#id	ministry	longname
-#1	Poverty	against Poverty
 
 @anvil.server.callable
 def upload_game_info_change(data):
@@ -99,9 +91,6 @@ def upload_game_info_change(data):
     dro = clean_csv(data[i])
     app_tables.games_info.add_row(id=float(dro[0]), game_id=dro[1], started_on=dro[2], updated=dro[3],
                             closed=dro[4], next_step_p=float(dro[5]), next_step_gm=float(dro[6]), npbhp=dro[7])
-    #for j in range(0,8):#      print(str(i) + ' ' + str(j) + ' value: ' + dro[j] + ' type: ' + str(type(dro[j])))
-#id	game_id	started_on	updated	closed	next_step_p	next_step_gm	npbhp
-#17	ZJTZP-732-665	29/01/2025 12:46	NULL	0	0	1	['us', 'cn', 'me', 'pa', 'se']
 
 @anvil.server.callable
 def upload_games_change(data):
@@ -112,9 +101,6 @@ def upload_games_change(data):
     dro = clean_csv(data[i])
     app_tables.games.add_row(id=float(dro[0]), game_id=dro[1], reg=dro[2], wert=float(dro[3]),
                             runde=float(dro[4]), pol=dro[5], ta=dro[6])
-    #for j in range(0,7):#      print(str(i) + ' ' + str(j) + ' value: ' + dro[j] + ' type: ' + str(type(dro[j])))
-#id	game_id	acro_reg	wert	runde	acro_pol	ta
-#1	TEST-000-111	us	0	1	ExPS	Poverty
 
 @anvil.server.callable
 def start_new_game(cid, npbhpv, next_step_gmv):
@@ -136,27 +122,18 @@ def make_list_from_str(npbhp):
   a = a.replace("', '", ' ')
   return a.split(' ')
     
+@anvil.server.callable
 def set_up_role_assignments(game_id, npbhp, regions):
+  app_tables.fill_roles.delete_all_rows()
   print (game_id)
   print (npbhp)
-  conn = connect()
-  with conn.cursor() as cur:
-    sql = ("DELETE FROM `fill_roles` WHERE `id` > 0")
-    cur.execute(sql)
-    conn.commit()
-    sql = ("ALTER TABLE `fill_roles` AUTO_INCREMENT = 0;")
-    cur.execute(sql)
-    conn.commit()
-    for r in regions:
-      sql = ("INSERT INTO `fill_roles` (`game_id`, `region`, `poverty`, `inequality`,`empowerment`,`food`,`energy`,`future`,`reg_avail`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)")
-      if r not in npbhp:
-        cur.execute(sql, (game_id, r, 1, 1, 1, 1, 1, 1, 1))
-      else:
-        cur.execute(sql, (game_id, r, 0, 0, 0, 0, 0, 0, 0))    
-    conn.commit()
+  for r in regions:
+    if r not in npbhp:
+      app_tables.fill_roles.add_row(empowerment=True, food=True, reg_avail=True, region=r, energy=True, game_id=game_id, poverty=True, inequality=True)        
+    else:
+      app_tables.fill_roles.add_row(empowerment=False, food=False, reg_avail=False, region=r, energy=False, game_id=game_id, poverty=False, inequality=False)      
 
 def get_sql(table, col):
-#  names = [r['name'] for r in app_tables.people.search()]
   if table == 'regions':
     names = [r[col] for r in app_tables.regions.search()]
   elif table == 'policies':
@@ -194,6 +171,6 @@ def set_up_game_db(runde, cid, npbhp):
           wert = random.uniform(myhalf, mymax)  # random policy value biased towards GL
         else:
           wert = tltl[gg]
-          app_tables.games.add_row(game_id=cid, wert=wert, pol=j, runde=k, ta=ta[gg], reg=i)
+        app_tables.games.add_row(game_id=cid, wert=wert, pol=j, runde=k, ta=ta[gg], reg=i)
         gg += 1
   return True, regions

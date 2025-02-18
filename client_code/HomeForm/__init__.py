@@ -190,7 +190,7 @@ class HomeForm(HomeFormTemplate):
     pass
 
 
-  def btn_rejoin_click(self, **event_args):
+  def cp_rejoin_click(self, **event_args):
     """This method is called when the button is clicked"""
     alert("Not is not yet coded ... check back later ...")
     pass
@@ -199,12 +199,20 @@ class HomeForm(HomeFormTemplate):
     roles = app_tables.fill_roles.search(game_id=cid)
     print (roles)
 
-  def card_p_jr_join_game_click(self, **event_args):
+  def cp_join_click(self, **event_args):
     """This method is called when the button is clicked"""
     row = anvil.server.call('get_latest_game')
-    rr = self.assign_roles(row['game_id'])
+    self.cp_top.visible= False
+    self.cp_confirm_game_id.visible = True
+    self.cp_id_holder.text = row['game_id']
+    rr = self.assign_roles(row['game_id'])    
+
 #    roles = anvil.server.call('get_roles', row['game_id'])
     print(row['game_id'])
+    pass
+
+  def cp_submit_game_id_click(self, **event_args):
+    """This method is called when the button is clicked"""
     pass
 
 

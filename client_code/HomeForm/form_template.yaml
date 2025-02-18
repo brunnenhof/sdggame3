@@ -198,23 +198,15 @@ components:
     properties: {background: '#e8f4d5', role: outlined-card, visible: false}
     type: ColumnPanel
   - components:
-    - layout_properties: {grid_position: 'CLUVVR,XPSMZD'}
-      name: card_p_reg_lab
-      properties: {bold: true, text: Region}
-      type: Label
-    - layout_properties: {grid_position: 'CLUVVR,OOYJDL'}
-      name: card_p_ministry_lab
-      properties: {bold: true, text: Ministry}
-      type: Label
     - components:
-      - event_bindings: {click: card_p_jr_join_game_click}
+      - event_bindings: {click: cp_join_click}
         layout_properties: {grid_position: 'QDSCGW,BIFIGN'}
-        name: card_p_jr_join_game
+        name: cp_join
         properties: {bold: true, role: elevated-button, text: JOIN a new game}
         type: Button
-      - event_bindings: {click: btn_rejoin_click}
+      - event_bindings: {click: cp_rejoin_click}
         layout_properties: {grid_position: 'QDSCGW,LQUETV'}
-        name: btn_rejoin
+        name: cp_rejoin
         properties: {bold: true, role: elevated-button, text: REjoin an existing game}
         type: Button
       layout_properties: {grid_position: 'XNNMPF,ZUWZZO'}
@@ -222,8 +214,59 @@ components:
       properties: {visible: false}
       type: ColumnPanel
     layout_properties: {grid_position: 'VJDABP,FLCFIR'}
-    name: card_p
+    name: cp_top
     properties: {background: '#f7d7df', role: outlined-card, visible: false}
+    type: ColumnPanel
+  - components:
+    - layout_properties: {grid_position: 'RTGUQO,GBQOMB'}
+      name: label_1
+      properties: {text: 'If the Game ID is correct, click the submit button. If not, correct the ID first and then click on the submit button'}
+      type: Label
+    - layout_properties: {grid_position: 'RTGUQO,DHDRZX'}
+      name: cp_id_holder
+      properties: {}
+      type: TextBox
+    - event_bindings: {click: cp_submit_game_id_click}
+      layout_properties: {grid_position: 'XDAMPD,HYQNFI'}
+      name: cp_submit_game_id
+      properties: {role: elevated-button, text: Submit GameID}
+      type: Button
+    layout_properties: {grid_position: 'GDCLPX,QBTQYY'}
+    name: cp_confirm_game_id
+    properties: {background: '#f7d7df', role: outlined-card, visible: false}
+    type: ColumnPanel
+  - components:
+    - layout_properties: {grid_position: 'KIDOQZ,KSUMIS'}
+      name: label_2
+      properties: {bold: true, text: 'First, select the region ...'}
+      type: Label
+    - layout_properties: {grid_position: 'SXWIDX,CPORSH'}
+      name: rb_us
+      properties: {text: USA}
+      type: RadioButton
+    - layout_properties: {grid_position: 'BBPGLR,QXNVNK'}
+      name: rb_af
+      properties: {text: 'Africa, South of Sahara'}
+      type: RadioButton
+    - layout_properties: {grid_position: 'PGWKRC,GMRTVK'}
+      name: rb_cn
+      properties: {text: China}
+      type: RadioButton
+    - layout_properties: {grid_position: 'YBODMP,GNDGIF'}
+      name: rb_me
+      properties: {text: Middle East and North Africa}
+      type: RadioButton
+    - layout_properties: {grid_position: 'MWTMLG,RLFFIA'}
+      name: rb_sa
+      properties: {text: South Asia}
+      type: RadioButton
+    - layout_properties: {grid_position: 'IQWNXB,PLIKNE'}
+      name: rb_la
+      properties: {text: Latin America}
+      type: RadioButton
+    layout_properties: {grid_position: 'GZPISO,YTYCUU'}
+    name: choose_role
+    properties: {role: outlined-card}
     type: ColumnPanel
   layout_properties: {slot: default}
   name: content_panel

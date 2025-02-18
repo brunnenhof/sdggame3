@@ -238,35 +238,83 @@ components:
   - components:
     - layout_properties: {grid_position: 'KIDOQZ,KSUMIS'}
       name: label_2
-      properties: {bold: true, text: 'First, select the region ...'}
+      properties: {bold: true, foreground: 'theme:Primary', text: 'First, select the region ...'}
+      type: Label
+    - layout_properties: {grid_position: 'KIDOQZ,ECLRGI'}
+      name: label_3
+      properties: {bold: true, foreground: 'theme:Secondary', text: '... then select your ministry'}
       type: Label
     - layout_properties: {grid_position: 'SXWIDX,CPORSH'}
       name: rb_us
-      properties: {text: USA}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: USA}
+      type: RadioButton
+    - layout_properties: {grid_position: 'SXWIDX,WHDPWT'}
+      name: rb_poverty
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Poverty}
       type: RadioButton
     - layout_properties: {grid_position: 'BBPGLR,QXNVNK'}
       name: rb_af
-      properties: {text: 'Africa, South of Sahara'}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: 'Africa, South of Sahara'}
+      type: RadioButton
+    - layout_properties: {grid_position: 'BBPGLR,LVWBDS'}
+      name: rb_inequality
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Inequality}
       type: RadioButton
     - layout_properties: {grid_position: 'PGWKRC,GMRTVK'}
       name: rb_cn
-      properties: {text: China}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: China}
+      type: RadioButton
+    - layout_properties: {grid_position: 'PGWKRC,TJQQWN'}
+      name: rb_empowerment
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Empowerment}
       type: RadioButton
     - layout_properties: {grid_position: 'YBODMP,GNDGIF'}
       name: rb_me
-      properties: {text: Middle East and North Africa}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Middle East and North Africa}
+      type: RadioButton
+    - layout_properties: {grid_position: 'YBODMP,OBJLFO'}
+      name: rb_food
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Food & Agriculture}
       type: RadioButton
     - layout_properties: {grid_position: 'MWTMLG,RLFFIA'}
       name: rb_sa
-      properties: {text: South Asia}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: South Asia}
+      type: RadioButton
+    - layout_properties: {grid_position: 'MWTMLG,OUGHWA'}
+      name: rb_energy
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Energy}
       type: RadioButton
     - layout_properties: {grid_position: 'IQWNXB,PLIKNE'}
       name: rb_la
-      properties: {text: Latin America}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Latin America}
       type: RadioButton
+    - layout_properties: {grid_position: 'IQWNXB,XKBYRI'}
+      name: rb_future
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Future}
+      type: RadioButton
+    - layout_properties: {grid_position: 'PBDUMO,JHCUGX'}
+      name: rb_pa
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Pacific Rim}
+      type: RadioButton
+    - layout_properties: {grid_position: 'UIGPGO,PQBQEX'}
+      name: rb_ec
+      properties: {spacing_above: none, spacing_below: none, text: East Europe and Central Asia}
+      type: RadioButton
+    - layout_properties: {grid_position: 'DGYHIW,XGDUNC'}
+      name: rb_eu
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Europe}
+      type: RadioButton
+    - layout_properties: {grid_position: 'AULKSA,GJSSDM'}
+      name: rb_se
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Southeast Asia}
+      type: RadioButton
+    - layout_properties: {grid_position: 'SRRSDV,MDOWPG'}
+      name: btn_submit_role
+      properties: {role: elevated-button, text: Once you have selected ONE region and ONE ministry click this SUBMIT button}
+      type: Button
     layout_properties: {grid_position: 'GZPISO,YTYCUU'}
     name: choose_role
-    properties: {role: outlined-card}
+    properties: {role: outlined-card, visible: false}
     type: ColumnPanel
   layout_properties: {slot: default}
   name: content_panel

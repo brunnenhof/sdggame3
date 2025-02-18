@@ -180,12 +180,7 @@ class HomeForm(HomeFormTemplate):
     # check if a game is ready
     # pick up latest game_id & game_info[next_step_p] == 1
     self.card_holder_top.visible = False
-    self.card_p_join_rejoin.visible = True
-
-    
-    # delete gm cards
-    self.card_p.visible=True
-    
+    self.cp_confirm_game_id.visible    
     """This method is called when the button is clicked"""
     pass
 

@@ -178,12 +178,34 @@ class HomeForm(HomeFormTemplate):
 
   def btn_join_game_click(self, **event_args):
     # check if a game is ready
-    pick up latest game_id & game_info[next_step_p] == 1
+    # pick up latest game_id & game_info[next_step_p] == 1
+    self.card_holder_top.visible = False
+    self.card_p_join_rejoin.visible = True
+
     
     # delete gm cards
     self.card_p.visible=True
     
     """This method is called when the button is clicked"""
     pass
+
+
+  def btn_rejoin_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    alert("Not is not yet coded ... check back later ...")
+    pass
+
+  def assign_roles(self, cid):
+    roles = app_tables.fill_roles.search(game_id=cid)
+    print (roles)
+
+  def card_p_jr_join_game_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    row = anvil.server.call('get_latest_game')
+    rr = self.assign_roles(row['game_id'])
+#    roles = anvil.server.call('get_roles', row['game_id'])
+    print(row['game_id'])
+    pass
+
 
     

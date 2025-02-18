@@ -174,3 +174,12 @@ def set_up_game_db(runde, cid, npbhp):
         app_tables.games.add_row(game_id=cid, wert=wert, pol=j, runde=k, ta=ta[gg], reg=i)
         gg += 1
   return True, regions
+
+@anvil.server.callable
+def get_latest_game():
+  row = app_tables.games_info.get(closed=False, next_step_gm=1)
+  return row
+
+@anvil.server.callable
+def get_roles(cid):
+  roles = app_tables.fill_roles.search(game_id=cid)

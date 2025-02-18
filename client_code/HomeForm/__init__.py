@@ -176,39 +176,101 @@ class HomeForm(HomeFormTemplate):
     """This method is called when the button is clicked"""
     pass
 
-  def btn_join_game_click(self, **event_args):
-    # check if a game is ready
-    # pick up latest game_id & game_info[next_step_p] == 1
-    self.card_holder_top.visible = False
-    self.cp_confirm_game_id.visible    
-    """This method is called when the button is clicked"""
-    pass
-
-
-  def cp_rejoin_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    alert("Not is not yet coded ... check back later ...")
-    pass
-
   def assign_roles(self, cid):
     roles = app_tables.fill_roles.search(game_id=cid)
     print (roles)
 
-  def cp_join_click(self, **event_args):
-    """This method is called when the button is clicked"""
+  def btn_join_new_click(self, **event_args):
     row = anvil.server.call('get_latest_game')
     self.cp_top.visible= False
     self.cp_confirm_game_id.visible = True
     self.cp_id_holder.text = row['game_id']
     rr = self.assign_roles(row['game_id'])    
 
-#    roles = anvil.server.call('get_roles', row['game_id'])
-    print(row['game_id'])
-    pass
+  def btn_rejoin_existing_click(self, **event_args):
+    alert("Not is not yet coded ... check back later ...")
+
+  def btn_join_game_click(self, **event_args):
+    self.card_holder_top.visible = False
+    self.cp_top.visible = True
+
+  def set_not_played_regions_to_invisible(self, reg):
+    if reg == 'us':
+      self.rb_us.visible = False
+    elif reg == 'af':
+      self.rb_af.visible = False
+    elif reg == 'cn':
+      self.rb_cn.visible = False
+    elif reg == 'me':
+      self.rb_me.visible = False
+    elif reg == 'sa':
+      self.rb_sa.visible = False
+    elif reg == 'la':
+      self.rb_la.visible = False
+    elif reg == 'pa':
+      self.rb_pa.visible = False
+    elif reg == 'ec':
+      self.rb_ec.visible = False
+    elif reg == 'eu':
+      self.rb_eu.visible = False
+    elif reg == 'se':
+      self.rb_se.visible = False
+
 
   def cp_submit_game_id_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    pass
+    global cid
+    cid = self.cp_id_holder.text
+    if cid == '':
+      alert("You must enter a Game ID in the format LLLLL-XXX-XXX")
+    else:
+      self.cp_confirm_game_id.visible = False
+      self.choose_role.visible = True
+      roles = app_tables.fill_roles.search(game_id=cid)
+      for r in roles:
+        if not r['reg_avail']:
+            self.set_not_played_regions_to_invisible(r['region'])
+
+  def set_mini_visi(self, cid, reg):
+    mini = app_tables.fill_roles.search(game_id=cid, region=reg)
+    self.rb_poverty.visible = False
+    self.rb_empowerment.visible = False
+    self.rb_inequality.visible = False
+    self.rb_food.visible = False
+    self.rb_energy.visible = False
+    self.rb_future.visible = False
+    for r in mini:
+      pov = r['poverty']
+      ine = r['inequality']
+      emp = r['empowerment']
+      foo = r['food']
+      ene = r['energy']
+      fut = r['future']
+      if emp:
+        self.rb_empowerment.visible = True
+      if pov:
+        self.rb_poverty.visible = True
+      if ine:
+        self.rb_inequality.visible = True
+      if foo:
+        self.rb_food.visible = True
+      if ene:
+        self.rb_energy.visible = True
+      if fut:
+        self.rb_future.visible = True
+
+  def rb_me_clicked(self, **event_args):
+    global cid
+    self.label_3.visible = True
+    self.set_mini_visi(cid, 'me')
+    self.btn_submit_role.visible = True
+
+  def btn_submit_role_click(self, **event_args):
+    global cid
+    my_reg = self.rb_reg.get_group_value()
+    print('IN btn_submit_role_clicked')
+    print(my_reg)
+
+ 
 
 
     

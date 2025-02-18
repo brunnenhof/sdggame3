@@ -129,9 +129,9 @@ def set_up_role_assignments(game_id, npbhp, regions):
   print (npbhp)
   for r in regions:
     if r not in npbhp:
-      app_tables.fill_roles.add_row(empowerment=True, food=True, reg_avail=True, region=r, energy=True, game_id=game_id, poverty=True, inequality=True)        
+      app_tables.fill_roles.add_row(empowerment=True, food=True, reg_avail=True, region=r, energy=True, game_id=game_id, poverty=True, inequality=True, future=True)        
     else:
-      app_tables.fill_roles.add_row(empowerment=False, food=False, reg_avail=False, region=r, energy=False, game_id=game_id, poverty=False, inequality=False)      
+      app_tables.fill_roles.add_row(empowerment=False, food=False, reg_avail=False, region=r, energy=False, game_id=game_id, poverty=False, inequality=False, future=False)      
 
 def get_sql(table, col):
   if table == 'regions':

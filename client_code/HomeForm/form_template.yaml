@@ -198,21 +198,16 @@ components:
     properties: {background: '#e8f4d5', role: outlined-card, visible: false}
     type: ColumnPanel
   - components:
-    - components:
-      - event_bindings: {click: cp_join_click}
-        layout_properties: {grid_position: 'QDSCGW,BIFIGN'}
-        name: cp_join
-        properties: {bold: true, role: elevated-button, text: JOIN a new game}
-        type: Button
-      - event_bindings: {click: cp_rejoin_click}
-        layout_properties: {grid_position: 'QDSCGW,LQUETV'}
-        name: cp_rejoin
-        properties: {bold: true, role: elevated-button, text: REjoin an existing game}
-        type: Button
-      layout_properties: {grid_position: 'XNNMPF,ZUWZZO'}
-      name: card_p_join_rejoin
-      properties: {visible: false}
-      type: ColumnPanel
+    - event_bindings: {click: btn_join_new_click}
+      layout_properties: {grid_position: 'OWDMAD,ZSGADJ'}
+      name: btn_join_new
+      properties: {role: elevated-button, text: Join a new game}
+      type: Button
+    - event_bindings: {click: btn_rejoin_existing_click}
+      layout_properties: {grid_position: 'OWDMAD,CKVKVB'}
+      name: btn_rejoin_existing
+      properties: {role: elevated-button, text: REjoin an existing game}
+      type: Button
     layout_properties: {grid_position: 'VJDABP,FLCFIR'}
     name: cp_top
     properties: {background: '#f7d7df', role: outlined-card, visible: false}
@@ -242,75 +237,77 @@ components:
       type: Label
     - layout_properties: {grid_position: 'KIDOQZ,ECLRGI'}
       name: label_3
-      properties: {bold: true, foreground: 'theme:Secondary', text: '... then select your ministry'}
+      properties: {bold: true, foreground: 'theme:Secondary', text: '... then select your ministry', visible: false}
       type: Label
     - layout_properties: {grid_position: 'SXWIDX,CPORSH'}
       name: rb_us
-      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: USA}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: USA, visible: true}
       type: RadioButton
     - layout_properties: {grid_position: 'SXWIDX,WHDPWT'}
       name: rb_poverty
-      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Poverty}
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Poverty, visible: false}
       type: RadioButton
     - layout_properties: {grid_position: 'BBPGLR,QXNVNK'}
       name: rb_af
-      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: 'Africa, South of Sahara'}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: 'Africa, South of Sahara', visible: true}
       type: RadioButton
     - layout_properties: {grid_position: 'BBPGLR,LVWBDS'}
       name: rb_inequality
-      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Inequality}
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Inequality, visible: false}
       type: RadioButton
     - layout_properties: {grid_position: 'PGWKRC,GMRTVK'}
       name: rb_cn
-      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: China}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: China, visible: true}
       type: RadioButton
     - layout_properties: {grid_position: 'PGWKRC,TJQQWN'}
       name: rb_empowerment
-      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Empowerment}
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Empowerment, visible: false}
       type: RadioButton
-    - layout_properties: {grid_position: 'YBODMP,GNDGIF'}
+    - event_bindings: {clicked: rb_me_clicked}
+      layout_properties: {grid_position: 'YBODMP,GNDGIF'}
       name: rb_me
-      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Middle East and North Africa}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Middle East and North Africa, visible: true}
       type: RadioButton
     - layout_properties: {grid_position: 'YBODMP,OBJLFO'}
       name: rb_food
-      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Food & Agriculture}
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Food & Agriculture, visible: false}
       type: RadioButton
     - layout_properties: {grid_position: 'MWTMLG,RLFFIA'}
       name: rb_sa
-      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: South Asia}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: South Asia, visible: true}
       type: RadioButton
     - layout_properties: {grid_position: 'MWTMLG,OUGHWA'}
       name: rb_energy
-      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Energy}
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Energy, visible: false}
       type: RadioButton
     - layout_properties: {grid_position: 'IQWNXB,PLIKNE'}
       name: rb_la
-      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Latin America}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Latin America, visible: true}
       type: RadioButton
     - layout_properties: {grid_position: 'IQWNXB,XKBYRI'}
       name: rb_future
-      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Future}
+      properties: {group_name: tas, spacing_above: none, spacing_below: none, text: Future, visible: false}
       type: RadioButton
     - layout_properties: {grid_position: 'PBDUMO,JHCUGX'}
       name: rb_pa
-      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Pacific Rim}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Pacific Rim, visible: true}
       type: RadioButton
     - layout_properties: {grid_position: 'UIGPGO,PQBQEX'}
       name: rb_ec
-      properties: {spacing_above: none, spacing_below: none, text: East Europe and Central Asia}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: East Europe and Central Asia, visible: true}
       type: RadioButton
     - layout_properties: {grid_position: 'DGYHIW,XGDUNC'}
       name: rb_eu
-      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Europe}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Europe, visible: true}
       type: RadioButton
     - layout_properties: {grid_position: 'AULKSA,GJSSDM'}
       name: rb_se
-      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Southeast Asia}
+      properties: {group_name: reg, spacing_above: none, spacing_below: none, text: Southeast Asia, visible: true}
       type: RadioButton
-    - layout_properties: {grid_position: 'SRRSDV,MDOWPG'}
+    - event_bindings: {click: btn_submit_role_click}
+      layout_properties: {grid_position: 'SRRSDV,MDOWPG'}
       name: btn_submit_role
-      properties: {role: elevated-button, text: Once you have selected ONE region and ONE ministry click this SUBMIT button}
+      properties: {role: elevated-button, text: Once you have selected ONE region and ONE ministry click this SUBMIT button, visible: false}
       type: Button
     layout_properties: {grid_position: 'GZPISO,YTYCUU'}
     name: choose_role

@@ -32,6 +32,23 @@ db_schema:
       type: bool
     server: full
     title: fill_roles
+  fr2:
+    client: search
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: gameID
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: ta
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: region
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      name: free
+      type: bool
+    server: full
+    title: fr2
   games:
     client: none
     columns:

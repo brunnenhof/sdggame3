@@ -34,7 +34,7 @@ class HomeForm(HomeFormTemplate):
     ###
     # ToDo put the password into server code !!
     ###
-    if self.admin_pw_box.text == 'thalloma12':
+    if self.admin_pw_box.text == 'golly':
       self.card_holder_admin.visible = True
       self.card_holder_top.visible = False
     else:
@@ -391,13 +391,19 @@ class HomeForm(HomeFormTemplate):
     print ('in save_player_choice: ' + ministry)
     minis = [r['mini'] for r in app_tables.ministries.search()]
     print(minis)
-    row = app_tables.fill_roles.get(game_id=game_id, region=region)
+    row = app_tables.fill_roles.get(game_id=game_id, region=region, )
     for r in row:
       print(r)
       col_name = r[0]
       col_val = r[1]
       if col_name in minis:
         if col_val:
+          # Get the Row object whose 'name' value is Zaphod Beeblebrox
+          zaphod_row = app_tables.people.get(name="Zaphod Beeblebrox")
+          # Get Zaphod's 'age', and print it
+          print(f"Zaphod is currently {zaphod_row['age']} years old")
+          # It's Zaphod's birthday, update the database
+          zaphod_row['age'] += 1
           rowup = app_tables.fill_roles.get(game_id=game_id, region=region)
           if col_name == 'future':
             app_tables.fill_roles.get(game_id=game_id, region=region, future = False)
@@ -473,6 +479,11 @@ class HomeForm(HomeFormTemplate):
       self.minister_label.text = temp
       anvil.server.call('load_plots', which_region, which_ministy)
       a = 2
+
+  def fill_fr2_click(self, **event_args):
+    anvil.server.call('fill_fr2')
+    """This method is called when the button is clicked"""
+    pass
 
 
  

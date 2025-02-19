@@ -74,6 +74,14 @@ components:
       name: load_games
       properties: {text: Load games}
       type: FileLoader
+    - event_bindings: {click: fill_fr2_click}
+      layout_properties: {grid_position: 'RGTKFA,UBTMMW'}
+      name: fill_fr2
+      properties:
+        role: elevated-button
+        text: |
+          fill fr2 from scratch
+      type: Button
     layout_properties: {grid_position: 'HVNQUK,LEOZIT'}
     name: card_holder_admin
     properties: {background: 'theme:bw grey light', role: outlined-card, visible: false}

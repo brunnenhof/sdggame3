@@ -183,3 +183,18 @@ def get_latest_game():
 @anvil.server.callable
 def get_roles(cid):
   roles = app_tables.fill_roles.search(game_id=cid)
+
+@anvil.server.callable
+def fill_fr2():
+  app_tables.fr2.delete_all_rows()
+  reg = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
+  tas = ['poverty', 'inequality', 'empowerment', 'food', 'energy', 'future']
+  cid = 'HSAOD-597-628'
+  for i in reg:
+    for j in tas:
+      free_v = random.randint(0, 1)
+      if free_v == 0:
+        free = False
+      else:
+        free = True
+      app_tables.fr2.add_row(free=free, gameID=cid, region=i, ta=j)

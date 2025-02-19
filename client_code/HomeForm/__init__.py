@@ -196,25 +196,25 @@ class HomeForm(HomeFormTemplate):
 
   def set_not_played_regions_to_invisible(self, reg):
     if reg == 'us':
-      self.rb_us.visible = False
+      self.rb_us2.visible = False
     elif reg == 'af':
-      self.rb_af.visible = False
+      self.rb_af2.visible = False
     elif reg == 'cn':
-      self.rb_cn.visible = False
+      self.rb_cn2.visible = False
     elif reg == 'me':
-      self.rb_me.visible = False
+      self.rb_me2.visible = False
     elif reg == 'sa':
-      self.rb_sa.visible = False
+      self.rb_sa2.visible = False
     elif reg == 'la':
-      self.rb_la.visible = False
+      self.rb_la2.visible = False
     elif reg == 'pa':
-      self.rb_pa.visible = False
+      self.rb_pa2.visible = False
     elif reg == 'ec':
-      self.rb_ec.visible = False
+      self.rb_ec2.visible = False
     elif reg == 'eu':
-      self.rb_eu.visible = False
+      self.rb_eu2.visible = False
     elif reg == 'se':
-      self.rb_se.visible = False
+      self.rb_se2.visible = False
 
 
   def cp_submit_game_id_click(self, **event_args):
@@ -224,51 +224,255 @@ class HomeForm(HomeFormTemplate):
       alert("You must enter a Game ID in the format LLLLL-XXX-XXX")
     else:
       self.cp_confirm_game_id.visible = False
-      self.choose_role.visible = True
       roles = app_tables.fill_roles.search(game_id=cid)
       for r in roles:
         if not r['reg_avail']:
             self.set_not_played_regions_to_invisible(r['region'])
+      self.choose_role2.visible = True
 
-  def set_mini_visi(self, cid, reg):
-    mini = app_tables.fill_roles.search(game_id=cid, region=reg)
-    self.rb_poverty.visible = False
-    self.rb_empowerment.visible = False
-    self.rb_inequality.visible = False
-    self.rb_food.visible = False
-    self.rb_energy.visible = False
-    self.rb_future.visible = False
-    for r in mini:
-      pov = r['poverty']
-      ine = r['inequality']
-      emp = r['empowerment']
-      foo = r['food']
-      ene = r['energy']
-      fut = r['future']
-      if emp:
-        self.rb_empowerment.visible = True
-      if pov:
-        self.rb_poverty.visible = True
-      if ine:
-        self.rb_inequality.visible = True
-      if foo:
-        self.rb_food.visible = True
-      if ene:
-        self.rb_energy.visible = True
-      if fut:
-        self.rb_future.visible = True
-
-  def rb_me_clicked(self, **event_args):
+  def set_ministries_visible(self, cid, reg):
+#    self.label_radio_ministry.visible = True
+    self.submit_role.visible = False
+    ministries = app_tables.fill_roles.search(game_id=cid, region=reg)
+    for key in ministries:
+#      print('IN for key in ministries:')
+#      print(key) # key is a row <LiveObject: anvil.tables.Row>
+#      print(type(key)) # <class 'anvil.LiveObjectProxy'>
+      for col in key:
+#        print('IN for r in key:')
+#        print(col[0] + ' ' + str(col[1])) 
+        cname = col[0] # column name
+        cval = col[1] # column value
+        if cname == 'poverty':
+          if cval:
+            self.rb_pov.visible = True
+          else:
+            self.rb_pov.visible = False
+        elif cname == 'empowerment':
+          if cval:
+            self.rb_emp.visible = True
+          else:
+            self.rb_emp.visible = False
+        elif cname == 'inequality':
+          if cval:
+            self.rb_ineq.visible = True
+          else:
+            self.rb_ineq.visible = False
+        elif cname == 'food':
+          if cval:
+            self.rb_foo.visible = True
+          else:
+            self.rb_foo.visible = False
+        elif cname == 'energy':
+          if cval:
+            self.rb_ene.visible = True
+          else:
+            self.rb_ene.visible = False
+        elif cname == 'future':
+          if cval:
+            self.rb_fut.visible = True
+          else:
+            self.rb_fut.visible = False
+ 
+  def rb_me2_clicked(self, **event_args):
     global cid
-    self.label_3.visible = True
-    self.set_mini_visi(cid, 'me')
-    self.btn_submit_role.visible = True
+    print ('in me btn ' + cid)
+    # set all available ministries for me visible
+    self.label_5.visible = True
+    self.set_ministries_visible(cid, 'me')
 
-  def btn_submit_role_click(self, **event_args):
+  def rb_foo_clicked(self, **event_args):
+    self.submit_role.visible = True
+
+  def rb_us2_clicked(self, **event_args):
     global cid
-    my_reg = self.rb_reg.get_group_value()
+    print ('in me btn ' + cid)
+    self.label_5.visible = True
+    self.set_ministries_visible(cid, 'us')
+
+  def rb_af2_clicked(self, **event_args):
+    global cid
+    print ('in me btn ' + cid)
+    self.label_5.visible = True
+    self.set_ministries_visible(cid, 'af')
+
+  def rb_cn2_clicked(self, **event_args):
+    global cid
+    print ('in me btn ' + cid)
+    self.label_5.visible = True
+    self.set_ministries_visible(cid, 'cn')
+
+  def rb_sa2_clicked(self, **event_args):
+    global cid
+    print ('in me btn ' + cid)
+    self.label_5.visible = True
+    self.set_ministries_visible(cid, 'sa')
+
+  def rb_pa2_clicked(self, **event_args):
+    global cid
+    print ('in me btn ' + cid)
+    self.label_5.visible = True
+    self.set_ministries_visible(cid, 'pa')
+
+  def rb_ec2_clicked(self, **event_args):
+    global cid
+    print ('in me btn ' + cid)
+    self.label_5.visible = True
+    self.set_ministries_visible(cid, 'ec')
+
+  def rb_eu2_clicked(self, **event_args):
+    global cid
+    print ('in me btn ' + cid)
+    self.label_5.visible = True
+    self.set_ministries_visible(cid, 'eu')
+
+  def rb_se2_clicked(self, **event_args):
+    global cid
+    print ('in me btn ' + cid)
+    self.label_5.visible = True
+    self.set_ministries_visible(cid, 'se')
+
+  def rb_pov_clicked(self, **event_args):
+    self.submit_role.visible = True
+
+  def rb_ineq_clicked(self, **event_args):
+    self.submit_role.visible = True
+
+  def rb_emp_clicked(self, **event_args):
+    self.submit_role.visible = True
+
+  def rb_ene_clicked(self, **event_args):
+    self.submit_role.visible = True
+
+  def rb_fut_clicked(self, **event_args):
+    self.submit_role.visible = True
+
+  def region_clicked(self):
+    if self.rb_af2.selected:
+      return 'af'
+    if self.rb_us2.selected:
+      return 'us'
+    if self.rb_cn2.selected:
+      return 'cn'
+    if self.rb_me2.selected:
+      return 'me'
+    if self.rb_sa2.selected:
+      return 'sa'
+    if self.rb_la2.selected:
+      return 'la'
+    if self.rb_pa2.selected:
+      return 'pa'
+    if self.rb_ec2.selected:
+      return 'ec'
+    if self.rb_eu2.selected:
+      return 'eu'
+    if self.rb_se2.selected:
+      return 'se'
+    return None
+
+  def minstry_clicked(self):
+    if self.rb_pov.selected:
+      return 'poverty'
+    if self.rb_ineq.selected:
+      return 'inequality'
+    if self.rb_emp.selected:
+      return 'empowerment'
+    if self.rb_foo.selected:
+      return 'food'
+    if self.rb_ene.selected:
+      return 'energy'
+    if self.rb_fut.selected:
+      return 'future'
+    return None  
+
+  
+  def save_player_choice(self, game_id, ministry, region):
+    print ('in save_player_choice: ' + region)
+    print ('in save_player_choice: ' + ministry)
+    row = app_tables.fill_roles.get(game_id=game_id, region=region)
+    for r in row:
+      print(r)
+      if r[0] == ministry:
+        if r[1]:
+          abc = app_tables.fill_roles.get(ministry=True)
+#          row=app_tables.tableA.get(name="dave")
+#          besty=app_tables.tableB.get(bestfriend="ernie")
+          # update
+#          table: fill_roles
+#          column: ministry
+#          set: True
+
+          # check is reg_avail
+          if not reg_avail:
+            pass
+        else:
+          alert("Taken")
+      else:
+        continue
+        
+  # qick check if that role is still available  
+#    if ministry == 'energy':
+#    sql = ("SELECT energy FROM fill_roles WHERE game_id = %s AND region = %s")
+#    sqls = ("UPDATE fill_roles SET energy = 1 WHERE game_id = %s AND region = %s") # prepare for save
+#    elif ministry == 'poverty':
+#    sql = ("SELECT poverty FROM fill_roles WHERE game_id = %s AND region = %s")
+#    sqls = ("UPDATE fill_roles SET poverty = 1 WHERE game_id = %s AND region = %s")  
+#  elif ministry == 'inequality':
+#    sql = ("SELECT inequality FROM fill_roles WHERE game_id = %s AND region = %s")
+#    sqls = ("UPDATE fill_roles SET inequality = 1 WHERE game_id = %s AND region = %s")  
+#  elif ministry == 'food':
+#    sql = ("SELECT food FROM fill_roles WHERE game_id = %s AND region = %s")
+#    sqls = ("UPDATE fill_roles SET food = 1 WHERE game_id = %s AND region = %s")  
+#  elif ministry == 'future':
+#    sql = ("SELECT future FROM fill_roles WHERE game_id = %s AND region = %s")
+#    sqls = ("UPDATE fill_roles SET future = 1 WHERE game_id = %s AND region = %s")  
+#  elif ministry == 'empowerment':
+#    sql = ("SELECT empowerment FROM fill_roles WHERE game_id = %s AND region = %s")
+#    sqls = ("UPDATE fill_roles SET empowerment = 1 WHERE game_id = %s AND region = %s")  
+#    if row[ministry] == 1:
+#      return False
+# handle False, ie role no longer available in client code
+# we now know that the role is still available, so save it  
+#  conn = connect()
+#  with conn.cursor() as cur:
+#    cur.execute(sqls, (game_id, region))
+#    conn.commit()
+#    # now check if setting this role as taken alse means that ALL roles are taken
+    # and the region needs to be set as taken / no longer available
+#    sql = ("SELECT * FROM `fill_roles` WHERE `game_id` = %s AND `region`= %s")
+#    cur.execute(sql, (game_id, region))
+#    all_regs = cur.fetchone()
+#    if all_ministries_taken(all_regs):  # set region to not available
+#      sql = ("UPDATE fill_roles SET reg_avail = 0 WHERE game_id = %s AND region = %s")
+#      cur.execute(sql, (game_id, region))
+#      conn.commit()
+#  return True
+
+  def submit_role_click(self, **event_args):
+    global cid
+    which_ministy = self.minstry_clicked()
+    which_region = self.region_clicked()
     print('IN btn_submit_role_clicked')
-    print(my_reg)
+    save_ok = self.save_player_choice(cid, which_ministy, which_region)
+    if not save_ok:
+      alert("Unfortunately, someone else was quicker and took the role. Please choose another one.")
+        # TODO refresh ministries and regions with the correct choices still available
+    else:
+      wrx, which_region_long  = anvil.server.call('get_reg_long_names', which_region)
+      wmx, which_ministy_long = anvil.server.call('get_ministry_long', which_ministy)
+      your_game_id = game_id_entered + "-" + str(wrx) + str(wmx)
+      msgid = "\nYour personal Game ID is:\n" + your_game_id + "\nPlease make a note of it!"
+      msg = ("Congratulations, you have been confirmed as the Minister " + which_ministy_long + " in " + which_region_long + '.' + msgid)
+      alert(msg)
+      self.choose_role2.visible = False
+      self.card_info_round1.visible = True
+      self.card_for_plots.visible = True
+      self.region_label.text = which_region_long
+      temp = 'Minister ' + which_ministy_long
+      self.minister_label.text = temp
+      anvil.server.call('load_plots', which_region, which_ministy)
+      a = 2
+
 
  
 

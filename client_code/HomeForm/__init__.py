@@ -454,23 +454,27 @@ class HomeForm(HomeFormTemplate):
 
   def submit_role_click(self, **event_args):
     global cid
+    reg = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
+    tas = ['poverty', 'inequality', 'empowerment', 'food', 'energy', 'future']
     which_ministy = self.minstry_clicked()
     which_region = self.region_clicked()
     print('IN btn_submit_role_clicked')
     save_ok = self.save_player_choice(cid, which_ministy, which_region)
     if save_ok:
-      wrx, which_region_long  = anvil.server.call('get_reg_long_names', which_region)
-      wmx, which_ministy_long = anvil.server.call('get_ministry_long', which_ministy)
+      which_region_long  = anvil.server.call('get_reg_long_names', which_region)
+      wrx = reg.index(which_region)
+      which_ministy_long = anvil.server.call('get_ministry_long', which_ministy)
+      wmx = tas.index(which_ministy)
       your_game_id = cid + "-" + str(wrx) + str(wmx)
       msgid = "\nYour personal Game ID is:\n" + your_game_id + "\nPlease make a note of it!"
       msg = ("Congratulations, you have been confirmed as the Minister " + which_ministy_long + " in " + which_region_long + '.' + msgid)
       alert(msg)
       self.choose_role2.visible = False
-      self.card_info_round1.visible = True
-      self.card_for_plots.visible = True
-      self.region_label.text = which_region_long
+      self.cplot.visible = True
+      self.your_personal_gameID.text = 'Your personal Game ID is: ' + your_game_id
+      self.your_region.text = which_region_long
       temp = 'Minister ' + which_ministy_long
-      self.minister_label.text = temp
+      self.your_ta.text = temp
       anvil.server.call('load_plots', which_region, which_ministy)
       a = 2
 

@@ -25,6 +25,9 @@ color_scheme:
   - {color: '#666666', name: bw grey dark}
   - {color: '#959595', name: bw grey medium}
   - {color: '#E2E2E2', name: bw grey light}
+  - {color: '#D9365E', name: e4ared}
+  - {color: '#e8f4d5', name: e4agreen light}
+  - {color: '#ffedd3', name: e4aorange light}
   preset_groups:
   - name: Colour Scheme
     options:

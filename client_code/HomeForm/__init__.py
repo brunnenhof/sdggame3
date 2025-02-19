@@ -389,19 +389,20 @@ class HomeForm(HomeFormTemplate):
   def save_player_choice(self, game_id, ministry, region):
     print ('in save_player_choice: ' + region)
     print ('in save_player_choice: ' + ministry)
+    minis = [r['mini'] for r in app_tables.ministries.search()]
+    print(minis)
     row = app_tables.fill_roles.get(game_id=game_id, region=region)
     for r in row:
       print(r)
-      if r[0] == ministry:
-        if r[1]:
-          abc = app_tables.fill_roles.get(ministry=True)
+      col_name = r[0]
+      col_val = r[1]
+      if col_name in minis:
+        if col_val:
+          rowup = app_tables.fill_roles.get(game_id=game_id, region=region)
+          if col_name == 'future':
+            app_tables.fill_roles.get(game_id=game_id, region=region, future = False)
 #          row=app_tables.tableA.get(name="dave")
 #          besty=app_tables.tableB.get(bestfriend="ernie")
-          # update
-#          table: fill_roles
-#          column: ministry
-#          set: True
-
           # check is reg_avail
           if not reg_avail:
             pass

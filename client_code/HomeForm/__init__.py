@@ -442,8 +442,8 @@ class HomeForm(HomeFormTemplate):
   
   
   def save_player_choice(self, game_id, ministry, region):
-    print ('in save_player_choice: ' + region)
-    print ('in save_player_choice: ' + ministry)
+#    print ('in save_player_choice: ' + region)
+#    print ('in save_player_choice: ' + ministry)
     row = app_tables.fr2.get(gameID=game_id, region=region, ta=ministry)
     if row['free']:
       row['free'] = False
@@ -484,6 +484,10 @@ class HomeForm(HomeFormTemplate):
     self.label_5.visible = True
     self.set_minis_invisible()
     self.set_ministries_visible(cid, 'la')
+
+  def fill_fr2_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    pass
 
 
  

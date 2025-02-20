@@ -125,14 +125,22 @@ def make_list_from_str(npbhp):
     
 @anvil.server.callable
 def set_up_role_assignments(game_id, npbhp, regions):
-  app_tables.fill_roles.delete_all_rows()
-  print (game_id)
-  print (npbhp)
-  for r in regions:
-    if r not in npbhp:
-      app_tables.fill_roles.add_row(empowerment=True, food=True, reg_avail=True, region=r, energy=True, game_id=game_id, poverty=True, inequality=True, future=True)        
-    else:
-      app_tables.fill_roles.add_row(empowerment=False, food=False, reg_avail=False, region=r, energy=False, game_id=game_id, poverty=False, inequality=False, future=False)      
+  app_tables.fr2.delete_all_rows()
+#  print (game_id)
+#  print (npbhp)
+  reg = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
+  tas = ['poverty', 'inequality', 'empowerment', 'food', 'energy', 'future']
+  for i in reg:
+    for j in tas:
+      if i in npbhp:
+#        print(i, ' ' + j + ': False')
+        free = False
+      else:
+#        print(i, ' ' + j + ': True')
+        free = True
+      app_tables.fr2.add_row(free=free, gameID=game_id, region=i, ta=j)
+
+
 
 def get_sql(table, col):
   if table == 'regions':
@@ -148,7 +156,7 @@ def set_up_game_db(runde, cid, npbhp):
   if runde == 1:
     app_tables.games.delete_all_rows()
   k = runde
-  print ('in set_up_game_db')
+#  print ('in set_up_game_db')
   if not npbhp == '[]':
 #    print(npbhp)
     regions = get_sql('regions', 'abbreviation')

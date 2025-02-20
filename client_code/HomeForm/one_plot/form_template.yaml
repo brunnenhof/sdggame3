@@ -1,0 +1,36 @@
+components:
+- layout_properties: {grid_position: 'QCOFBC,JYNNHI'}
+  name: one_plot_title
+  properties:
+    bold: true
+    font_size: 16
+    spacing:
+      padding: ['4', null, '4', null]
+    spacing_above: none
+    spacing_below: none
+  type: Label
+- layout_properties: {grid_position: 'XTIFBO,EBKFEH'}
+  name: one_plot_subtitle
+  properties:
+    italic: true
+    spacing:
+      padding: ['4', null, '4', null]
+    spacing_above: none
+    spacing_below: none
+  type: Label
+- layout_properties: {grid_position: 'JWBYRC,JLTJKE'}
+  name: one_plot_graph
+  properties: {height: 316}
+  type: Plot
+- layout_properties: {grid_position: 'LOTZGZ,ZOJSRX'}
+  name: one_plot_caption
+  properties:
+    align: right
+    font_size: 10
+    spacing:
+      padding: ['4', null, null, null]
+    spacing_above: none
+    spacing_below: none
+  type: Label
+container: {type: ColumnPanel}
+is_package: true

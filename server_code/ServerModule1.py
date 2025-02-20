@@ -241,10 +241,10 @@ def load_plots(region, single_ta):
   my_time_formatted = time.strftime("%a %d %b %G, %H:%M", my_time)
   foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
   cap = foot1 + ' on ' + my_time_formatted
-  mdf = get_play_25()
-  num_rows, num_cols = mdf.shape
+#  mdf = get_play_25()
+#  num_rows, num_cols = mdf.shape
 # drop first 10 years from 1980 to 1990 to get the spin-up wrinkles out
-  mdf = mdf[321:num_rows, :]
+#  mdf = mdf[321:num_rows, :]
   regidx, long, farbe = get_reg_x_name_colx(region)
   print(region + '  ' + long)
   print('    ' + single_ta)
@@ -252,8 +252,8 @@ def load_plots(region, single_ta):
   vars_info_l = get_all_vars_for_ta(single_ta)
   print('IN load_plots')
   print(vars_info_l)
-  title = 'test title'
-  sub = 'test subtile'
+  title = 'test title ' + str(random.randint(100,999))
+  sub = 'test subtile ' + str(random.randint(100,999))
   fig = 'test fig'
   return title, sub, fig, cap
 #  for i in range(len(vars_info_l)):

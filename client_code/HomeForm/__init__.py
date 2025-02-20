@@ -475,7 +475,7 @@ class HomeForm(HomeFormTemplate):
       self.your_region.text = which_region_long
       temp = 'Minister ' + which_ministy_long
       self.your_ta.text = temp
-      anvil.server.call('load_plots', which_region, which_ministy)
+      title, sub, fig, cap = anvil.server.call('load_plots', which_region, which_ministy)
       a = 2
 
   def rb_la2_clicked(self, **event_args):

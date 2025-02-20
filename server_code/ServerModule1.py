@@ -8,6 +8,8 @@ import csv
 import datetime
 import random
 import time
+import matplotlib.pyplot as plt
+import anvil.mpl_util
 
 @anvil.server.callable
 def upload_sdg_var_change(data):
@@ -233,7 +235,30 @@ def get_reg_x_name_colx(region):
 def get_all_vars_for_ta(ta):
   vars = [r['vensim_name'] for r in app_tables.sdg_vars.search(ta=ta)]
   return vars
+
+def generate_mpl():
+  fig = plt.figure()
+  x = [1,2,3]  
+  y = [2,4,1]  
+  plt.plot(x, y)  
+  plt.xlabel('x - axis')  
+  plt.ylabel('y - axis')  
+  plt.title('My first graph!')  
+  fig.tight_layout(pad=15)
+  return anvil.mpl_util.plot_image()
   
+@anvil.server.callable
+def fake_it_server():
+    fig = generate_mpl()
+    print(type(fig))
+    full_dict = (
+     {'title': 'Joe', 'subtitle': 'Latest tech report', 'fig' : fig, 'cap': 'caption'},
+     {'title': 'Joe Blow', 'subtitle': 'Grandpa', 'fig' : fig,  'cap': 'caption 2'},
+     {'title': 'Joe Blow jr', 'subtitle': 'Son', 'fig' : fig,  'cap': 'caption 23'},
+     {'title': 'Joe Blow jr III', 'subtitle': 'Son of a b...', 'fig' : fig,  'cap': 'caption 234'},
+   )
+    return full_dict
+
 @anvil.server.callable
 def load_plots(region, single_ta):
   # region as 'nn' single ta as 'poverty', etc
@@ -250,7 +275,7 @@ def load_plots(region, single_ta):
   print('    ' + single_ta)
 # get the names of all vars in the current TA / Ministry
   vars_info_l = get_all_vars_for_ta(single_ta)
-  print('IN load_plots')
+  print('IN load_plots, vars_info_l')
   print(vars_info_l)
   title = 'test title ' + str(random.randint(100,999))
   sub = 'test subtile ' + str(random.randint(100,999))

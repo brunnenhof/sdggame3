@@ -453,14 +453,17 @@ class HomeForm(HomeFormTemplate):
     return True
 
   def fake_it(self, **event_args):
+    fd = anvil.server.call('fake_it_server')
+    return fd
 #       self.repeating_panel.items = (
-    full_dict = (
-     {'title': 'Joe', 'subtitle': 'Latest tech report', 'cap': 'caption'},
-     {'title': 'Joe Blow', 'subtitle': 'Grandpa', 'cap': 'caption 2'},
-     {'title': 'Joe Blow jr', 'subtitle': 'Son', 'cap': 'caption 23'},
-     {'title': 'Joe Blow jr III', 'subtitle': 'Son of a b...', 'cap': 'caption 234'},
-   )
-    return full_dict
+    
+#    full_dict = (
+#     {'title': 'Joe', 'subtitle': 'Latest tech report', 'cap': 'caption'},
+#     {'title': 'Joe Blow', 'subtitle': 'Grandpa', 'cap': 'caption 2'},
+#     {'title': 'Joe Blow jr', 'subtitle': 'Son', 'cap': 'caption 23'},
+#     {'title': 'Joe Blow jr III', 'subtitle': 'Son of a b...', 'cap': 'caption 234'},
+#   )
+#    return full_dict
 #    full_dict = {}
     
   def submit_role_click(self, **event_args):
@@ -469,7 +472,7 @@ class HomeForm(HomeFormTemplate):
     tas = ['poverty', 'inequality', 'empowerment', 'food', 'energy', 'future']
     which_ministy = self.minstry_clicked()
     which_region = self.region_clicked()
-    print('IN btn_submit_role_clicked')
+#    print('IN btn_submit_role_clicked')
     save_ok = self.save_player_choice(cid, which_ministy, which_region)
     if save_ok:
       which_region_long  = anvil.server.call('get_reg_long_names', which_region)
@@ -488,7 +491,8 @@ class HomeForm(HomeFormTemplate):
       self.your_ta.text = temp
       title, sub, fig, cap = anvil.server.call('load_plots', which_region, which_ministy)
       self.plot_card.visible = True
-      slots = self.fake_it()
+      slots = anvil.server.call('fake_it_server')
+#      slots = self.fake_it()
       self.repeating_plots_panel.items = slots
 #      self.repeating_plots_panel.visible = True
       
@@ -496,7 +500,7 @@ class HomeForm(HomeFormTemplate):
 
   def rb_la2_clicked(self, **event_args):
     global cid
-    print ('in la2 btn ' + cid)
+#    print ('in la2 btn ' + cid)
     self.label_5.visible = True
     self.set_minis_invisible()
     self.set_ministries_visible(cid, 'la')

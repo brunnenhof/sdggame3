@@ -452,6 +452,17 @@ class HomeForm(HomeFormTemplate):
       return False
     return True
 
+  def fake_it(self, **event_args):
+#       self.repeating_panel.items = (
+    full_dict = (
+     {'title': 'Joe', 'subtitle': 'Latest tech report', 'cap': 'caption'},
+     {'title': 'Joe Blow', 'subtitle': 'Grandpa', 'cap': 'caption 2'},
+     {'title': 'Joe Blow jr', 'subtitle': 'Son', 'cap': 'caption 23'},
+     {'title': 'Joe Blow jr III', 'subtitle': 'Son of a b...', 'cap': 'caption 234'},
+   )
+    return full_dict
+#    full_dict = {}
+    
   def submit_role_click(self, **event_args):
     global cid
     reg = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
@@ -476,6 +487,11 @@ class HomeForm(HomeFormTemplate):
       temp = 'Minister ' + which_ministy_long
       self.your_ta.text = temp
       title, sub, fig, cap = anvil.server.call('load_plots', which_region, which_ministy)
+      self.plot_card.visible = True
+      slots = self.fake_it()
+      self.repeating_plots_panel.items = slots
+#      self.repeating_plots_panel.visible = True
+      
       a = 2
 
   def rb_la2_clicked(self, **event_args):

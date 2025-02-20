@@ -12,4 +12,8 @@ class one_plot(one_plotTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    # Any code you write here will run before the form opens.
+    # Set the Labels to have fields from the `item` dictionary,
+    # which is one entry in the RepeatingPanel's `items` list:
+    self.one_plot_title.text = self.item['title']
+    self.one_plot_subtitle.text = self.item['subtitle']
+    self.one_plot_caption.text = self.item['cap']

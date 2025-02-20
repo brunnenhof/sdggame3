@@ -489,9 +489,9 @@ class HomeForm(HomeFormTemplate):
       self.your_region.text = which_region_long
       temp = 'Minister ' + which_ministy_long
       self.your_ta.text = temp
-      title, sub, fig, cap = anvil.server.call('load_plots', which_region, which_ministy)
+#      title, sub, fig, cap = anvil.server.call('load_plots', which_region, which_ministy)
       self.plot_card.visible = True
-      slots = anvil.server.call('fake_it_server')
+      slots = anvil.server.call('fake_it_server', which_region, which_ministy)
 #      slots = self.fake_it()
       self.repeating_plots_panel.items = slots
 #      self.repeating_plots_panel.visible = True

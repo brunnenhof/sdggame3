@@ -10,6 +10,7 @@ import random
 import time
 import matplotlib.pyplot as plt
 import anvil.mpl_util
+import string
 
 @anvil.server.callable
 def upload_sdg_var_change(data):
@@ -233,8 +234,10 @@ def get_reg_x_name_colx(region):
   return regix, long, farbe
 
 def get_all_vars_for_ta(ta):
-  vars = [r['vensim_name'] for r in app_tables.sdg_vars.search(ta=ta)]
-  return vars
+  ta_cap = ta.capitalize()
+  v_row = app_tables.sdg_vars.search(ta=ta_cap)
+  vars = [r['vensim_name'] for r in app_tables.sdg_vars.search(ta=ta_cap)]
+  return vars, v_row
 
 def generate_mpl():
   fig = plt.figure()
@@ -246,9 +249,105 @@ def generate_mpl():
   plt.title('My first graph!')  
   fig.tight_layout(pad=15)
   return anvil.mpl_util.plot_image()
+
+def read_fcol_in_mdf():
+  global fcol_in_mdf
+  
   
 @anvil.server.callable
-def fake_it_server():
+def fake_it_server(region, single_ta):
+  # region as 'nn' single ta as 'poverty', etc
+  my_time = time.localtime()
+  my_time_formatted = time.strftime("%a %d %b %G", my_time)
+  foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
+  cap = foot1 + ' on ' + my_time_formatted
+#  mdf = get_play_25()
+#  num_rows, num_cols = mdf.shape
+# drop first 10 years from 1980 to 1990 to get the spin-up wrinkles out
+#  mdf = mdf[321:num_rows, :]
+  regidx, long, farbe = get_reg_x_name_colx(region)
+  print(region + '  ' + long)
+  print('    ' + single_ta)
+# get the names of all vars in the current TA / Ministry
+  vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
+  for var_row in vars_info_rows:
+    var_l = var_row['vensim_name']
+    print('IN fake_it_server, var_l: '+str(var_l))
+    var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
+    sdg_name = var_row['sdg_nbr']
+    print('IN fake_it_server, sdg_name: '+str(sdg_name))
+    sdg_idx = var_row['id']
+    print('IN fake_it_server, sdg_idx: '+str(sdg_idx))
+    varx = var_row['id']
+    print('IN fake_it_server, varx: '+str(varx))
+    if varx in[18, 20, 34]: # global variable  
+      idx = fcol_in_mdf[var_l] # find location of variable in mdf
+    else:
+      idx = fcol_in_mdf[var_l] # find location of variable in mdf
+
+    fig = generate_mpl()
+    print(type(fig))
+    full_dict = (
+      {'title': 'Joe', 'subtitle': 'Latest tech report', 'fig' : fig, 'cap': 'caption'},
+      {'title': 'Joe Blow', 'subtitle': 'Grandpa', 'fig' : fig,  'cap': 'caption 2'},
+      {'title': 'Joe Blow jr', 'subtitle': 'Son', 'fig' : fig,  'cap': 'caption 23'},
+      {'title': 'Joe Blow jr III', 'subtitle': 'Son of a b...', 'fig' : fig,  'cap': 'caption 234'},
+    )
+#  
+#    sdg_idx = vars_info_l.iloc[i,0]
+#    varx_list = vars_df.index[vars_df['modelvariable'] == var_l].tolist()
+#    varx = varx_list[0] # make an integer
+#    print('        ', var_l, ' ', str(varx))
+#    if varx in[18, 20, 34]: # global variable
+#        var_l = var_l.replace(" ", "_")
+#        idx = fcol_in_mdf[var_l]
+#        dfv = mdf[:, idx]
+#        dfv = dfv[0:end_rowi-1]
+    # Define a dictionary containing Students data
+#        dfvpd = pd.DataFrame(dfv, columns=['glob'])
+#        dfvpd = dfvpd * vars_df.iloc[varx, 12]
+#        yr = np.arange(1990, end_yr, 0.03125)
+#        dfvpd.insert(loc=0, column='yr', value=yr)
+#        yr_py_int = np.int_(yr_py)
+#        pvt = np.full((lx, 1), np.nan)  # placeholder for year points
+#        for i in range(lx):
+#            idx = max(1, yr_py_int.item(i))
+#            pvt[i] = dfvpd.iloc[idx-1, 1]
+#            fn = folder + region + '-' + str(varx) + '-' + single_ta + '.png'
+#            plot_glob_ta_pol(dfvpd, pvt, varx, fn)
+#    else: # regional variable
+    # vensim uses underscores not whitespace in variable name
+#        var_l = var_l.replace(" ", "_")
+        # find location of variable in mdf
+#        idx = fcol_in_mdf[var_l]
+        # get the slice with all regional data for the variable
+#        dfv = mdf[:, idx:idx + 10]
+        # get the slice of rows
+#        dfv = dfv[0:end_rowi - 1, :]
+        # make a pd dataframe
+#        dfvpd = pd.DataFrame(dfv, columns=my_lab)
+        # scale
+#        dfvpd = dfvpd * vars_df.iloc[varx, 12]
+        # slice out the correct region column#
+#        dfvpd = pd.DataFrame(dfvpd.iloc[:, regidx])
+        # make a colum with correct time data
+#        yr = np.arange(1990, end_yr, 0.03125)
+        # put the time in slot 0
+#        dfvpd.insert(loc=0, column='yr', value=yr)
+        # fig = px.line(d3,x='yr',y='cn')
+        # fig.show()
+        # prepare the data for the years with thick dots
+#        yr_py_int = np.int_(yr_py)
+#        pvt = np.full((lx, 1), np.nan)  # placeholder for year points
+#        for i in range(lx):
+#            idx = max(1, yr_py_int.item(i))
+#            pvt[i] = dfvpd.iloc[idx-1, 1]
+        # prepare the correct filename
+#        lfn = region + '-' + str(varx) + '-' + single_ta + '.png'
+#        fn = os.path.join(cwd, folder, lfn)
+        # send for plotting
+#        plot_each_reg_ta_pol(dfvpd, pvt, varx, fn)
+#        plot_each_reg_ta_pol2(dfvpd, pvt, varx, fn)
     fig = generate_mpl()
     print(type(fig))
     full_dict = (
@@ -263,7 +362,7 @@ def fake_it_server():
 def load_plots(region, single_ta):
   # region as 'nn' single ta as 'poverty', etc
   my_time = time.localtime()
-  my_time_formatted = time.strftime("%a %d %b %G, %H:%M", my_time)
+  my_time_formatted = time.strftime("%a %d %b %G", my_time)
   foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
   cap = foot1 + ' on ' + my_time_formatted
 #  mdf = get_play_25()

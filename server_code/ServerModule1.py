@@ -273,6 +273,16 @@ def read_mdf25():
     mdf = np.array(mdf_read)
   return mdf
 
+def make_png(df, row):
+  fig = plt.figure()
+  x = df[:, 0]
+  y = df[:, 1]  
+  plt.plot(x, y)  
+  plt.xlabel('Years')  
+  plt.ylabel('')  
+  fig.tight_layout(pad=15)
+  return anvil.mpl_util.plot_image()
+  
 @anvil.server.callable
 def fake_it_server(region, single_ta):
   # region as 'nn' single ta as 'poverty', etc
@@ -291,24 +301,31 @@ def fake_it_server(region, single_ta):
   print('    ' + single_ta)
 # get the names of all vars in the current TA / Ministry
   vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
+  plot_dict = dict()
   for var_row in vars_info_rows:
     var_l = var_row['vensim_name']
-    print('IN fake_it_server, var_l: '+str(var_l))
+#    print('IN fake_it_server, var_l: '+str(var_l))
     var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
     sdg_name = var_row['sdg_nbr']
-    print('IN fake_it_server, sdg_name: '+str(sdg_name))
+#    print('IN fake_it_server, sdg_name: '+str(sdg_name))
     sdg_idx = var_row['id']
-    print('IN fake_it_server, sdg_idx: '+str(sdg_idx))
+#    print('IN fake_it_server, sdg_idx: '+str(sdg_idx))
     varx = var_row['id']
-    print('IN fake_it_server, varx: '+str(varx))
+#    print('IN fake_it_server, varx: '+str(varx))
     if varx in[18, 20, 34]: # global variable  
       idx = fcol_in_mdf[var_l] # find location of variable in mdf
     else:
       idx = fcol_in_mdf[var_l] # find location of variable in mdf
+
+    row = get_row_from_varl(var_l)
     print('IN fake_it_server, idx: ' + str(idx) + ' varl: ' + var_l)
-    dfv = mdf[:, idx]
-    print ('IN fake_it_server, dfv: ' )
-    print (dfv)
+    dfv = mdf[:, [0, idx]]
+    cur_fig = make_png(dfv, row)
+    cur_title =
+    cur_sub =
+    cur_cap =
+    
+#    print ('IN fake_it_server, dfv: ' )
 
 #    fig = generate_mpl()
 #    print(type(fig))

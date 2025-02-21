@@ -268,36 +268,25 @@ def read_fcol_in_mdf():
 
 def read_mdf():
   global mdf
-  with open(data_files['mdf2100.npy']) as ff:
-    mdf = np.load(ff)
+  with open(data_files['mdf_data.json']) as ff:
+    mdf_read = json.load(ff)
+    mdf = np.array(mdf_read)
   return mdf
 
-def read_d_table():
-  global d_table
-  with open(data_files['d_table.pkl']) as ff:
-    d_table = pickle.load(ff)
-  return d_table
-
-def read_a_file():
-  with open('/tmp/my-file.txt', 'r') as f:
-    contents = f.read()
-    print(contents)
-    
 @anvil.server.callable
 def fake_it_server(region, single_ta):
   # region as 'nn' single ta as 'poverty', etc
   fcol_in_mdf = read_fcol_in_mdf()
-  d_table = read_d_table()
-  print (d_table)
-#  mdf = read_mdf()
+#  d_table = read_d_table()
+#  print (d_table)
+  mdf = read_mdf()
+  num_rows, num_cols = mdf.shape
+# drop first 10 years from 1980 to 1990 to get the spin-up wrinkles out
+  mdf = mdf[321:num_rows, :]
   my_time = time.localtime()
   my_time_formatted = time.strftime("%a %d %b %G", my_time)
   foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
   cap = foot1 + ' on ' + my_time_formatted
-#  mdf = get_play_25()
-#  num_rows, num_cols = mdf.shape
-# drop first 10 years from 1980 to 1990 to get the spin-up wrinkles out
-#  mdf = mdf[321:num_rows, :]
   regidx, long, farbe = get_reg_x_name_colx(region)
   print(region + '  ' + long)
   print('    ' + single_ta)

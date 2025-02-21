@@ -13,6 +13,7 @@ import time
 import matplotlib.pyplot as plt
 import anvil.mpl_util
 import string
+import numpy as np
 
 @anvil.server.callable
 def upload_sdg_var_change(data):
@@ -252,13 +253,22 @@ def generate_mpl():
   fig.tight_layout(pad=15)
   return anvil.mpl_util.plot_image()
 
+def read_ch():
+  global ch
+  with open(data_files['ch.npy']) as ff:
+    ch = np.load(ff)
+  return ch
+  
 def read_fcol_in_mdf():
   global fcol_in_mdf
-  
-  
+  with open(data_files['fcol_in_mdf.json']) as ff:
+    fcol_in_mdf = json.load(ff)
+  return fcol_in_mdf
+
 @anvil.server.callable
 def fake_it_server(region, single_ta):
   # region as 'nn' single ta as 'poverty', etc
+  fcol_in_mdf = read_fcol_in_mdf()
   my_time = time.localtime()
   my_time_formatted = time.strftime("%a %d %b %G", my_time)
   foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
@@ -286,6 +296,7 @@ def fake_it_server(region, single_ta):
       idx = fcol_in_mdf[var_l] # find location of variable in mdf
     else:
       idx = fcol_in_mdf[var_l] # find location of variable in mdf
+    print('IN fake_it_server, idx: ' + str(idx) + ' varl: ' + var_l)
 
     fig = generate_mpl()
     print(type(fig))

@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import anvil.mpl_util
 import string
 import numpy as np
+import pickle
 
 @anvil.server.callable
 def upload_sdg_var_change(data):
@@ -265,10 +266,30 @@ def read_fcol_in_mdf():
     fcol_in_mdf = json.load(ff)
   return fcol_in_mdf
 
+def read_mdf():
+  global mdf
+  with open(data_files['mdf2100.npy']) as ff:
+    mdf = np.load(ff)
+  return mdf
+
+def read_d_table():
+  global d_table
+  with open(data_files['d_table.pkl']) as ff:
+    d_table = pickle.load(ff)
+  return d_table
+
+def read_a_file():
+  with open('/tmp/my-file.txt', 'r') as f:
+    contents = f.read()
+    print(contents)
+    
 @anvil.server.callable
 def fake_it_server(region, single_ta):
   # region as 'nn' single ta as 'poverty', etc
   fcol_in_mdf = read_fcol_in_mdf()
+  d_table = read_d_table()
+  print (d_table)
+#  mdf = read_mdf()
   my_time = time.localtime()
   my_time_formatted = time.strftime("%a %d %b %G", my_time)
   foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
@@ -297,15 +318,18 @@ def fake_it_server(region, single_ta):
     else:
       idx = fcol_in_mdf[var_l] # find location of variable in mdf
     print('IN fake_it_server, idx: ' + str(idx) + ' varl: ' + var_l)
+    dfv = mdf[:, idx]
+    print ('IN fake_it_server, dfv: ' )
+    print (dfv)
 
-    fig = generate_mpl()
-    print(type(fig))
-    full_dict = (
-      {'title': 'Joe', 'subtitle': 'Latest tech report', 'fig' : fig, 'cap': 'caption'},
-      {'title': 'Joe Blow', 'subtitle': 'Grandpa', 'fig' : fig,  'cap': 'caption 2'},
-      {'title': 'Joe Blow jr', 'subtitle': 'Son', 'fig' : fig,  'cap': 'caption 23'},
-      {'title': 'Joe Blow jr III', 'subtitle': 'Son of a b...', 'fig' : fig,  'cap': 'caption 234'},
-    )
+#    fig = generate_mpl()
+#    print(type(fig))
+#    full_dict = (
+#      {'title': 'Joe', 'subtitle': 'Latest tech report', 'fig' : fig, 'cap': 'caption'},
+#      {'title': 'Joe Blow', 'subtitle': 'Grandpa', 'fig' : fig,  'cap': 'caption 2'},
+#      {'title': 'Joe Blow jr', 'subtitle': 'Son', 'fig' : fig,  'cap': 'caption 23'},
+#      {'title': 'Joe Blow jr III', 'subtitle': 'Son of a b...', 'fig' : fig,  'cap': 'caption 234'},
+#    )
 #  
 #    sdg_idx = vars_info_l.iloc[i,0]
 #    varx_list = vars_df.index[vars_df['modelvariable'] == var_l].tolist()

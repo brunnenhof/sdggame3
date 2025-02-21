@@ -266,9 +266,9 @@ def read_fcol_in_mdf():
     fcol_in_mdf = json.load(ff)
   return fcol_in_mdf
 
-def read_mdf():
+def read_mdf25():
   global mdf
-  with open(data_files['mdf_data.json']) as ff:
+  with open(data_files['mdf25.json']) as ff:
     mdf_read = json.load(ff)
     mdf = np.array(mdf_read)
   return mdf
@@ -279,10 +279,9 @@ def fake_it_server(region, single_ta):
   fcol_in_mdf = read_fcol_in_mdf()
 #  d_table = read_d_table()
 #  print (d_table)
-  mdf = read_mdf()
+  mdf = read_mdf25()
   num_rows, num_cols = mdf.shape
 # drop first 10 years from 1980 to 1990 to get the spin-up wrinkles out
-  mdf = mdf[321:num_rows, :]
   my_time = time.localtime()
   my_time_formatted = time.strftime("%a %d %b %G", my_time)
   foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'

@@ -18,10 +18,17 @@ components:
     spacing_above: none
     spacing_below: none
   type: Label
-- data_bindings: []
-  layout_properties: {grid_position: 'QVBBTD,PIYPEA'}
+- layout_properties: {grid_position: 'DCSBVV,QPDCNS'}
+  name: one_plot_units
+  properties:
+    spacing:
+      padding: ['4', null, '4', null]
+    spacing_above: none
+    spacing_below: none
+  type: Label
+- layout_properties: {grid_position: 'WASAIF,LBIRKY'}
   name: one_plot_img
-  properties: {border: '#FFA421', display_mode: fill_width}
+  properties: {display_mode: original_size, height: 61}
   type: Image
 - layout_properties: {grid_position: 'LOTZGZ,ZOJSRX'}
   name: one_plot_caption

@@ -283,6 +283,7 @@ def make_png(df, row):
   fig.tight_layout(pad=15)
   return anvil.mpl_util.plot_image()
   
+@anvil.server.background_task
 @anvil.server.callable
 def fake_it_server(region, single_ta):
   # region as 'nn' single ta as 'poverty', etc
@@ -301,7 +302,7 @@ def fake_it_server(region, single_ta):
   print('    ' + single_ta)
 # get the names of all vars in the current TA / Ministry
   vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
-  plot_dict = dict()
+  plot_list = []
   for var_row in vars_info_rows:
     var_l = var_row['vensim_name']
 #    print('IN fake_it_server, var_l: '+str(var_l))
@@ -317,13 +318,17 @@ def fake_it_server(region, single_ta):
     else:
       idx = fcol_in_mdf[var_l] # find location of variable in mdf
 
-    row = get_row_from_varl(var_l)
+#    row = get_row_from_varl(var_l)
     print('IN fake_it_server, idx: ' + str(idx) + ' varl: ' + var_l)
     dfv = mdf[:, [0, idx]]
-    cur_fig = make_png(dfv, row)
-    cur_title =
-    cur_sub =
-    cur_cap =
+    cur_fig = make_png(dfv, var_row)
+    cur_title = 'ETI-' + str(int(var_row['sdg_nbr'])) + ': ' +var_row['sdg']
+    cur_sub = var_row['indicator']
+    cur_unit = var_row['subtitle']
+    cur_cap = cap
+    fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cur_cap, 'unit' : cur_unit}
+    plot_list.append(fdz)
+  return plot_list
     
 #    print ('IN fake_it_server, dfv: ' )
 
@@ -390,15 +395,15 @@ def fake_it_server(region, single_ta):
         # send for plotting
 #        plot_each_reg_ta_pol(dfvpd, pvt, varx, fn)
 #        plot_each_reg_ta_pol2(dfvpd, pvt, varx, fn)
-    fig = generate_mpl()
-    print(type(fig))
-    full_dict = (
-     {'title': 'Joe', 'subtitle': 'Latest tech report', 'fig' : fig, 'cap': 'caption'},
-     {'title': 'Joe Blow', 'subtitle': 'Grandpa', 'fig' : fig,  'cap': 'caption 2'},
-     {'title': 'Joe Blow jr', 'subtitle': 'Son', 'fig' : fig,  'cap': 'caption 23'},
-     {'title': 'Joe Blow jr III', 'subtitle': 'Son of a b...', 'fig' : fig,  'cap': 'caption 234'},
-   )
-    return full_dict
+#    fig = generate_mpl()
+#    print(type(fig))
+#    full_dict = (
+#     {'title': 'Joe', 'subtitle': 'Latest tech report', 'fig' : fig, 'cap': 'caption'},
+#     {'title': 'Joe Blow', 'subtitle': 'Grandpa', 'fig' : fig,  'cap': 'caption 2'},
+#     {'title': 'Joe Blow jr', 'subtitle': 'Son', 'fig' : fig,  'cap': 'caption 23'},
+#     {'title': 'Joe Blow jr III', 'subtitle': 'Son of a b...', 'fig' : fig,  'cap': 'caption 234'},
+#   )
+#    return full_dict
 
 @anvil.server.callable
 def load_plots(region, single_ta):

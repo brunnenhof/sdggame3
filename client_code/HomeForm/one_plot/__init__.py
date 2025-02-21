@@ -15,5 +15,6 @@ class one_plot(one_plotTemplate):
     # which is one entry in the RepeatingPanel's `items` list:
     self.one_plot_title.text = self.item['title']
     self.one_plot_subtitle.text = self.item['subtitle']
+    self.one_plot_units.text = self.item['unit']
     self.one_plot_caption.text = self.item['cap']
     self.one_plot_img.source = self.item['fig']

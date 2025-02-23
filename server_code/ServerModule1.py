@@ -275,8 +275,15 @@ def read_mdf25():
 
 def pick(ys, x, y):
   o = []
+  print(type(x))
+  print(x)
   for i in range(0, len(ys)):
-    idx = np.where(x==i)[0][0]
+    idx = np.where(x==i)[0]
+    print(type(idx))
+    print(idx)
+    print(type(y))
+    lo = y[idx]
+    print(lo)
     lo = y.iloc[idx]
     o.append(lo)
   return o

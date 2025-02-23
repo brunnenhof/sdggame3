@@ -298,91 +298,6 @@ def pick(ys, x, y):
             o.append(np.nan)
     return o
 
-  
-def make_pngOLD(df, row, pyidx, end_yr):
-  fig = plt.figure()
-  x = df[:, 0]
-  y = df[:, 1]  
-  data_max = y.max() * 1.1
-  data_min = y.min()
-  plot_max = row['ymax']
-  plot_min = row['ymin']
-  ymin = min(data_min, plot_min)
-  ymax = max(data_max, plot_max)
-  if ymin > 0:
-    ymin = 0
-  if ymax < 0:
-    ymax = 0
-  if int(row['id']) in [26, 4]:  # Labour share of GDP | life expectancy
-    ymin = plot_min # red min
-  if int(row['id']) in [25,31]: # population | Nitrogen use
-    ymax = data_max
-  dt = 1 / 32  # = 0.03125
-  abc = app_tables.regions.get(pyidx=pyidx)
-  my_colhex = abc['colhex']
-  my_lab = abc['name']
-  plt.plot(x, y, color=my_colhex, linewidth=2.5, label=my_lab)
-  # now plot the thick dots
-  # get the year picks
-  runto_row = app_tables.runto.get(end_year=end_yr)
-  yr_picks_str = runto_row['yr_picks']
-  yps = yr_picks_str.replace("'", "")
-  yr_picks = yps.split(' ')
-  yps_int = []
-  for i in range(0,len(yr_picks)):
-    yps_int.append(int(yr_picks[i]))
-  print ('IN make_png yr_picks: ')
-  pvt_len = len(yr_picks)
-  ys = pick(yps_int, x, y)
-  plt.scatter(yr_picks, ys, color = my_colhex, s=66, alpha=0.5)
-  if int(row['lowerbetter']) == 1:
-    grn_min = row['ymin'] # 8
-    grn_max = row['green'] # vars_df.iloc[varx, 4]
-    red_min = row['red'] #vars_df.iloc[varx, 5]
-    if int(row['id']) == 16: # Emissions per person
-      red_max = max(data_max, 8)
-      ymax = red_max
-    else:
-      red_max = row['ymax'] # vars_df.iloc[varx, 9]
-    if red_max < ymax:
-      red_max = ymax
-    yel_min = grn_max
-    yel_max = red_min
-  else:
-    red_min = row['ymin'] # vars_df.iloc[varx, 8]
-    if int(row['id']) == 9: # Access to electricity
-      if red_min > ymin:
-        ymin = red_min
-    red_max = row['red'] # vars_df.iloc[varx, 5]
-    grn_min = row['green'] #vars_df.iloc[varx, 4]
-    grn_max = row['ymax'] #vars_df.iloc[varx, 9]
-    yel_min = red_max
-    yel_max = grn_min
-
-    plt.ylim(ymin, ymax)
-    xmin = 1990
-    xmax = end_yr
-    if not int(row['id']) == 25: # population
-        opa = 0.075
-        plt.fill_betweenx(y=[grn_min, grn_max], x1=xmin, x2=xmax, color='green', alpha=opa)
-        plt.fill_betweenx(y=[red_min, red_max], x1=xmin, x2=xmax, color='red', alpha=opa)
-        plt.fill_betweenx(y=[yel_min, yel_max], x1=xmin, x2=xmax, color='yellow', alpha=opa)
-
-#    plt.figtext(0.88, 0.035, 'ug ' + cap, ha='right', fontsize=8)
-    plt.grid(color='gainsboro', linestyle='-', linewidth=.5)
-        # leg = plt.legend()
-        # leg.get_frame().set_alpha(.8)
-    plt.box(False)
-
-#  plt.plot(x, y)  
-#  plt.xlabel('Years')  
-#  plt.ylabel('')  
-#  fig.tight_layout(pad=15)
-  return anvil.mpl_util.plot_image()
-
-#    plt.xticks(yr_points)
-#    plt.subplots_adjust(top=0.83, bottom=0.15)
-
 def make_png(df, row, pyidx, end_yr, my_title):
     fig, ax = plt.subplots()
     pct = row['pct']
@@ -406,7 +321,6 @@ def make_png(df, row, pyidx, end_yr, my_title):
         ymin = plot_min
         ymax = plot_max
 
-    dt = 1 / 32  # = 0.03125
     abc = app_tables.regions.get(pyidx=pyidx)
 #    sql = ("SELECT * FROM regions WHERE pyidx = %s")
 #    conn = connect()
@@ -433,11 +347,9 @@ def make_png(df, row, pyidx, end_yr, my_title):
     for i in range(0, len(yr_picks)):
         yps_int.append(int(yr_picks[i]))
 #    print('IN make_png yr_picks: ')
-    pvt_len = len(yr_picks)
     ys = pick(yps_int, x, y)
     plt.scatter(x, ys, color=my_colhex, s=300, alpha=0.55)
 #    plt.show()
-
     if int(row['lowerbetter']) == 1:
         grn_min = row['ymin']  # 8
         grn_max = row['green']  # vars_df.iloc[varx, 4]
@@ -481,49 +393,6 @@ def make_png(df, row, pyidx, end_yr, my_title):
   
 @anvil.server.background_task
 @anvil.server.callable
-def fake_it_serverOLD(region, single_ta):
-  # region as 'nn' single ta as 'poverty', etc
-  print(region)
-  regrow = app_tables.regions.get(abbreviation=region)
-  print (regrow)
-  regidx = int(regrow['pyidx'])
-  fcol_in_mdf = read_fcol_in_mdf()
-  mdf = read_mdf25()
-  num_rows, num_cols = mdf.shape
-  my_time = time.localtime()
-  my_time_formatted = time.strftime("%a %d %b %G", my_time)
-  foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
-  cap = foot1 + ' on ' + my_time_formatted
-  regidx, long, farbe = get_reg_x_name_colx(region)
-#  print(region + '  ' + long)
-#  print('    ' + single_ta)
-  vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
-  plot_list = []
-  for var_row in vars_info_rows:
-    var_l = var_row['vensim_name']
-    var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
-    varx = var_row['id']
-    if varx in[18, 20, 34]: # global variable  
-      idx = fcol_in_mdf[var_l] # find location of variable in mdf
-    else:
-      idx = fcol_in_mdf[var_l] # find location of variable in mdf
-
-#    row = get_row_from_varl(var_l)
-    print('IN fake_it_server, idx: ' + str(idx) + ' varl: ' + var_l)
-    print('IN fake_it_server, idx: ' + str(idx) + ' regidx: ' + str(regidx))    
-    lx = idx + regidx
-    print (lx)
-    dfv = mdf[:, [0, lx]]
-    cur_fig = make_png(dfv, var_row, regidx, 2025)
-    cur_title = 'ETI-' + str(int(var_row['sdg_nbr'])) + ': ' +var_row['sdg']
-    cur_sub = var_row['indicator']
-    cur_cap = cap
-    fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cur_cap}
-    plot_list.append(fdz)
-  return plot_list
-
-@anvil.server.background_task
-@anvil.server.callable
 def fake_it_server(region, single_ta):
   # region as 'nn' single ta as 'poverty', etc
     print(region + ' ' + single_ta)
@@ -557,7 +426,6 @@ def fake_it_server(region, single_ta):
         else:
             idx = fcol_in_mdf[var_l]
             lx = idx + regidx # find location of variable in mdf with reg offset
-
 #    row = get_row_from_varl(var_l)
         print('IN fake_it_server, idx: ' + str(idx) + ' varl: ' + var_l)
 #        print('IN fake_it_server, idx: ' + str(idx) + ' regidx: ' + str(regidx))

@@ -232,10 +232,9 @@ def get_play_25():
 
 def get_reg_x_name_colx(region):
   row = app_tables.regions.get(abbreviation=region)
-  regix = int(row['id'])
   long = row['name']
   farbe = row['color']
-  return regix, long, farbe
+  return long, farbe
 
 def get_all_vars_for_ta(ta):
   ta_cap = ta.capitalize()
@@ -273,7 +272,7 @@ def read_mdf25():
     mdf = np.array(mdf_read)
   return mdf
 
-def pick(ys, x, y):
+def pickOLD(ys, x, y):
   o = []
   for i in range(0, len(ys)):
     y_in_range = ys[i]
@@ -281,8 +280,26 @@ def pick(ys, x, y):
     lo = y[idx]
     o.append(lo[0])
   return o
+
+def pick(ys, x, y):
+    o = []
+    ys_len = len(ys)
+    ys_cnt = 0
+    ys_check = ys[ys_cnt]
+    for i in range(0, len(x)):
+        if ys_check == x[i]:
+            o.append(y[i])
+            ys_cnt += 1
+            if ys_cnt == ys_len:
+                ys_check = 1952
+            else:
+                ys_check = ys[ys_cnt]
+        else:
+            o.append(np.nan)
+    return o
+
   
-def make_png(df, row, pyidx, end_yr):
+def make_pngOLD(df, row, pyidx, end_yr):
   fig = plt.figure()
   x = df[:, 0]
   y = df[:, 1]  
@@ -366,10 +383,105 @@ def make_png(df, row, pyidx, end_yr):
 #    plt.xticks(yr_points)
 #    plt.subplots_adjust(top=0.83, bottom=0.15)
 
+def make_png(df, row, pyidx, end_yr, my_title):
+    fig, ax = plt.subplots()
+    pct = row['pct']
+    x = df[:, 0]
+    y = df[:, 1] * pct
+    data_max = y.max() * 1.1
+    data_min = y.min()
+    plot_max = row['ymax']
+    plot_min = row['ymin']
+    ymin = min(data_min, plot_min)
+    ymax = max(data_max, plot_max)
+    if ymin > 0:
+        ymin = 0
+    if ymax < 0:
+        ymax = 0
+    if int(row['id']) in [27, 5]:  # Labour share of GDP | life expectancy
+        ymin = plot_min  # red min
+    if int(row['id']) in [26, 32]:  # population | Nitrogen use
+        ymax = data_max
+    if int(row['id']) in [21]:  # pH  |
+        ymin = plot_min
+        ymax = plot_max
+
+    dt = 1 / 32  # = 0.03125
+    abc = app_tables.regions.get(pyidx=pyidx)
+#    sql = ("SELECT * FROM regions WHERE pyidx = %s")
+#    conn = connect()
+#    with conn.cursor() as cur:
+#        cur.execute(sql, [pyidx])
+#        abc = cur.fetchone()
+    my_colhex = abc['colhex']
+    my_lab = abc['name']
+    plt.plot(x, y, color=my_colhex, linewidth=2.5, label=my_lab)
+#    plt.title(my_title)
+#    plt.show()
+    # now plot the thick dots
+    # get the year picks
+    runto_row = app_tables.runto.get(end_year=end_yr)
+#    sql = ("SELECT * FROM runto WHERE end_year = %s")
+#    conn = connect()
+#    with conn.cursor() as cur:
+#        cur.execute(sql, [end_yr])
+#        runto_row = cur.fetchone()
+    yr_picks_str = runto_row['yr_picks']
+    yps = yr_picks_str.replace("'", "")
+    yr_picks = yps.split(' ')
+    yps_int = []
+    for i in range(0, len(yr_picks)):
+        yps_int.append(int(yr_picks[i]))
+#    print('IN make_png yr_picks: ')
+    pvt_len = len(yr_picks)
+    ys = pick(yps_int, x, y)
+    plt.scatter(x, ys, color=my_colhex, s=300, alpha=0.55)
+#    plt.show()
+
+    if int(row['lowerbetter']) == 1:
+        grn_min = row['ymin']  # 8
+        grn_max = row['green']  # vars_df.iloc[varx, 4]
+        red_min = row['red']  # vars_df.iloc[varx, 5]
+        if int(row['id']) == 16:  # Emissions per person
+            red_max = max(data_max, 8)
+            ymax = red_max
+        else:
+            red_max = row['ymax']  # vars_df.iloc[varx, 9]
+        if red_max < ymax:
+            red_max = ymax
+        yel_min = grn_max
+        yel_max = red_min
+    else:
+        red_min = row['ymin']  # vars_df.iloc[varx, 8]
+        if int(row['id']) == 10:  # Access to electricity
+            if red_min > ymin:
+                ymin = red_min
+        red_max = row['red']  # vars_df.iloc[varx, 5]
+        grn_min = row['green']  # vars_df.iloc[varx, 4]
+        grn_max = row['ymax']  # vars_df.iloc[varx, 9]
+        yel_min = red_max
+        yel_max = grn_min
+
+    plt.ylim(ymin, ymax)
+    xmin = 1990
+    xmax = end_yr
+    if not int(row['id']) == 26:  # population
+        opa = 0.075
+        poly_coords = [(xmin, grn_max), (xmax, grn_max), (xmax, grn_min), (xmin, grn_min)]
+        ax.add_patch(plt.Polygon(poly_coords, color='green', alpha=opa))
+        poly_coords = [(xmin, red_max), (xmax, red_max), (xmax, red_min), (xmin, red_min)]
+        ax.add_patch(plt.Polygon(poly_coords, color='red', alpha=opa))
+        poly_coords = [(xmin, yel_max), (xmax, yel_max), (xmax, yel_min), (xmin, yel_min)]
+        ax.add_patch(plt.Polygon(poly_coords, color='yellow', alpha=opa))
+    plt.grid(color='gainsboro', linestyle='-', linewidth=.5)
+    plt.box(False)
+#    plt.show()
+    return anvil.mpl_util.plot_image()
+#    a = 2
   
 @anvil.server.background_task
 @anvil.server.callable
-def fake_it_server(region, single_ta):
+def fake_it_serverOLD(region, single_ta):
   # region as 'nn' single ta as 'poverty', etc
   print(region)
   regrow = app_tables.regions.get(abbreviation=region)
@@ -409,4 +521,53 @@ def fake_it_server(region, single_ta):
     fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cur_cap}
     plot_list.append(fdz)
   return plot_list
-    
+
+@anvil.server.background_task
+@anvil.server.callable
+def fake_it_server(region, single_ta):
+  # region as 'nn' single ta as 'poverty', etc
+    print(region + ' ' + single_ta)
+    regrow = app_tables.regions.get(abbreviation=region)
+#    sql = ("SELECT * FROM regions WHERE abbreviation = %s")
+#    conn = connect()
+#    with conn.cursor() as cur:
+#      cur.execute(sql, [region])
+#      row = cur.fetchone()
+#    regrow = row
+    regidx = int(regrow['pyidx'])
+    fcol_in_mdf = read_fcol_in_mdf()
+    mdf = read_mdf25()
+    num_rows, num_cols = mdf.shape
+    my_time = time.localtime()
+    my_time_formatted = time.strftime("%a %d %b %G", my_time)
+    foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
+    cap = foot1 + ' on ' + my_time_formatted
+    long, farbe = get_reg_x_name_colx(region)
+#  print(region + '  ' + long)
+#  print('    ' + single_ta)
+    vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
+    plot_list = []
+    for var_row in vars_info_rows:
+        var_l = var_row['vensim_name']
+        var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
+        varx = var_row['id']
+        if varx in[19, 21, 22, 35]: # global variable
+            idx = fcol_in_mdf[var_l]
+            lx = idx # find location of variable in mdf
+        else:
+            idx = fcol_in_mdf[var_l]
+            lx = idx + regidx # find location of variable in mdf with reg offset
+
+#    row = get_row_from_varl(var_l)
+        print('IN fake_it_server, idx: ' + str(idx) + ' varl: ' + var_l)
+#        print('IN fake_it_server, idx: ' + str(idx) + ' regidx: ' + str(regidx))
+        dfv = mdf[:, [0, lx]]
+        cur_title = 'ETI-' + str(int(var_row['sdg_nbr'])) + ': ' +var_row['sdg']
+        cur_sub = var_row['indicator']
+        cur_fig = make_png(dfv, var_row, regidx, 2025, cur_sub)
+        cur_sub = var_row['indicator']
+        cur_cap = cap
+        fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cur_cap}
+#        print(fdz)
+        plot_list.append(fdz)
+    return plot_list

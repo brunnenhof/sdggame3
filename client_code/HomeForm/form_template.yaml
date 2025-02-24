@@ -506,7 +506,7 @@ components:
       type: RichText
     - layout_properties: {grid_position: 'KZHQLQ,YMRBTC'}
       name: pol_repeat
-      properties: {item_template: HomeForm.ItemTemplate1}
+      properties: {item_template: HomeForm.policy}
       type: RepeatingPanel
     layout_properties: {grid_position: 'ZBDXGY,HPWAGT'}
     name: pol_card

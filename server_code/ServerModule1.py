@@ -440,8 +440,11 @@ def fake_it_server(region, single_ta):
         plot_list.append(fdz)
     return plot_list
 
+def get_budget(yr):
+
+  
 @anvil.server.callable
-def get_policy_budgets(yr):
+def get_policy_budgets(reg, ta, yr):
   fcol_in_mdf = read_fcol_in_mdf()
   budget = []
   if yr == 2025:
@@ -472,4 +475,7 @@ def get_policy_budgets(yr):
 
   Fraction_of_budget_available_for_policies = 0.5
   budget.append(Fraction_of_budget_available_for_policies) # fraction
+  pols = {}
+  pol_list = []
+  for i in 
   return budget

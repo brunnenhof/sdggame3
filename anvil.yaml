@@ -288,5 +288,5 @@ services:
 - client_config: {}
   server_config: {file_table: files}
   source: /runtime/services/anvil/files.yml
-startup: {module: HomeForm.policy, type: form}
+startup: {module: HomeForm, type: form}
 startup_form: null

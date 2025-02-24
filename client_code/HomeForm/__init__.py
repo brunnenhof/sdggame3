@@ -14,8 +14,11 @@ class HomeForm(HomeFormTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-
     # Any code you write here will run before the form opens.
+    self.card_holder_top.visible = False
+    self.card_holder_admin.visible = False
+    self.pol_card.visible = True
+    
 
   def btn_thanks_click(self, **event_args):
     alert(content="... to our Alpha testers, the students in course SW101 at the Realschule Baesweiler during April 2024 taught by René Langohr, and all the beta testers.", title="Thank you", large=True)

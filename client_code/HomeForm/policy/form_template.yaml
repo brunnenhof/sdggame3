@@ -1,0 +1,11 @@
+components:
+- layout_properties: {grid_position: 'FJKGOE,AUJYMG'}
+  name: pol_name
+  properties: {}
+  type: Label
+- layout_properties: {grid_position: 'HCXOQF,WVSZVN'}
+  name: pol_expl
+  properties: {}
+  type: TextArea
+container: {type: ColumnPanel}
+is_package: true

@@ -19,7 +19,7 @@ class HomeForm(HomeFormTemplate):
     self.card_holder_admin.visible = False
     self.pol_card.visible = True
     self.pol_repeat.visible = True
-    anvil.server.call('get_policy_budgets', '1', '2', 2025)
+#    anvil.server.call('get_policy_budgets', '1', '2', 2025)
     
 
   def btn_thanks_click(self, **event_args):

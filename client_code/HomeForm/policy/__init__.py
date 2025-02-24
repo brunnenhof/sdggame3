@@ -11,22 +11,15 @@ class policy(policyTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
-    budget = anvil.server.call('get_policy_budgets', 'us', 'poverty', 2025)
-#    print (budget)
-    expl = [r['expl'] for r in app_tables.policies.search()]
-    pol_name = [r['name'] for r in app_tables.policies.search()]
-    tltl = [r['tltl'] for r in app_tables.policies.search()]
-    gl = [r['gl'] for r in app_tables.policies.search()]
+    budget, pol_list = anvil.server.call('get_policy_budgets', '1', '2', 2025)
     # Set the Labels to have fields from the `item` dictionary,
     # which is one entry in the RepeatingPanel's `items` list:
-    print(expl[0])
-    print(pol_name[0])
-    print(tltl[0])
-    print(gl[0])
-    self.pol_name.text = pol_name[0]
-    self.pol_expl.text = expl[0]
-#
-#    self.pol_expl.text = self.item['expl']
+#    print(expl[0])
+#    print(pol_name[0])
+#    print(tltl[0])
+#    print(gl[0])
+    self.pol_name.text = self.item['pol_name']
+    self.pol_expl.text = self.item['expl']
 #    self.pone_plot_title.text = self.item['title']
 #    self.one_plot_subtitle.text = self.item['subtitle']
 #    self.one_plot_caption.text = self.item['cap']

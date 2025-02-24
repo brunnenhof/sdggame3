@@ -478,22 +478,23 @@ def get_policy_budgets(reg, ta, yr):
   reg = regnames[random.randint(0, len(regnames) - 1)]
   ta = single_tas[random.randint(0, len(single_tas) - 1)]
 #    single_ta = 'empowerment'
-  print(reg)
+#  print(reg)
   ta = ta.capitalize()
-  print(ta)
+#  print(ta)
   budget = get_budget(2025)
-  print(budget)
+#  print(budget)
 
   pol_list = []
-  pols = app_tables.policies.search(, ta=ta)
-  print(pols)
+  pols = app_tables.policies.search(ta=ta)
+#  print(pols)
   for pol in pols:
-    print(pol)
+ #   print(pol)
     pol_name = pol['name']
+#    print(pol_name)
     pol_expl = pol['expl']
     pol_tltl = pol['tltl']
     pol_gl = pol['gl']
     fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl}
-    print(fdz)
+#    print(fdz)
     pol_list.append(fdz)
   return budget, pol_list

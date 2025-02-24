@@ -475,18 +475,24 @@ def get_budget(yr):
 def get_policy_budgets(reg, ta, yr):
   regnames = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
   single_tas = ['energy', 'poverty', 'inequality', 'food', 'empowerment']
-  region = regnames[random.randint(0, len(regnames) - 1)]
-  single_ta = single_tas[random.randint(0, len(single_tas) - 1)]
+  reg = regnames[random.randint(0, len(regnames) - 1)]
+  ta = single_tas[random.randint(0, len(single_tas) - 1)]
 #    single_ta = 'empowerment'
-  budget = anvil.server.call('get_policy_budgets', region, single_ta, 2025)
+  print(reg)
+  ta = ta.capitalize()
+  print(ta)
+  budget = get_budget(2025)
+  print(budget)
 
   pol_list = []
-  pols = app_tables.policies.search(abbreviation=reg, ta=ta)
-  for i in pols:
-    pol_name = pols['name']
-    pol_expl = pols['expl']
-    pol_tltl = pols['tltl']
-    pol_gl = pols['gl']
+  pols = app_tables.policies.search(, ta=ta)
+  print(pols)
+  for pol in pols:
+    print(pol)
+    pol_name = pol['name']
+    pol_expl = pol['expl']
+    pol_tltl = pol['tltl']
+    pol_gl = pol['gl']
     fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl}
     print(fdz)
     pol_list.append(fdz)

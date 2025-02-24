@@ -439,3 +439,37 @@ def fake_it_server(region, single_ta):
 #        print(fdz)
         plot_list.append(fdz)
     return plot_list
+
+@anvil.server.callable
+def get_policy_budgets(yr):
+  fcol_in_mdf = read_fcol_in_mdf()
+  budget = []
+  if yr == 2025:
+    mdf = read_mdf25()
+    rx = 1441 - 321
+  else:
+    print("Forgot to add reading later mdfs")
+#  print(type(fcol_in_mdf))
+#  print(fcol_in_mdf)
+  idx = fcol_in_mdf['Budget_for_all_TA_per_region']
+  for i in range(10):
+    budget.append(mdf[rx, idx + i]) # region
+  idx = fcol_in_mdf['Cost_per_regional_poverty_policy']
+  for i in range(10):
+    budget.append(mdf[rx, idx + i]) # poverty
+  idx = fcol_in_mdf['Cost_per_regional_inequality_policy']
+  for i in range(10):
+    budget.append(mdf[rx, idx + i]) # inequality
+  idx = fcol_in_mdf['Cost_per_regional_empowerment_policy']
+  for i in range(10):
+    budget.append(mdf[rx, idx + i]) # empowerment
+  idx = fcol_in_mdf['Cost_per_regional_food_policy']
+  for i in range(10):
+    budget.append(mdf[rx, idx + i]) # food
+  idx = fcol_in_mdf['Cost_per_regional_energy_policy']
+  for i in range(10):
+    budget.append(mdf[rx, idx + i]) # energy
+
+  Fraction_of_budget_available_for_policies = 0.5
+  budget.append(Fraction_of_budget_available_for_policies) # fraction
+  return budget

@@ -4,15 +4,14 @@ import anvil.server
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
-
+import random
 
 class policy(policyTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
-    budget = anvil.server.call('get_policy_budgets', 2025)
+    budget = anvil.server.call('get_policy_budgets', 'us', 'poverty', 2025)
 #    print (budget)
     expl = [r['expl'] for r in app_tables.policies.search()]
     pol_name = [r['name'] for r in app_tables.policies.search()]

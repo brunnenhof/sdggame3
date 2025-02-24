@@ -441,10 +441,6 @@ def fake_it_server(region, single_ta):
     return plot_list
 
 def get_budget(yr):
-
-  
-@anvil.server.callable
-def get_policy_budgets(reg, ta, yr):
   fcol_in_mdf = read_fcol_in_mdf()
   budget = []
   if yr == 2025:
@@ -452,8 +448,6 @@ def get_policy_budgets(reg, ta, yr):
     rx = 1441 - 321
   else:
     print("Forgot to add reading later mdfs")
-#  print(type(fcol_in_mdf))
-#  print(fcol_in_mdf)
   idx = fcol_in_mdf['Budget_for_all_TA_per_region']
   for i in range(10):
     budget.append(mdf[rx, idx + i]) # region
@@ -475,7 +469,25 @@ def get_policy_budgets(reg, ta, yr):
 
   Fraction_of_budget_available_for_policies = 0.5
   budget.append(Fraction_of_budget_available_for_policies) # fraction
-  pols = {}
-  pol_list = []
-  for i in 
   return budget
+  
+@anvil.server.callable
+def get_policy_budgets(reg, ta, yr):
+  regnames = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
+  single_tas = ['energy', 'poverty', 'inequality', 'food', 'empowerment']
+  region = regnames[random.randint(0, len(regnames) - 1)]
+  single_ta = single_tas[random.randint(0, len(single_tas) - 1)]
+#    single_ta = 'empowerment'
+  budget = anvil.server.call('get_policy_budgets', region, single_ta, 2025)
+
+  pol_list = []
+  pols = app_tables.policies.search(abbreviation=reg, ta=ta)
+  for i in pols:
+    pol_name = pols['name']
+    pol_expl = pols['expl']
+    pol_tltl = pols['tltl']
+    pol_gl = pols['gl']
+    fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl}
+    print(fdz)
+    pol_list.append(fdz)
+  return budget, pol_list

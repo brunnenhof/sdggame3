@@ -268,7 +268,10 @@ db_schema:
       type: number
     server: full
     title: sdg_vars
-dependencies: []
+dependencies:
+- dep_id: dep_cnan8juni0ghc
+  resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
+  version: {version_tag: v3.1.0}
 metadata: {logo_img: 'asset:favicon.ico'}
 name: SDGgame
 package_name: SDGgame

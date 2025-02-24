@@ -471,6 +471,7 @@ def get_budget(yr):
   budget.append(Fraction_of_budget_available_for_policies) # fraction
   return budget
   
+@anvil.server.background_task
 @anvil.server.callable
 def get_policy_budgets(reg, ta, yr):
   regnames = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
@@ -495,6 +496,6 @@ def get_policy_budgets(reg, ta, yr):
     pol_tltl = pol['tltl']
     pol_gl = pol['gl']
     fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl}
-#    print(fdz)
     pol_list.append(fdz)
+#  print(pol_list)
   return budget, pol_list

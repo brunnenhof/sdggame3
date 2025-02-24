@@ -20,7 +20,6 @@ class HomeForm(HomeFormTemplate):
     self.pol_card.visible = True
     self.pol_repeat.visible = True
 #    anvil.server.call('get_policy_budgets', '1', '2', 2025)
-    
 
   def btn_thanks_click(self, **event_args):
     alert(content="... to our Alpha testers, the students in course SW101 at the Realschule Baesweiler during April 2024 taught by René Langohr, and all the beta testers.", title="Thank you", large=True)
@@ -443,8 +442,6 @@ class HomeForm(HomeFormTemplate):
     if self.rb_fut.selected:
       return 'future'
     return None  
-
-  
   
   def save_player_choice(self, game_id, ministry, region):
 #    print ('in save_player_choice: ' + region)
@@ -500,8 +497,6 @@ class HomeForm(HomeFormTemplate):
 #      slots = self.fake_it()
       self.repeating_plots_panel.items = slots
 #      self.repeating_plots_panel.visible = True
-      
-      a = 2
 
   def rb_la2_clicked(self, **event_args):
     global cid
@@ -513,6 +508,12 @@ class HomeForm(HomeFormTemplate):
   def fill_fr2_click(self, **event_args):
     """This method is called when the button is clicked"""
     pass
+
+  def kick_in_pol_repeat_click(self, **event_args):
+    self.pol_card.visible = True
+    budget, pol_list = anvil.server.call('get_policy_budgets', '1', '2', 2025)
+    print(pol_list)
+    self.pol_repeat.items = pol_list
 
 
  

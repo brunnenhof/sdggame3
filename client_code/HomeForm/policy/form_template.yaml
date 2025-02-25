@@ -32,7 +32,9 @@ components:
       padding: ['0', null, null, null]
     spacing_above: none
   type: Label
-- layout_properties: {grid_position: 'QBQRRS,JCGGMW'}
+- data_bindings:
+  - {code: 'self.item[''slider_1.value'']', property: text, writeback: false}
+  layout_properties: {grid_position: 'QBQRRS,JCGGMW'}
   name: slide_val
   properties: {bold: true}
   type: Label

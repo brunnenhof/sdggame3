@@ -482,7 +482,8 @@ def get_policy_budgets(reg, ta, yr):
 #  print(reg)
   ta = ta.capitalize()
 #  print(ta)
-  budget = get_budget(2025)
+#  budget = get_budget(2025)
+  budget = 999
 #  print(budget)
   pol_list = []
   pols = app_tables.policies.search(ta=ta)

@@ -27,11 +27,12 @@ class policy(policyTemplate):
     
   @property
   def slider_min(self):
+    return int(self.slide_min.text)
     return self._slider_min
   
   @slider_min.setter
   def slider_min(self, value):
-    self._slider_min = value
+    self._slider_min = int(self.slide_min.text)
     self.update()
     
   @property

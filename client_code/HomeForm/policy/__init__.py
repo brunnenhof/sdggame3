@@ -17,10 +17,24 @@ class policy(policyTemplate):
     self.slide_max.text = self.item['pol_gl']
     self.pol_abbr.text = self.item['pol_abbr']
     
-
   def slider_1_change(self, **event_args):
+    global cid
     self.slide_val.text = self.slider_1.value
-    
+    # update the games DB
+    # need game_id, reg, pol, runde, to
+    # set wert
+    cid = 'JYENF-616-529'
+    pol = self.pol_abbr
+    print(cid)
+    print(pol)
+    runde = 1
+    ta = 'Poverty'
+    reg = 'us'
+    row = app_tables.games.get(game_id=cid, pol=pol, runde=runde, ta=ta, reg=reg)
+    print (row)
+    row[wert] = float(self.slider_1.value)
+
+  # now get all the info to be able to calculate the budget constraint
     """This method is called when the value of the component is changed"""
     pass
 

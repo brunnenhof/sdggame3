@@ -15,10 +15,10 @@ class HomeForm(HomeFormTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
-    self.card_holder_top.visible = False
+    self.card_holder_top.visible = True
     self.card_holder_admin.visible = False
-    self.pol_card.visible = True
-    self.pol_repeat.visible = True
+#    self.pol_card.visible = True
+#    self.pol_repeat.visible = True
 #    anvil.server.call('get_policy_budgets', '1', '2', 2025)
 
   def btn_thanks_click(self, **event_args):
@@ -467,6 +467,7 @@ class HomeForm(HomeFormTemplate):
 #   )
 #    return full_dict
 #    full_dict = {}
+
     
   def submit_role_click(self, **event_args):
     global cid
@@ -496,6 +497,7 @@ class HomeForm(HomeFormTemplate):
       slots = anvil.server.call('fake_it_server', which_region, which_ministy)
 #      slots = self.fake_it()
       self.repeating_plots_panel.items = slots
+      self.pol_card.visible = True
 #      self.repeating_plots_panel.visible = True
 
   def rb_la2_clicked(self, **event_args):

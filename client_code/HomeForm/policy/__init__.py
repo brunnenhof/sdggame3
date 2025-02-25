@@ -16,4 +16,9 @@ class policy(policyTemplate):
     self.slide_min.text = self.item['pol_tltl']
     self.slide_max.text = self.item['pol_gl']
 
+  def slider_1_change(self, **event_args):
+    self.slide_val.text = m3
+    """This method is called when the value of the component is changed"""
+    pass
+
   

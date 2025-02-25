@@ -274,13 +274,15 @@ dependencies:
   version: {version_tag: v1.2.2}
 metadata: {logo_img: 'asset:favicon.ico'}
 name: SDGgame
+native_deps: null
 package_name: SDGgame
 renamed: true
 runtime_options:
   client_version: '3'
+  legacy_features: {__dict__: true, bootstrap3: true, class_names: true, root_container: true}
   server_spec: {base: python310-standard}
   server_version: python3-sandbox
-  version: 2
+  version: 3
 services:
 - client_config: {}
   server_config: {}

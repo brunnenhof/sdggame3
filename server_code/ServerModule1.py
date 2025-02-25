@@ -298,6 +298,7 @@ def pick(ys, x, y):
             o.append(np.nan)
     return o
 
+@anvil.server.background_task
 def make_png(df, row, pyidx, end_yr, my_title):
     fig, ax = plt.subplots()
     pct = row['pct']
@@ -390,9 +391,10 @@ def make_png(df, row, pyidx, end_yr, my_title):
 #    plt.show()
     return anvil.mpl_util.plot_image()
 #    a = 2
+
   
-@anvil.server.background_task
 @anvil.server.callable
+@anvil.server.background_task
 def fake_it_server(region, single_ta):
   # region as 'nn' single ta as 'poverty', etc
     print(region + ' ' + single_ta)

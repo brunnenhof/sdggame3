@@ -498,6 +498,10 @@ class HomeForm(HomeFormTemplate):
 #      slots = self.fake_it()
       self.repeating_plots_panel.items = slots
       self.pol_card.visible = True
+      budget, pol_list = anvil.server.call('get_policy_budgets', '1', '2', 2025)
+#      print(pol_list)
+      self.pol_repeat.items = pol_list
+
 #      self.repeating_plots_panel.visible = True
 
   def rb_la2_clicked(self, **event_args):

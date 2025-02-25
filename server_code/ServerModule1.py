@@ -484,17 +484,17 @@ def get_policy_budgets(reg, ta, yr):
 #  print(ta)
   budget = get_budget(2025)
 #  print(budget)
-
   pol_list = []
   pols = app_tables.policies.search(ta=ta)
 #  print(pols)
   for pol in pols:
- #   print(pol)
+    print(pol)
     pol_name = pol['name']
 #    print(pol_name)
     pol_expl = pol['expl']
     pol_tltl = pol['tltl']
     pol_gl = pol['gl']
+    
     fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl}
     pol_list.append(fdz)
 #  print(pol_list)

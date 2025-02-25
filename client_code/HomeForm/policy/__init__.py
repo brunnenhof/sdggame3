@@ -13,6 +13,8 @@ class policy(policyTemplate):
     # Any code you write here will run before the form opens.
     self.pol_name.text = self.item['pol_name']
     self.pol_expl.text = self.item['pol_expl']
+    self.slide_min.text = self.item['pol_tltl']
+    self.slide_max.text = self.item['pol_gl']
 
   @property
   def level(self):

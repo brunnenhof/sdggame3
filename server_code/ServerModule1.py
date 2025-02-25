@@ -495,8 +495,9 @@ def get_policy_budgets(reg, ta, yr):
     pol_expl = pol['expl']
     pol_tltl = pol['tltl']
     pol_gl = pol['gl']
+    pol_abbr = pol['abbreviation']
     
-    fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl}
+    fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl, 'pol_abbr' : pol_abbr}
     pol_list.append(fdz)
 #  print(pol_list)
   return budget, pol_list

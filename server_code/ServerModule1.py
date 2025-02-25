@@ -259,12 +259,14 @@ def read_ch():
     ch = np.load(ff)
   return ch
   
+@anvil.server.background_task
 def read_fcol_in_mdf():
   global fcol_in_mdf
   with open(data_files['fcol_in_mdf.json']) as ff:
     fcol_in_mdf = json.load(ff)
   return fcol_in_mdf
 
+@anvil.server.background_task
 def read_mdf25():
   global mdf
   with open(data_files['mdf25.json']) as ff:
@@ -316,8 +318,10 @@ def make_png(df, row, pyidx, end_yr, my_title):
         ymax = 0
     if int(row['id']) in [27, 5]:  # Labour share of GDP | life expectancy
         ymin = plot_min  # red min
-    if int(row['id']) in [26, 32]:  # population | Nitrogen use
+    if int(row['id']) in [26]:  # population | 
         ymax = data_max
+    if int(row['id']) in [32]:  # Nitrogen use
+        ymax = 25
     if int(row['id']) in [21]:  # pH  |
         ymin = plot_min
         ymax = plot_max
@@ -391,10 +395,9 @@ def make_png(df, row, pyidx, end_yr, my_title):
 #    plt.show()
     return anvil.mpl_util.plot_image()
 #    a = 2
-
   
-@anvil.server.callable
 @anvil.server.background_task
+@anvil.server.callable
 def fake_it_server(region, single_ta):
   # region as 'nn' single ta as 'poverty', etc
     print(region + ' ' + single_ta)
@@ -435,9 +438,7 @@ def fake_it_server(region, single_ta):
         cur_title = 'ETI-' + str(int(var_row['sdg_nbr'])) + ': ' +var_row['sdg']
         cur_sub = var_row['indicator']
         cur_fig = make_png(dfv, var_row, regidx, 2025, cur_sub)
-        cur_sub = var_row['indicator']
-        cur_cap = cap
-        fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cur_cap}
+        fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cap}
 #        print(fdz)
         plot_list.append(fdz)
     return plot_list
@@ -476,10 +477,10 @@ def get_budget(yr):
 @anvil.server.background_task
 @anvil.server.callable
 def get_policy_budgets(reg, ta, yr):
-  regnames = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
-  single_tas = ['energy', 'poverty', 'inequality', 'food', 'empowerment']
-  reg = regnames[random.randint(0, len(regnames) - 1)]
-  ta = single_tas[random.randint(0, len(single_tas) - 1)]
+#  regnames = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
+#  single_tas = ['energy', 'poverty', 'inequality', 'food', 'empowerment']
+#  reg = regnames[random.randint(0, len(regnames) - 1)]
+#  ta = single_tas[random.randint(0, len(single_tas) - 1)]
 #    single_ta = 'empowerment'
 #  print(reg)
   ta = ta.capitalize()

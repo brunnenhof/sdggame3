@@ -232,19 +232,19 @@ def get_play_25():
 
 #@anvil.server.callable
 @anvil.server.background_task
-def lmab():
+def load(datei):
   global mdf
-  print('IN read_mdf25')
-  with open(data_files['mdf25.json']) as ff:
+  print('IN load(datei) ' + datei)
+  with open(data_files[datei]) as ff:
     mdf_read = json.load(ff)
     mdf = np.array(mdf_read)
   return mdf
 
 @anvil.server.callable
-def load_lmab():
+def launch_load_lmab(datei):
   global mdf
-  print ('IN load_lamb')
-  task = anvil.server.launch_background_task('lmab')
+  print ('IN launch_load_lmab')
+  task = anvil.server.launch_background_task('load', datei)
   print (task.get_state())
   while task.is_running():
     bb = 22
@@ -525,7 +525,6 @@ def get_budget(yr):
   budget.append(Fraction_of_budget_available_for_policies) # fraction
   return budget
   
-@anvil.server.background_task
 @anvil.server.callable
 def get_policy_budgets(reg, ta, yr):
 #  regnames = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
@@ -555,3 +554,9 @@ def get_policy_budgets(reg, ta, yr):
     pol_list.append(fdz)
 #  print(pol_list)
   return budget, pol_list
+
+@anvil.server.callable
+def get_existing_tasks():
+  return [
+    t for t in anvil.server.list_background_tasks() if t.get_task_name() == 'load'
+  ]

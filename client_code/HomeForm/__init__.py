@@ -16,6 +16,13 @@ class HomeForm(HomeFormTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
+    tasks = anvil.server.call('get_existing_tasks')
+    if len(tasks) > 0:
+      # Keep track of the latest task
+      self.task = tasks[-1]
+      # Turn on the progress display
+      self.timer_1.interval = 0.5
+
     self.card_holder_top.visible = True
     self.card_holder_admin.visible = False
 #    self.pol_card.visible = True
@@ -511,8 +518,25 @@ class HomeForm(HomeFormTemplate):
 
   def load_mdf25_as_background_click(self, **event_args):
     """This method is called when the component is clicked."""
-    self.task = anvil.server.call('load_lmab')
+    self.task = anvil.server.call('launch_load_lmab', 'mdf25.json')
+    self.timer_1.interval = 0.5
+    
+    print(self.task)
     a=2
+
+  def timer_1_tick(self, **event_args):
+    """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+    with anvil.server.no_loading_indicator:
+      # Show progress
+      state = self.task.get_state()
+#      n_complete, total_urls = state.get('n_complete', 0), state.get('total_urls', 0)
+#      self.label_num_indexed.text = n_complete
+#      self.label_total_pages.text = total_urls
+  
+      # Switch Timer off if process is complete
+      if not self.task.is_running():
+        self.timer_1.interval = 0
+
 
 
  

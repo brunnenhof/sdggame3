@@ -267,12 +267,30 @@ def read_fcol_in_mdf():
   return fcol_in_mdf
 
 @anvil.server.background_task
+def crawl(sitemap_url):
+  print('Crawling: ' + sitemap_url)
+
+@anvil.server.background_task
 def read_mdf25():
   global mdf
+  print('IN read_mdf25')
   with open(data_files['mdf25.json']) as ff:
     mdf_read = json.load(ff)
     mdf = np.array(mdf_read)
   return mdf
+
+def launch_read_mdf25():
+  """Launch a single crawler background task."""
+  global mdf
+  print ('IN launch_read_mdf25')
+  task = anvil.server.launch_background_task('read_mdf25')
+  print (task.get_state())
+  while task.is_running():
+    bb = 22
+  print(task.is_completed())
+  a, b = mdf.shape()
+  print (str(a) + ' ' + str(b))
+  return task
 
 def pickOLD(ys, x, y):
   o = []
@@ -417,12 +435,15 @@ def build_plot(var_row, regidx, cap):
   cur_fig = make_png(dfv, var_row, regidx, 2025, cur_sub)
   fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cap}
   return fdz
-  
+
+
 @anvil.server.background_task
 @anvil.server.callable
 def get_plots_for_slots(region, single_ta):
     global fcol_in_mdf, mdf
-    mdf = read_mdf25()
+    t = launch_read_mdf25()
+    print (t)
+#    mdf = read_mdf25()
     fcol_in_mdf = read_fcol_in_mdf()
   # region as 'nn' single ta as 'poverty', etc
     print(region + ' ' + single_ta)

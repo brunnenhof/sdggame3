@@ -395,10 +395,35 @@ def make_png(df, row, pyidx, end_yr, my_title):
 #    plt.show()
     return anvil.mpl_util.plot_image()
 #    a = 2
+
+@anvil.server.background_task
+def build_plot(var_row, regidx, cap):
+  global fcol_in_mdf, mdf
+  var_l = var_row['vensim_name']
+  var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
+  varx = var_row['id']
+  if varx in[19, 21, 22, 35]: # global variable
+    idx = fcol_in_mdf[var_l]
+    lx = idx # find location of variable in mdf
+  else:
+    idx = fcol_in_mdf[var_l]
+    lx = idx + regidx # find location of variable in mdf with reg offset
+#    row = get_row_from_varl(var_l)
+  print('IN build_plot, idx: ' + str(idx) + ' varl: ' + var_l)
+#        print('IN get_plots_for_slots, idx: ' + str(idx) + ' regidx: ' + str(regidx))
+  dfv = mdf[:, [0, lx]]
+  cur_title = 'ETI-' + str(int(var_row['sdg_nbr'])) + ': ' +var_row['sdg']
+  cur_sub = var_row['indicator']
+  cur_fig = make_png(dfv, var_row, regidx, 2025, cur_sub)
+  fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cap}
+  return fdz
   
 @anvil.server.background_task
 @anvil.server.callable
-def fake_it_server(region, single_ta):
+def get_plots_for_slots(region, single_ta):
+    global fcol_in_mdf, mdf
+    mdf = read_mdf25()
+    fcol_in_mdf = read_fcol_in_mdf()
   # region as 'nn' single ta as 'poverty', etc
     print(region + ' ' + single_ta)
     regrow = app_tables.regions.get(abbreviation=region)
@@ -409,9 +434,6 @@ def fake_it_server(region, single_ta):
 #      row = cur.fetchone()
 #    regrow = row
     regidx = int(regrow['pyidx'])
-    fcol_in_mdf = read_fcol_in_mdf()
-    mdf = read_mdf25()
-    num_rows, num_cols = mdf.shape
     my_time = time.localtime()
     my_time_formatted = time.strftime("%a %d %b %G", my_time)
     foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
@@ -422,25 +444,8 @@ def fake_it_server(region, single_ta):
     vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
     plot_list = []
     for var_row in vars_info_rows:
-        var_l = var_row['vensim_name']
-        var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
-        varx = var_row['id']
-        if varx in[19, 21, 22, 35]: # global variable
-            idx = fcol_in_mdf[var_l]
-            lx = idx # find location of variable in mdf
-        else:
-            idx = fcol_in_mdf[var_l]
-            lx = idx + regidx # find location of variable in mdf with reg offset
-#    row = get_row_from_varl(var_l)
-        print('IN fake_it_server, idx: ' + str(idx) + ' varl: ' + var_l)
-#        print('IN fake_it_server, idx: ' + str(idx) + ' regidx: ' + str(regidx))
-        dfv = mdf[:, [0, lx]]
-        cur_title = 'ETI-' + str(int(var_row['sdg_nbr'])) + ': ' +var_row['sdg']
-        cur_sub = var_row['indicator']
-        cur_fig = make_png(dfv, var_row, regidx, 2025, cur_sub)
-        fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cap}
-#        print(fdz)
-        plot_list.append(fdz)
+      fdz = build_plot(var_row, regidx, cap)
+      plot_list.append(fdz)
     return plot_list
 
 def get_budget(yr):

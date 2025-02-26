@@ -112,6 +112,32 @@ db_schema:
       type: bool
     server: full
     title: games_info
+  globs:
+    client: full
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: game_id
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: pol_abbr
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: runde
+      type: number
+    - admin_ui: {order: 3, width: 200}
+      name: ta
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: reg
+      type: string
+    - admin_ui: {order: 5, width: 200}
+      name: game_id_pers
+      type: string
+    - admin_ui: {order: 6, width: 200}
+      name: updated
+      type: datetime
+    server: full
+    title: globs
   ministries:
     client: search
     columns:

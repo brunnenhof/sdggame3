@@ -9,6 +9,7 @@ import webbrowser
 from ..apg import apg
 import random
 import string
+import datetime
 
 class HomeForm(HomeFormTemplate):
   def __init__(self, **properties):
@@ -454,23 +455,8 @@ class HomeForm(HomeFormTemplate):
       return False
     return True
 
-  def fake_it(self, **event_args):
-    fd = anvil.server.call('fake_it_server')
-    return fd
-#       self.repeating_panel.items = (
-    
-#    full_dict = (
-#     {'title': 'Joe', 'subtitle': 'Latest tech report', 'cap': 'caption'},
-#     {'title': 'Joe Blow', 'subtitle': 'Grandpa', 'cap': 'caption 2'},
-#     {'title': 'Joe Blow jr', 'subtitle': 'Son', 'cap': 'caption 23'},
-#     {'title': 'Joe Blow jr III', 'subtitle': 'Son of a b...', 'cap': 'caption 234'},
-#   )
-#    return full_dict
-#    full_dict = {}
-
-    
   def submit_role_click(self, **event_args):
-    global cid
+    global cid, your_game_id
     reg = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
     tas = ['poverty', 'inequality', 'empowerment', 'food', 'energy', 'future']
     which_ministy = self.minstry_clicked()
@@ -494,12 +480,14 @@ class HomeForm(HomeFormTemplate):
       self.your_ta.text = temp
 #      title, sub, fig, cap = anvil.server.call('load_plots', which_region, which_ministy)
       self.plot_card.visible = True
-      slots = anvil.server.call('fake_it_server', which_region, which_ministy)
-#      slots = self.fake_it()
+      slots = anvil.server.call('get_plots_for_slots', which_region, which_ministy)
       self.repeating_plots_panel.items = slots
       self.pol_card.visible = True
       budget, pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministy, 2025)
 #      print(pol_list)
+      app_tables.globs.delete_all_rows()
+      app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministy, 
+                               reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
       self.pol_repeat.items = pol_list
 
 #      self.repeating_plots_panel.visible = True

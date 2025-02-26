@@ -15,7 +15,8 @@ components:
   - {code: 'self.item[''pol_tltl'']', property: value, writeback: false}
   - {code: 'self.item[''pol_gl'']', property: max, writeback: false}
   - {code: 'self.item[''pol_tltl'']', property: min, writeback: false}
-  event_bindings: {change: slider_1_change}
+  - {code: '(self.item[''pol_gl''] - self.item[''pol_tltl''] ) / 10', property: step, writeback: false}
+  event_bindings: {change: slider_1_change, change_end: slider_1_change_end}
   layout_properties: {grid_position: 'QBQRRS,GTFCPY DJSHAK,XQBOMR'}
   name: slider_1
   properties: {min: 0, show_markers: true, tooltip: Move the handle to set your slider, value: 5}

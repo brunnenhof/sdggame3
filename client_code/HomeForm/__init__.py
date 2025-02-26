@@ -509,6 +509,11 @@ class HomeForm(HomeFormTemplate):
     print(pol_list)
     self.pol_repeat.items = pol_list
 
+  def load_mdf25_as_background_click(self, **event_args):
+    """This method is called when the component is clicked."""
+    self.task = anvil.server.call('load_lmab')
+    a=2
+
 
  
 

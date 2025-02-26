@@ -230,6 +230,31 @@ def get_ministry_long(which_ministry):
 def get_play_25():
   pass
 
+#@anvil.server.callable
+@anvil.server.background_task
+def lmab():
+  global mdf
+  print('IN read_mdf25')
+  with open(data_files['mdf25.json']) as ff:
+    mdf_read = json.load(ff)
+    mdf = np.array(mdf_read)
+  return mdf
+
+@anvil.server.callable
+def load_lmab():
+  global mdf
+  print ('IN load_lamb')
+  task = anvil.server.launch_background_task('lmab')
+  print (task.get_state())
+  while task.is_running():
+    bb = 22
+  print(task.is_completed())
+  a, b = mdf.shape()
+  print (str(a) + ' ' + str(b))
+  return task
+
+  
+
 def get_reg_x_name_colx(region):
   row = app_tables.regions.get(abbreviation=region)
   long = row['name']

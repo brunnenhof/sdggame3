@@ -23,7 +23,7 @@ class policy(policyTemplate):
   def slider_1_change_end(self, **event_args):
     row = app_tables.globs.get()
     cid = row['game_id']
-    ta = row['ta']
+    ta = row['ta'].capitalize()
     reg = row['reg']
     # update the games DB
     # need game_id, reg, pol, runde, to
@@ -33,5 +33,6 @@ class policy(policyTemplate):
     row = app_tables.games.get(game_id=cid, pol=pol, runde=runde, ta=ta, reg=reg)
     print (row)
     row['wert'] = float(self.slider_1.value)
+    a=2
 
   

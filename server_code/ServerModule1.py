@@ -431,6 +431,14 @@ def build_plot(var_row, regidx, cap):
   return fdz
 
 @anvil.server.callable
+def launch_get_plots_for_slots(region, single_ta):
+  """Fire off the training task, returning the Task object to the client."""
+  task = anvil.server.launch_background_task('get_plots_for_slots', region, single_ta)
+  time.sleep(2)
+  return task
+
+@anvil.server.background_task
+@anvil.server.callable
 def get_plots_for_slots(region, single_ta):
     global fcol_in_mdf, mdf
     mdf = read_mdf25()

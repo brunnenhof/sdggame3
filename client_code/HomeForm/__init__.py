@@ -16,13 +16,6 @@ class HomeForm(HomeFormTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
-    tasks = anvil.server.call('get_existing_tasks')
-    if len(tasks) > 0:
-      # Keep track of the latest task
-      self.task = tasks[-1]
-      # Turn on the progress display
-      self.timer_1.interval = 0.5
-
     self.card_holder_top.visible = True
     self.card_holder_admin.visible = False
 #    self.pol_card.visible = True

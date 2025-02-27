@@ -29,11 +29,6 @@ components:
     name: card_holder_top
     properties: {col_widths: '{"ZFZTYJ":20,"TBBCAU":20,"YKBQVV":20}', role: outlined-card}
     type: ColumnPanel
-  - event_bindings: {click: load_mdf25_as_background_click}
-    layout_properties: {grid_position: 'ONVKIF,TNKULD'}
-    name: load_mdf25_as_background
-    properties: {align: center, text: load_mdf25_as_background}
-    type: form:dep_pm2g5wpt33sld:_Components.Button
   - components:
     - layout_properties: {grid_position: 'QRLSDT,QUVHER'}
       name: admin_header

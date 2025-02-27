@@ -17,26 +17,19 @@ class policy(policyTemplate):
     self.slide_max.text = self.item['pol_gl']
     self.pol_abbr.text = self.item['pol_abbr']
     
-    
   def slider_1_change(self, **event_args):
     self.slide_val.text = self.slider_1.value
 
   def slider_1_change_end(self, **event_args):
-    global your_game_id
-    ll = your_game_id
     row = app_tables.globs.get()
-    print(row)
+    cid = row['game_id']
+    ta = row['ta']
+    reg = row['reg']
     # update the games DB
     # need game_id, reg, pol, runde, to
     # set wert
-    lcid = cid
-    cid = 'JYENF-616-529'
-    pol = self.pol_abbr
-    print(cid)
-    print(pol)
+    pol = self.pol_abbr.text
     runde = 1
-    ta = 'Poverty'
-    reg = 'us'
     row = app_tables.games.get(game_id=cid, pol=pol, runde=runde, ta=ta, reg=reg)
     print (row)
     row['wert'] = float(self.slider_1.value)

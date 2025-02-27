@@ -231,7 +231,6 @@ def get_play_25():
   pass
 
 #@anvil.server.callable
-@anvil.server.background_task
 def load(datei):
   global mdf
   print('IN load(datei) ' + datei)
@@ -284,18 +283,12 @@ def read_ch():
     ch = np.load(ff)
   return ch
   
-@anvil.server.background_task
 def read_fcol_in_mdf():
   global fcol_in_mdf
   with open(data_files['fcol_in_mdf.json']) as ff:
     fcol_in_mdf = json.load(ff)
   return fcol_in_mdf
 
-@anvil.server.background_task
-def crawl(sitemap_url):
-  print('Crawling: ' + sitemap_url)
-
-@anvil.server.background_task
 def read_mdf25():
   global mdf
   print('IN read_mdf25')
@@ -303,28 +296,6 @@ def read_mdf25():
     mdf_read = json.load(ff)
     mdf = np.array(mdf_read)
   return mdf
-
-def launch_read_mdf25():
-  """Launch a single crawler background task."""
-  global mdf
-  print ('IN launch_read_mdf25')
-  task = anvil.server.launch_background_task('read_mdf25')
-  print (task.get_state())
-  while task.is_running():
-    bb = 22
-  print(task.is_completed())
-  a, b = mdf.shape()
-  print (str(a) + ' ' + str(b))
-  return task
-
-def pickOLD(ys, x, y):
-  o = []
-  for i in range(0, len(ys)):
-    y_in_range = ys[i]
-    idx = np.where(x == y_in_range)[0]
-    lo = y[idx]
-    o.append(lo[0])
-  return o
 
 def pick(ys, x, y):
     o = []
@@ -343,7 +314,6 @@ def pick(ys, x, y):
             o.append(np.nan)
     return o
 
-@anvil.server.background_task
 def make_png(df, row, pyidx, end_yr, my_title):
     fig, ax = plt.subplots()
     pct = row['pct']
@@ -439,7 +409,6 @@ def make_png(df, row, pyidx, end_yr, my_title):
     return anvil.mpl_util.plot_image()
 #    a = 2
 
-@anvil.server.background_task
 def build_plot(var_row, regidx, cap):
   global fcol_in_mdf, mdf
   var_l = var_row['vensim_name']
@@ -461,14 +430,10 @@ def build_plot(var_row, regidx, cap):
   fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cap}
   return fdz
 
-
-@anvil.server.background_task
 @anvil.server.callable
 def get_plots_for_slots(region, single_ta):
     global fcol_in_mdf, mdf
-    t = launch_read_mdf25()
-    print (t)
-#    mdf = read_mdf25()
+    mdf = read_mdf25()
     fcol_in_mdf = read_fcol_in_mdf()
   # region as 'nn' single ta as 'poverty', etc
     print(region + ' ' + single_ta)

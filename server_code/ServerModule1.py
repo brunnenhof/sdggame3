@@ -234,6 +234,7 @@ def get_play_25():
 def load(datei):
   global mdf
   print('IN load(datei) ' + datei)
+  mdf = data_files['mdf2025.npy']
   with open(data_files[datei]) as ff:
     mdf_read = json.load(ff)
     mdf = np.array(mdf_read)
@@ -243,7 +244,7 @@ def load(datei):
 def launch_load_lmab(datei):
   global mdf
   print ('IN launch_load_lmab')
-  task = anvil.server.launch_background_task('load', datei)
+  task = anvil.server.launch_background_task('load', 'mdf2025.npy')
   print (task.get_state())
   while task.is_running():
     bb = 22

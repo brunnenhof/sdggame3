@@ -412,6 +412,7 @@ def make_png(df, row, pyidx, end_yr, my_title):
 
 def build_plot(var_row, regidx, cap):
   global fcol_in_mdf, mdf
+  start_time = time.time()
   var_l = var_row['vensim_name']
   var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
   varx = var_row['id']
@@ -429,6 +430,8 @@ def build_plot(var_row, regidx, cap):
   cur_sub = var_row['indicator']
   cur_fig = make_png(dfv, var_row, regidx, 2025, cur_sub)
   fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cap}
+  end_time = time.time() - start_time
+  print ('creating matplotlib for ' + var_l + ': '+ str(end_time))
   return fdz
 
 @anvil.server.callable
@@ -470,6 +473,7 @@ def get_plots_for_slots(region, single_ta):
 
 @anvil.server.callable
 def put_budget(yr, cid):
+  app_tables.budget.delete_all_rows()
   start_time = time.time()
   regs = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
   fcol_in_mdf = read_fcol_in_mdf()
@@ -508,16 +512,10 @@ def put_budget(yr, cid):
     cener.append(mdf[rx, idx + i]) # energy
 
   for r in regs:
-    row = app_tables.budget.add_row(game_id=cid,reg=r, runde=runde, Bud_all_TA=ba[0],
-          Cost_poverty=cpov[0], Cost_inequality=cineq[0], Cost_empowerment=cemp[0],
-          Cost_food=cfood[0], Cost_energy=cener[0])
-    for i in range(1,10):
-      row['Bud_all_TA'] = ba[i]
-      row['Cost_poverty'] = cpov[i]
-      row['Cost_inequality'] = cineq[i]
-      row['Cost_food'] = cfood[i]
-      row['Cost_energy'] = cener[i]
-      row['Cost_empowerment'] = cemp[i]
+    for i in range(0,10):
+      row = app_tables.budget.add_row(yr=yr, game_id=cid,reg=r, runde=runde, Bud_all_TA=ba[i],
+          Cost_poverty=cpov[i], Cost_inequality=cineq[i], Cost_empowerment=cemp[i],
+          Cost_food=cfood[i], Cost_energy=cener[i])
   end_time = time.time() - start_time
   print('time to put budget ' + str(end_time))
   

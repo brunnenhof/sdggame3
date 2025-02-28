@@ -483,12 +483,13 @@ class HomeForm(HomeFormTemplate):
       slots = anvil.server.call('get_plots_for_slots', which_region, which_ministy)
       self.repeating_plots_panel.items = slots
       self.pol_card.visible = True
-      budget, pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministy, 2025, cid)
+      pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministy, 2025, cid)
 #      print(pol_list)
       app_tables.globs.delete_all_rows()
       app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministy, 
                                reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
       self.pol_repeat.items = pol_list
+      anvil.server.call('put_budget', 2025, cid)
 
 #      self.repeating_plots_panel.visible = True
 

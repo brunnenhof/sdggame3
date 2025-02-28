@@ -290,9 +290,12 @@ def read_fcol_in_mdf():
 
 def read_mdf25():
   global mdf
+  start_time = time.time()
   print('IN read_mdf25')
   f = data_files['mdf2025.npy']
   mdf = np.load(f)
+  end_time =  time.time() - start_time
+  print(' time to load mdf2025.npy ' + str(end_time))
   return mdf
 
 def pick(ys, x, y):
@@ -465,10 +468,12 @@ def get_plots_for_slots(region, single_ta):
       plot_list.append(fdz)
     return plot_list
 
-def get_budget(yr, cid):
-  global mdf
+@anvil.server.callable
+def put_budget(yr, cid):
+  start_time = time.time()
   regs = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
   fcol_in_mdf = read_fcol_in_mdf()
+  mdf = read_mdf25()
   if yr == 2025:
 #    mdf = read_mdf25()
     rx = 1441 - 321
@@ -479,10 +484,12 @@ def get_budget(yr, cid):
   idx = fcol_in_mdf['Budget_for_all_TA_per_region']
   for i in range(0,10):
     ba.append(mdf[rx, idx + i])
+  print(ba)
   cpov = []
   idx = fcol_in_mdf['Cost_per_regional_poverty_policy']
   for i in range(10):
     cpov.append(mdf[rx, idx + i]) # poverty
+  print(cpov)
   cineq = [] 
   idx = fcol_in_mdf['Cost_per_regional_inequality_policy']
   for i in range(10):
@@ -511,7 +518,8 @@ def get_budget(yr, cid):
       row['Cost_food'] = cfood[i]
       row['Cost_energy'] = cener[i]
       row['Cost_empowerment'] = cemp[i]
-
+  end_time = time.time() - start_time
+  print('time to put budget ' + str(end_time))
   
 @anvil.server.callable
 def get_policy_budgets(reg, ta, yr, cid):
@@ -524,7 +532,6 @@ def get_policy_budgets(reg, ta, yr, cid):
   row_globs = app_tables.globs.get()
   ta = ta.capitalize()
 #  print(ta)
-  budget = get_budget(2025, cid)
 #  budget = 999
 #  print(budget)
   pol_list = []

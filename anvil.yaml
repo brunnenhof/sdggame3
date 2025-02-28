@@ -3,28 +3,28 @@ db_schema:
   budget:
     client: none
     columns:
-    - admin_ui: {order: 0, width: 200}
+    - admin_ui: {order: 0, width: 83}
       name: yr
       type: number
-    - admin_ui: {order: 1, width: 200}
+    - admin_ui: {order: 1, width: 113}
       name: Bud_all_TA
       type: number
-    - admin_ui: {order: 3, width: 200}
+    - admin_ui: {order: 3, width: 128}
       name: Cost_inequality
       type: number
-    - admin_ui: {order: 4, width: 200}
+    - admin_ui: {order: 4, width: 118}
       name: Cost_poverty
       type: number
-    - admin_ui: {order: 5, width: 200}
+    - admin_ui: {order: 5, width: 110}
       name: Cost_empowerment
       type: number
-    - admin_ui: {order: 6, width: 200}
+    - admin_ui: {order: 6, width: 103}
       name: Cost_food
       type: number
-    - admin_ui: {order: 7, width: 200}
+    - admin_ui: {order: 7, width: 119}
       name: Cost_energy
       type: number
-    - admin_ui: {order: 8, width: 200}
+    - admin_ui: {order: 8, width: 53}
       name: reg
       type: string
     - admin_ui: {order: 9, width: 200}

@@ -14,6 +14,15 @@ import anvil.mpl_util
 import string
 import numpy as np
 
+def timeitt(f):
+    def timed(*args, **kw):
+        ts = time.time()
+        result = f(*args, **kw)
+        te = time.time()
+        print ('func:%r args:[%r, %r] took: %2.4f sec' %(f.__name__, args, kw, te - ts))
+        return result
+    return timed
+  
 @anvil.server.callable
 def upload_sdg_var_change(data):
   # Delete all rows in the table
@@ -145,8 +154,6 @@ def set_up_role_assignments(game_id, npbhp, regions):
         free = True
       app_tables.fr2.add_row(free=free, gameID=game_id, region=i, ta=j)
 
-
-
 def get_sql(table, col):
   if table == 'regions':
     names = [r[col] for r in app_tables.regions.search()]
@@ -225,34 +232,6 @@ def get_ministry_long(which_ministry):
   m_long = row['longname']
   return m_long
 
-def get_play_25():
-  pass
-
-#@anvil.server.callable
-def load(datei):
-  global mdf
-  print('IN load(datei) ' + datei)
-  mdf = data_files['mdf2025.npy']
-  with open(data_files[datei]) as ff:
-    mdf_read = json.load(ff)
-    mdf = np.array(mdf_read)
-  return mdf
-
-@anvil.server.callable
-def launch_load_lmab(datei):
-  global mdf
-  print ('IN launch_load_lmab')
-  task = anvil.server.launch_background_task('load', 'mdf2025.npy')
-  print (task.get_state())
-  while task.is_running():
-    bb = 22
-  print(task.is_completed())
-  a, b = mdf.shape()
-  print (str(a) + ' ' + str(b))
-  return task
-
-  
-
 def get_reg_x_name_colx(region):
   row = app_tables.regions.get(abbreviation=region)
   long = row['name']
@@ -276,10 +255,11 @@ def generate_mpl():
   fig.tight_layout(pad=15)
   return anvil.mpl_util.plot_image()
 
+@timeitt
 def read_ch():
   global ch
-  with open(data_files['ch.npy']) as ff:
-    ch = np.load(ff)
+  f = data_files['ch.npy']
+  ch = np.load(f)
   return ch
   
 def read_fcol_in_mdf():
@@ -288,14 +268,12 @@ def read_fcol_in_mdf():
     fcol_in_mdf = json.load(ff)
   return fcol_in_mdf
 
-def read_mdf25():
+@timeitt
+def read_mdf25(datei):
   global mdf
-  start_time = time.time()
-  print('IN read_mdf25')
-  f = data_files['mdf2025.npy']
+  print('IN read_mdf25 loading ' + datei)
+  f = data_files[datei]
   mdf = np.load(f)
-  end_time =  time.time() - start_time
-  print(' time to load mdf2025.npy ' + str(end_time))
   return mdf
 
 def pick(ys, x, y):
@@ -315,6 +293,7 @@ def pick(ys, x, y):
             o.append(np.nan)
     return o
 
+@timeitt
 def make_png(df, row, pyidx, end_yr, my_title):
     fig, ax = plt.subplots()
     pct = row['pct']
@@ -410,9 +389,9 @@ def make_png(df, row, pyidx, end_yr, my_title):
     return anvil.mpl_util.plot_image()
 #    a = 2
 
+@timeitt
 def build_plot(var_row, regidx, cap):
   global fcol_in_mdf, mdf
-  start_time = time.time()
   var_l = var_row['vensim_name']
   var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
   varx = var_row['id']
@@ -430,8 +409,6 @@ def build_plot(var_row, regidx, cap):
   cur_sub = var_row['indicator']
   cur_fig = make_png(dfv, var_row, regidx, 2025, cur_sub)
   fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cap}
-  end_time = time.time() - start_time
-  print ('creating matplotlib for ' + var_l + ': '+ str(end_time))
   return fdz
 
 @anvil.server.callable
@@ -445,7 +422,7 @@ def launch_get_plots_for_slots(region, single_ta):
 @anvil.server.callable
 def get_plots_for_slots(region, single_ta):
     global fcol_in_mdf, mdf
-    mdf = read_mdf25()
+    mdf = read_mdf25('mdf2025.npy')
     fcol_in_mdf = read_fcol_in_mdf()
   # region as 'nn' single ta as 'poverty', etc
     print(region + ' ' + single_ta)
@@ -471,15 +448,14 @@ def get_plots_for_slots(region, single_ta):
       plot_list.append(fdz)
     return plot_list
 
+@timeitt
 @anvil.server.callable
 def put_budget(yr, cid):
   app_tables.budget.delete_all_rows()
-  start_time = time.time()
   regs = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
   fcol_in_mdf = read_fcol_in_mdf()
-  mdf = read_mdf25()
+  mdf = read_mdf25('mdf2025.npy')
   if yr == 2025:
-#    mdf = read_mdf25()
     rx = 1441 - 321
     runde = 1
   else:
@@ -511,13 +487,10 @@ def put_budget(yr, cid):
   for i in range(10):
     cener.append(mdf[rx, idx + i]) # energy
 
-  for r in regs:
-    for i in range(0,10):
-      row = app_tables.budget.add_row(yr=yr, game_id=cid,reg=r, runde=runde, Bud_all_TA=ba[i],
+  for i in range(0,10):
+    row = app_tables.budget.add_row(yr=yr, game_id=cid,reg=[i], runde=runde, Bud_all_TA=ba[i],
           Cost_poverty=cpov[i], Cost_inequality=cineq[i], Cost_empowerment=cemp[i],
           Cost_food=cfood[i], Cost_energy=cener[i])
-  end_time = time.time() - start_time
-  print('time to put budget ' + str(end_time))
   
 @anvil.server.callable
 def get_policy_budgets(reg, ta, yr, cid):
@@ -548,8 +521,3 @@ def get_policy_budgets(reg, ta, yr, cid):
 #  print(pol_list)
   return pol_list
 
-@anvil.server.callable
-def get_existing_tasks():
-  return [
-    t for t in anvil.server.list_background_tasks() if t.get_task_name() == 'load'
-  ]

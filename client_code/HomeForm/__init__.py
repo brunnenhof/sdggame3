@@ -10,7 +10,17 @@ from ..apg import apg
 import random
 import string
 import datetime
+import time
 
+def timeitt_client(f):
+    def timed(*args, **kw):
+        ts = time.time()
+        result = f(*args, **kw)
+        te = time.time()
+        print ('func:%r args:[%r, %r] took: %2.4f sec' %(f.__name__, args, kw, te - ts))
+        return result
+    return timed
+  
 class HomeForm(HomeFormTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
@@ -127,10 +137,8 @@ class HomeForm(HomeFormTemplate):
     self.label_glb_game_id.visible = True
     self.box_glb_text.visible = True
     self.box_glb_text.text = cid
-    #set_new_game = anvil.server.call('start_new_game', cid)
     self.btn_new_game2.visible = False
     self.btn_continue_game.visible = False
-#    self.select_regions_label.visible = True
     self.gm_reg_selection_card.visible = True
 
   def button_submit_not_played_click(self, **event_args):
@@ -322,8 +330,6 @@ class HomeForm(HomeFormTemplate):
     elif reg == 'se':
       self.rb_se2.selected = True      
 
-    
-    
   def rb_me2_clicked(self, **event_args):
     global cid
     print ('in me2 btn ' + cid)
@@ -491,8 +497,6 @@ class HomeForm(HomeFormTemplate):
       self.pol_repeat.items = pol_list
       anvil.server.call('put_budget', 2025, cid)
 
-#      self.repeating_plots_panel.visible = True
-
   def rb_la2_clicked(self, **event_args):
     global cid
 #    print ('in la2 btn ' + cid)
@@ -509,27 +513,6 @@ class HomeForm(HomeFormTemplate):
     budget, pol_list = anvil.server.call('get_policy_budgets', '1', '2', 2025)
     print(pol_list)
     self.pol_repeat.items = pol_list
-
-  def load_mdf25_as_background_click(self, **event_args):
-    """This method is called when the component is clicked."""
-    self.task = anvil.server.call('launch_load_lmab', 'mdf25.json')
-    self.timer_1.interval = 0.5
-    print(self.task)
-    a=2
-
-  def timer_1_tick(self, **event_args):
-    """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-    with anvil.server.no_loading_indicator:
-      # Show progress
-      state = self.task.get_state()
-#      n_complete, total_urls = state.get('n_complete', 0), state.get('total_urls', 0)
-#      self.label_num_indexed.text = n_complete
-#      self.label_total_pages.text = total_urls
-  
-      # Switch Timer off if process is complete
-      if not self.task.is_running():
-        self.timer_1.interval = 0
-
 
 
  

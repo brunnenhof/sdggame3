@@ -20,9 +20,8 @@ class policy(policyTemplate):
   def slider_1_change(self, **event_args):
     self.slide_val.text = self.slider_1.value
 
-  def get_budget_for_region(self, reg):
-    global budget
-    lb = budget
+  def get_budget_for_region(self, reg, cid, yr):
+    lb = app_tables.budget.search(reg=reg, game_id=cid, yr=yr)
     print(lb)
     a = 2
     
@@ -37,11 +36,16 @@ class policy(policyTemplate):
     # set wert
     pol = self.pol_abbr.text
     runde = 1
+    if runde==1:
+      yr = 2025
+    else:
+      alert("OOPS in slider_1_change_end: forgot to set YEAR")
     row = app_tables.games.get(game_id=cid, pol=pol, runde=runde, ta=ta, reg=reg)
     print (row)
     row['wert'] = float(self.slider_1.value)
     # now I need to get the percentage
-    lb = self.get_budget_for_region(reg)
+    lb = app_tables.budget.search(reg=reg, game_id=cid, yr=yr)
+    lb = self.get_budget_for_region(reg, cid, 2025)
     a=2
 
   

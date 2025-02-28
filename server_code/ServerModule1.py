@@ -6,7 +6,6 @@ from anvil.tables import app_tables
 import anvil.server
 import json
 import pandas as pd
-import csv
 import datetime
 import random
 import time
@@ -14,8 +13,6 @@ import matplotlib.pyplot as plt
 import anvil.mpl_util
 import string
 import numpy as np
-import pickle
-import .
 
 @anvil.server.callable
 def upload_sdg_var_change(data):

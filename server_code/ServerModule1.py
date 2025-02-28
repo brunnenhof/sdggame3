@@ -14,6 +14,15 @@ import anvil.mpl_util
 import string
 import numpy as np
 
+def timeitt(f):
+    def timed(*args, **kw):
+        ts = time.time()
+        result = f(*args, **kw)
+        te = time.time()
+        print ('func:%r args:[%r, %r] took: %2.4f sec' %(f.__name__, args, kw, te - ts))
+        return result
+    return timed
+  
 @anvil.server.callable
 def upload_sdg_var_change(data):
   # Delete all rows in the table
@@ -288,14 +297,12 @@ def read_fcol_in_mdf():
     fcol_in_mdf = json.load(ff)
   return fcol_in_mdf
 
+@timeitt
 def read_mdf25():
   global mdf
-  start_time = time.time()
   print('IN read_mdf25')
   f = data_files['mdf2025.npy']
   mdf = np.load(f)
-  end_time =  time.time() - start_time
-  print(' time to load mdf2025.npy ' + str(end_time))
   return mdf
 
 def pick(ys, x, y):
@@ -315,6 +322,7 @@ def pick(ys, x, y):
             o.append(np.nan)
     return o
 
+@timeitt
 def make_png(df, row, pyidx, end_yr, my_title):
     fig, ax = plt.subplots()
     pct = row['pct']
@@ -410,9 +418,9 @@ def make_png(df, row, pyidx, end_yr, my_title):
     return anvil.mpl_util.plot_image()
 #    a = 2
 
+@timeitt
 def build_plot(var_row, regidx, cap):
   global fcol_in_mdf, mdf
-  start_time = time.time()
   var_l = var_row['vensim_name']
   var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
   varx = var_row['id']
@@ -430,8 +438,6 @@ def build_plot(var_row, regidx, cap):
   cur_sub = var_row['indicator']
   cur_fig = make_png(dfv, var_row, regidx, 2025, cur_sub)
   fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cap}
-  end_time = time.time() - start_time
-  print ('creating matplotlib for ' + var_l + ': '+ str(end_time))
   return fdz
 
 @anvil.server.callable

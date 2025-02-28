@@ -476,8 +476,12 @@ def get_budget(yr):
     rx = 1441 - 321
   else:
     print("Forgot to add reading later mdfs")
+  
   idx = fcol_in_mdf['Budget_for_all_TA_per_region']
+  app_tables.budget.add_row(game_id=cid,reg='us', Bud_all_TA=)
   for i in range(10):
+
+    
     budget.append(mdf[rx, idx + i]) # region
   idx = fcol_in_mdf['Cost_per_regional_poverty_policy']
   for i in range(10):

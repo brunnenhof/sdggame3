@@ -1,5 +1,34 @@
 allow_embedding: false
 db_schema:
+  budget:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: yr
+      type: number
+    - admin_ui: {order: 1, width: 200}
+      name: Bud_all_TA
+      type: number
+    - admin_ui: {order: 3, width: 200}
+      name: Cost_inequality
+      type: number
+    - admin_ui: {order: 4, width: 200}
+      name: Cost_poverty
+      type: number
+    - admin_ui: {order: 5, width: 200}
+      name: Cost_empowerment
+      type: number
+    - admin_ui: {order: 6, width: 200}
+      name: Cost_food
+      type: number
+    - admin_ui: {order: 7, width: 200}
+      name: Cost_energy
+      type: number
+    - admin_ui: {order: 8, width: 200}
+      name: reg
+      type: string
+    server: full
+    title: budget
   files:
     client: none
     columns:

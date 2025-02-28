@@ -468,10 +468,11 @@ def get_plots_for_slots(region, single_ta):
     return plot_list
 
 def get_budget(yr):
+  global mdf
   fcol_in_mdf = read_fcol_in_mdf()
   budget = []
   if yr == 2025:
-    mdf = read_mdf25()
+#    mdf = read_mdf25()
     rx = 1441 - 321
   else:
     print("Forgot to add reading later mdfs")

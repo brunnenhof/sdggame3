@@ -20,7 +20,7 @@ class policy(policyTemplate):
   def slider_1_change(self, **event_args):
     self.slide_val.text = self.slider_1.value
 
-  def get_budget_for_region(reg):
+  def get_budget_for_region(self, reg):
     global budget
     lb = budget
     print(lb)

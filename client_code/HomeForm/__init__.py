@@ -456,7 +456,7 @@ class HomeForm(HomeFormTemplate):
     return True
 
   def submit_role_click(self, **event_args):
-    global cid, your_game_id
+    global cid, your_game_id, budget
     reg = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
     tas = ['poverty', 'inequality', 'empowerment', 'food', 'energy', 'future']
     which_ministy = self.minstry_clicked()
@@ -513,7 +513,6 @@ class HomeForm(HomeFormTemplate):
     """This method is called when the component is clicked."""
     self.task = anvil.server.call('launch_load_lmab', 'mdf25.json')
     self.timer_1.interval = 0.5
-    
     print(self.task)
     a=2
 

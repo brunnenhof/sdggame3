@@ -293,9 +293,8 @@ def read_fcol_in_mdf():
 def read_mdf25():
   global mdf
   print('IN read_mdf25')
-  with open(data_files['mdf25.json']) as ff:
-    mdf_read = json.load(ff)
-    mdf = np.array(mdf_read)
+  f = data_files['mdf2025.npy']
+  mdf = np.load(f)
   return mdf
 
 def pick(ys, x, y):
@@ -509,8 +508,8 @@ def get_policy_budgets(reg, ta, yr):
 #  print(reg)
   ta = ta.capitalize()
 #  print(ta)
-#  budget = get_budget(2025)
-  budget = 999
+  budget = get_budget(2025)
+#  budget = 999
 #  print(budget)
   pol_list = []
   pols = app_tables.policies.search(ta=ta)
@@ -523,7 +522,6 @@ def get_policy_budgets(reg, ta, yr):
     pol_tltl = pol['tltl']
     pol_gl = pol['gl']
     pol_abbr = pol['abbreviation']
-    
     fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl, 'pol_abbr' : pol_abbr}
     pol_list.append(fdz)
 #  print(pol_list)

@@ -20,7 +20,14 @@ class policy(policyTemplate):
   def slider_1_change(self, **event_args):
     self.slide_val.text = self.slider_1.value
 
+  def get_budget_for_region(reg):
+    global budget
+    lb = budget
+    print(lb)
+    a = 2
+    
   def slider_1_change_end(self, **event_args):
+    global budget
     row = app_tables.globs.get()
     cid = row['game_id']
     ta = row['ta'].capitalize()
@@ -33,6 +40,8 @@ class policy(policyTemplate):
     row = app_tables.games.get(game_id=cid, pol=pol, runde=runde, ta=ta, reg=reg)
     print (row)
     row['wert'] = float(self.slider_1.value)
+    # now I need to get the percentage
+    lb = self.get_budget_for_region(reg)
     a=2
 
   

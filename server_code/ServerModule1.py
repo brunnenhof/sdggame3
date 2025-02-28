@@ -514,7 +514,7 @@ def get_budget(yr, cid):
 
   
 @anvil.server.callable
-def get_policy_budgets(reg, ta, yr):
+def get_policy_budgets(reg, ta, yr, cid):
 #  regnames = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
 #  single_tas = ['energy', 'poverty', 'inequality', 'food', 'empowerment']
 #  reg = regnames[random.randint(0, len(regnames) - 1)]
@@ -524,7 +524,7 @@ def get_policy_budgets(reg, ta, yr):
   row_globs = app_tables.globs.get()
   ta = ta.capitalize()
 #  print(ta)
-  budget = get_budget(2025, globs.cid)
+  budget = get_budget(2025, cid)
 #  budget = 999
 #  print(budget)
   pol_list = []

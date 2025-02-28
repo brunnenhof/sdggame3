@@ -521,6 +521,7 @@ def get_policy_budgets(reg, ta, yr):
 #  ta = single_tas[random.randint(0, len(single_tas) - 1)]
 #    single_ta = 'empowerment'
 #  print(reg)
+  row_globs = app_tables.globs.get()
   ta = ta.capitalize()
 #  print(ta)
   budget = get_budget(2025, globs.cid)

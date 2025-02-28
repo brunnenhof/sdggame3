@@ -15,6 +15,7 @@ import anvil.mpl_util
 import string
 import numpy as np
 import pickle
+import .
 
 @anvil.server.callable
 def upload_sdg_var_change(data):
@@ -467,41 +468,53 @@ def get_plots_for_slots(region, single_ta):
       plot_list.append(fdz)
     return plot_list
 
-def get_budget(yr):
+def get_budget(yr, cid):
   global mdf
+  regs = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
   fcol_in_mdf = read_fcol_in_mdf()
-  budget = []
   if yr == 2025:
 #    mdf = read_mdf25()
     rx = 1441 - 321
+    runde = 1
   else:
     print("Forgot to add reading later mdfs")
-  
+  ba = []
   idx = fcol_in_mdf['Budget_for_all_TA_per_region']
-  app_tables.budget.add_row(game_id=cid,reg='us', Bud_all_TA=)
-  for i in range(10):
-
-    
-    budget.append(mdf[rx, idx + i]) # region
+  for i in range(0,10):
+    ba.append(mdf[rx, idx + i])
+  cpov = []
   idx = fcol_in_mdf['Cost_per_regional_poverty_policy']
   for i in range(10):
-    budget.append(mdf[rx, idx + i]) # poverty
+    cpov.append(mdf[rx, idx + i]) # poverty
+  cineq = [] 
   idx = fcol_in_mdf['Cost_per_regional_inequality_policy']
   for i in range(10):
-    budget.append(mdf[rx, idx + i]) # inequality
+    cineq.append(mdf[rx, idx + i]) # inequality
+  cemp = []
   idx = fcol_in_mdf['Cost_per_regional_empowerment_policy']
   for i in range(10):
-    budget.append(mdf[rx, idx + i]) # empowerment
+    cemp.append(mdf[rx, idx + i]) # empowerment
+  cfood = []
   idx = fcol_in_mdf['Cost_per_regional_food_policy']
   for i in range(10):
-    budget.append(mdf[rx, idx + i]) # food
+    cfood.append(mdf[rx, idx + i]) # food
+  cener = []
   idx = fcol_in_mdf['Cost_per_regional_energy_policy']
   for i in range(10):
-    budget.append(mdf[rx, idx + i]) # energy
+    cener.append(mdf[rx, idx + i]) # energy
 
-  Fraction_of_budget_available_for_policies = 0.5
-  budget.append(Fraction_of_budget_available_for_policies) # fraction
-  return budget
+  for r in regs:
+    row = app_tables.budget.add_row(game_id=cid,reg=r, runde=runde, Bud_all_TA=ba[0],
+          Cost_poverty=cpov[0], Cost_inequality=cineq[0], Cost_empowerment=cemp[0],
+          Cost_food=cfood[0], Cost_energy=cener[0])
+    for i in range(1,10):
+      row['Bud_all_TA'] = ba[i]
+      row['Cost_poverty'] = cpov[i]
+      row['Cost_inequality'] = cineq[i]
+      row['Cost_food'] = cfood[i]
+      row['Cost_energy'] = cener[i]
+      row['Cost_empowerment'] = cemp[i]
+
   
 @anvil.server.callable
 def get_policy_budgets(reg, ta, yr):
@@ -513,7 +526,7 @@ def get_policy_budgets(reg, ta, yr):
 #  print(reg)
   ta = ta.capitalize()
 #  print(ta)
-  budget = get_budget(2025)
+  budget = get_budget(2025, globs.cid)
 #  budget = 999
 #  print(budget)
   pol_list = []
@@ -530,7 +543,7 @@ def get_policy_budgets(reg, ta, yr):
     fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl, 'pol_abbr' : pol_abbr}
     pol_list.append(fdz)
 #  print(pol_list)
-  return budget, pol_list
+  return pol_list
 
 @anvil.server.callable
 def get_existing_tasks():

@@ -486,24 +486,25 @@ class HomeForm(HomeFormTemplate):
       self.your_ta.text = temp
 #      title, sub, fig, cap = anvil.server.call('load_plots', which_region, which_ministy)
       self.plot_card.visible = True
-      self.task = anvil.server.call('launch_get_plots_for_slots', which_region, which_ministy)
+      self.task = anvil.server.call('launch_put_plots_for_slots', your_game_id, which_region, which_ministy)
       self.label_aa.visible = True
 #      make something visible
-#      while self.task.is_running():
-#        self.label_aa.text = 'Generating plots and decision sheets ...'
-#      else:
-#        self.label_aa.visible = False
+      while not self.task.is_completed():
+        self.label_aa.text = 'Generating plots and decision sheets ...'
+      else:
+        self.label_aa.visible = False
 #        slots = self.task.get_state()['plots']
-      slots = anvil.server.call('get_plots_for_slots22', which_region, which_ministy)
-      self.repeating_plots_panel.items = slots
-      self.pol_card.visible = True
-      pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministy, 2025, cid)
+        rows = app_tables.plots.search(pers_game_id=your_game_id)
+        slots = [{key: r[key] for key in ["title", "subtitle", "cap", "fig"]} for r in app_tables.plots.search(pers_game_id=your_game_id)]
+        self.repeating_plots_panel.items = slots
+        self.pol_card.visible = True
+        pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministy, 2025, cid)
 #      print(pol_list)
-      app_tables.globs.delete_all_rows()
-      app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministy, 
+        app_tables.globs.delete_all_rows()
+        app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministy, 
                                reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
-      self.pol_repeat.items = pol_list
-      anvil.server.call('put_budget', 2025, cid)
+        self.pol_repeat.items = pol_list
+        anvil.server.call('put_budget', 2025, cid)
 
   def rb_la2_clicked(self, **event_args):
     global cid

@@ -190,6 +190,26 @@ db_schema:
       type: string
     server: full
     title: ministries
+  plots:
+    client: search
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: pers_game_id
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: title
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: subtitle
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      name: cap
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: fig
+      type: media
+    server: full
+    title: plots
   policies:
     client: search
     columns:

@@ -411,9 +411,9 @@ def build_plot(var_row, regidx, cap):
   return fdz
 
 @anvil.server.callable
-def launch_get_plots_for_slots(region, single_ta):
+def launch_put_plots_for_slots(pers_game_id, region, single_ta):
   """Fire off the training task, returning the Task object to the client."""
-  task = anvil.server.launch_background_task('get_plots_for_slots', region, single_ta)
+  task = anvil.server.launch_background_task('put_plots_for_slots', pers_game_id, region, single_ta)
   return task
 
 @anvil.server.background_task
@@ -451,40 +451,25 @@ def get_plots_for_slots(region, single_ta):
     anvil.server.task_state['plots'] = plot_list
 #    return plot_list
 
-@anvil.server.callable
-def get_plots_for_slots22(region, single_ta):
+@anvil.server.background_task
+def put_plots_for_slots(pers_game_id, region, single_ta):
     global fcol_in_mdf, mdf
-#    anvil.server.task_state['progress'] = 42
+    app_tables.plots.delete_all_rows(pers_game_id = pers_game_id)
     mdf = read_mdf25('mdf2025.npy')
     fcol_in_mdf = read_fcol_in_mdf()
-  # region as 'nn' single ta as 'poverty', etc
     print(region + ' ' + single_ta)
     regrow = app_tables.regions.get(abbreviation=region)
-#    sql = ("SELECT * FROM regions WHERE abbreviation = %s")
-#    conn = connect()
-#    with conn.cursor() as cur:
-#      cur.execute(sql, [region])
-#      row = cur.fetchone()
-#    regrow = row
     regidx = int(regrow['pyidx'])
     my_time = time.localtime()
     my_time_formatted = time.strftime("%a %d %b %G", my_time)
     foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
     cap = foot1 + ' on ' + my_time_formatted
     long, farbe = get_reg_x_name_colx(region)
-#  print(region + '  ' + long)
-#  print('    ' + single_ta)
     vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
-    plot_list = []
     for var_row in vars_info_rows:
       fdz = build_plot(var_row, regidx, cap)
-      plot_list.append(fdz)
-      print ('Printin type(fdz) fdz type(plot_list)')
-      print (type(fdz))
-      print(fdz)
-      print(type(plot_list))
-#    anvil.server.task_state['plots'] = plot_list
-    return plot_list
+      app_tables.plots.add_row(pers_game_id=pers_game_id, title=fdz['title'], subtitle=fdz['subtitle'],
+                              fig=fdz['fig'], cap=cap)
 
 @timeitt
 @anvil.server.callable

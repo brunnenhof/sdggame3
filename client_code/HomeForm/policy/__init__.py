@@ -44,8 +44,10 @@ class policy(policyTemplate):
     print (row)
     row['wert'] = float(self.slider_1.value)
     # now I need to get the percentage
-    lb = app_tables.budget.search(reg=reg, game_id=cid, yr=yr)
-    lb = self.get_budget_for_region(reg, cid, 2025)
+    cost = [r['name'] for r in app_tables.games.search()]
+    lb = app_tables.budget.get(reg=reg, game_id=cid, yr=yr)
+    bud = lb['Bud_all_TA']
+    
     a=2
 
   

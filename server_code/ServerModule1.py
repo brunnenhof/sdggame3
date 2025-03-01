@@ -403,7 +403,6 @@ def build_plot(var_row, regidx, cap):
     lx = idx + regidx # find location of variable in mdf with reg offset
 #    row = get_row_from_varl(var_l)
   print('IN build_plot, idx: ' + str(idx) + ' varl: ' + var_l)
-#        print('IN get_plots_for_slots, idx: ' + str(idx) + ' regidx: ' + str(regidx))
   dfv = mdf[:, [0, lx]]
   cur_title = 'ETI-' + str(int(var_row['sdg_nbr'])) + ': ' +var_row['sdg']
   cur_sub = var_row['indicator']
@@ -418,10 +417,9 @@ def launch_get_plots_for_slots(region, single_ta):
   return task
 
 @anvil.server.background_task
-@anvil.server.callable
 def get_plots_for_slots(region, single_ta):
     global fcol_in_mdf, mdf
-  
+#    anvil.server.task_state['progress'] = 42
     mdf = read_mdf25('mdf2025.npy')
     fcol_in_mdf = read_fcol_in_mdf()
   # region as 'nn' single ta as 'poverty', etc
@@ -446,6 +444,46 @@ def get_plots_for_slots(region, single_ta):
     for var_row in vars_info_rows:
       fdz = build_plot(var_row, regidx, cap)
       plot_list.append(fdz)
+      print ('Printin type(fdz) fdz type(plot_list)')
+      print (type(fdz))
+      print(fdz)
+      print(type(plot_list))
+    anvil.server.task_state['plots'] = plot_list
+#    return plot_list
+
+@anvil.server.callable
+def get_plots_for_slots22(region, single_ta):
+    global fcol_in_mdf, mdf
+#    anvil.server.task_state['progress'] = 42
+    mdf = read_mdf25('mdf2025.npy')
+    fcol_in_mdf = read_fcol_in_mdf()
+  # region as 'nn' single ta as 'poverty', etc
+    print(region + ' ' + single_ta)
+    regrow = app_tables.regions.get(abbreviation=region)
+#    sql = ("SELECT * FROM regions WHERE abbreviation = %s")
+#    conn = connect()
+#    with conn.cursor() as cur:
+#      cur.execute(sql, [region])
+#      row = cur.fetchone()
+#    regrow = row
+    regidx = int(regrow['pyidx'])
+    my_time = time.localtime()
+    my_time_formatted = time.strftime("%a %d %b %G", my_time)
+    foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
+    cap = foot1 + ' on ' + my_time_formatted
+    long, farbe = get_reg_x_name_colx(region)
+#  print(region + '  ' + long)
+#  print('    ' + single_ta)
+    vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
+    plot_list = []
+    for var_row in vars_info_rows:
+      fdz = build_plot(var_row, regidx, cap)
+      plot_list.append(fdz)
+      print ('Printin type(fdz) fdz type(plot_list)')
+      print (type(fdz))
+      print(fdz)
+      print(type(plot_list))
+#    anvil.server.task_state['plots'] = plot_list
     return plot_list
 
 @timeitt

@@ -44,10 +44,36 @@ class policy(policyTemplate):
     print (row)
     row['wert'] = float(self.slider_1.value)
     # now I need to get the percentage
-    cost_pov = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Poverty', reg=reg)]
+    pct_pov = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Poverty', reg=reg, runde=runde)]
+    pct_ineq = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Inequality', reg=reg, runde=runde)]
+    pct_emp = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Empowerment', reg=reg, runde=runde)]
+    pct_food = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Food', reg=reg, runde=runde)]
+    pct_ener = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Energy', reg=reg, runde=runde)]
+    tltl_pov = [r['tltl'] for r in app_tables.policies.search(ta='Poverty')]
+    gl_pov = [r['gl'] for r in app_tables.policies.search(ta='Poverty')]
     lb = app_tables.budget.get(reg=reg, game_id=cid, yr=yr)
     bud = lb['Bud_all_TA']
-    
+    max_cost_pov = lb['Cost_poverty']
+    cost_pov = 0
+    for i in range(0, len(pct_pov)):
+      nw = pct_pov[i] - tltl_pov[i]
+      nb = 0
+      nt = gl_pov[i] - tltl_pov[i]
+      pct_of_range = nw / (nt - nb)
+      cost_pov += max_cost_pov * pct_of_range
+    total_cost = cost_pov
+    pct_of_budget = total_cost / bud * 100
+    self.budget_constraint.text = pct_of_budget
+    if pct_of_budget > 100:
+      if pct_of_budget > 101:
+        pct_shown = int(pct_of_budget)
+      else:
+        pct_shown = round(pct_of_budget, 1)
+      self.budget_feedback.text = 'You are using ' + str(pct_shown) + '% of your regional budget!'
+      self.budget_feedback.foreground = 'red'
+    else:
+      self.budget_feedback.text = 'You are using' + str(pct_of_budget) + '% of your regional budget!'
+      self.budget_feedback.foreground = 'green'
     a=2
 
   

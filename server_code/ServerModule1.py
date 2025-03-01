@@ -415,13 +415,13 @@ def build_plot(var_row, regidx, cap):
 def launch_get_plots_for_slots(region, single_ta):
   """Fire off the training task, returning the Task object to the client."""
   task = anvil.server.launch_background_task('get_plots_for_slots', region, single_ta)
-  time.sleep(2)
   return task
 
 @anvil.server.background_task
 @anvil.server.callable
 def get_plots_for_slots(region, single_ta):
     global fcol_in_mdf, mdf
+  
     mdf = read_mdf25('mdf2025.npy')
     fcol_in_mdf = read_fcol_in_mdf()
   # region as 'nn' single ta as 'poverty', etc

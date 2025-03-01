@@ -488,7 +488,7 @@ def put_budget(yr, cid):
     cener.append(mdf[rx, idx + i]) # energy
 
   for i in range(0,10):
-    row = app_tables.budget.add_row(yr=yr, game_id=cid,reg=[i], runde=runde, Bud_all_TA=ba[i],
+    row = app_tables.budget.add_row(yr=yr, game_id=cid,reg=regs[i], runde=runde, Bud_all_TA=ba[i],
           Cost_poverty=cpov[i], Cost_inequality=cineq[i], Cost_empowerment=cemp[i],
           Cost_food=cfood[i], Cost_energy=cener[i])
   

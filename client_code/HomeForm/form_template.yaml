@@ -470,6 +470,10 @@ components:
       name: your_personal_gameID
       properties: {align: center, bold: true, text: Your personal Game ID}
       type: Label
+    - layout_properties: {grid_position: 'XQSGEP,FCZZXD'}
+      name: label_aa
+      properties: {align: center, bold: true, italic: true, visible: false}
+      type: form:dep_pm2g5wpt33sld:_Components.Text
     layout_properties: {grid_position: 'URSVVV,NMQDJX'}
     name: cplot
     properties: {role: outlined-card, visible: false}

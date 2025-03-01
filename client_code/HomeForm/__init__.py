@@ -486,7 +486,13 @@ class HomeForm(HomeFormTemplate):
       self.your_ta.text = temp
 #      title, sub, fig, cap = anvil.server.call('load_plots', which_region, which_ministy)
       self.plot_card.visible = True
-      slots = anvil.server.call('get_plots_for_slots', which_region, which_ministy)
+      self.task = anvil.server.call('launch_get_plots_for_slots', which_region, which_ministy)
+      make something visible
+      while self.task.is_running():
+        self.label_aa.text = 'Generating plots and decision sheets ...')
+      else:
+        aa = self.task.get_state()['slots']
+        slots = anvil.server.call('get_plots_for_slots', which_region, which_ministy)
       self.repeating_plots_panel.items = slots
       self.pol_card.visible = True
       pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministy, 2025, cid)

@@ -564,13 +564,198 @@ components:
       name: fut_invest_pct
       properties: {bold: true}
       type: form:dep_pm2g5wpt33sld:_Components.Text
+    - components:
+      - layout_properties: {grid_position: 'HIDMQC,JDSDTM'}
+        name: lab_pov
+        properties: {bold: true, text: Poverty}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG OGBLXS,OJCAIJ'}
+        name: ExPS_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG DVRIXQ,BMOSAT'}
+        name: LPB_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG RMXXEF,TGOGHL'}
+        name: LPBsplit_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG NOXIIA,TPVZFK'}
+        name: LPBgrant_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG MJFAXX,FMTIVO'}
+        name: FMPLDD_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG XKITVU,NOXPTM'}
+        name: TOW_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG QORSME,GJDKLZ'}
+        name: FPGDC_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG XGFJHX,FEGUNJ'}
+        name: Lfrac_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG YABTUZ,EMOCDD'}
+        name: SSDGR_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG FXHRMN,IJMYBK'}
+        name: tot_pov_lab
+        properties: {align: right, bold: true, text: Total investment plans against poverty}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG BXWCMI,MDKFLJ'}
+        name: divider_1
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Divider
+      - layout_properties: {grid_position: 'RSBATO,OMENDG ZOSRTS,UGYBYU'}
+        name: text_2
+        properties: {bold: true, text: Inequality}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG TXPZPO,YFBTBD'}
+        name: XtaxFrac_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG ETZTIP,WIPYGX'}
+        name: StrUP_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG WVKXLF,PQEDUC'}
+        name: WReaction_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG IOGPCC,MQHTVJ'}
+        name: ICTR_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG PQOMKW,IEXZHJ'}
+        name: IOITR_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG SLHUFA,HKUMJR'}
+        name: IWITR_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG HMJOLO,OBKUKP'}
+        name: Ctax_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG VBJHMS,PWIXOR'}
+        name: SGRPI_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG YSFZJZ,UVKZZK'}
+        name: XtaxCom_lab
+        properties: {align: right}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG DJDKIL,RIVYTM'}
+        name: tot_ineq_lab
+        properties: {align: right, bold: true, text: Total investment plans against inequality}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI IPDJBO,NWDCXH'}
+        name: ExPS_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI EDALNZ,QNLURY'}
+        name: LPB_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI GTUBCE,TCXJDK'}
+        name: LPBsplit_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI RRAONO,TJTIBV'}
+        name: LPBgrant_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI SKIQRE,TZBHEK'}
+        name: FMPLDD_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI RXRVZW,COFDVO'}
+        name: TOW_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI UNMUQW,QWTEYD'}
+        name: FPGDC_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI REVSNB,OUXVMN'}
+        name: Lfrac_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI JUGOAK,NZXDUE'}
+        name: SSDGR_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI EITTPS,WWZQYQ'}
+        name: tot_pov_value
+        properties: {bold: true}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI LUCKUE,VNROBU'}
+        name: divider_2
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Divider
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI TUKLHI,KCYPUF'}
+        name: text_3
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI GZDFLL,UZNEPF'}
+        name: XtaxFrac_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI OVFQHY,KKYZHX'}
+        name: StrUP_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI LFGPYO,DACFPR'}
+        name: WReaction_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI YADHID,UHHXNG'}
+        name: ICTR_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI DFISCA,KJLZQV'}
+        name: IOITR_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI GVBRLT,AJANIC'}
+        name: IWITR_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI ONDZDT,GQDMKE'}
+        name: Ctax_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI JQOCBT,BRYIEY'}
+        name: SGRPI_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI MRYPVX,CEVPIB'}
+        name: XtaxCom_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI QYMWEK,UQNNGI'}
+        name: tot_ineq_value
+        properties: {bold: true}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      layout_properties: {grid_position: 'ZYIVGV,LUACXI'}
+      name: column_panel_3
+      properties: {}
+      type: ColumnPanel
     - layout_properties: {grid_position: 'XINHCW,AJIWBQ'}
       name: fut_submit_all_pols
       properties: {align: center, icon: 'mi:file_save', text: Submit all policies for the current round}
       type: form:dep_pm2g5wpt33sld:_Components.Button
     layout_properties: {grid_position: 'MPMWKG,QVVTHF'}
     name: card_fut
-    properties: {col_widths: '{"IFHJWU":35,"HCCRAK":25}', role: outlined-card, visible: false}
+    properties: {col_widths: '{"IFHJWU":35,"HCCRAK":25}', role: outlined-card, visible: true}
     type: ColumnPanel
   layout_properties: {slot: default}
   name: content_panel

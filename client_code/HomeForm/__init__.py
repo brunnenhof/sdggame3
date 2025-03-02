@@ -461,27 +461,38 @@ class HomeForm(HomeFormTemplate):
       return False
     return True
 
-  def continue_with_non_future(self):
-    pass
+  def do_non_future(self, which_ministry, which_region):
+    self.pol_card.visible = True
+    pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministry, 2025, cid)
+#      print(pol_list)
+    app_tables.globs.delete_all_rows()
+    app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministry, 
+        reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
+    self.pol_repeat.items = pol_list
+    anvil.server.call('put_budget', 2025, cid)
 
-  def continue_with_future(self):
-    pass
+  def do_future(self, which_ministry, which_region):
+    self.card_fut.visible = True
+    fut_pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministry, 2025, cid)
+#      print(pol_list)
+    app_tables.globs.delete_all_rows()
+    app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministry, 
+        reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
+    self.pol_repeat.items = fut_pol_list
+#    anvil.server.call('put_budget', 2025, cid)
     
   def submit_role_click(self, **event_args):
     global cid, your_game_id, budget
+    which_ministry = self.minstry_clicked()
+    which_region = self.region_clicked()
     reg = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
     tas = ['poverty', 'inequality', 'empowerment', 'food', 'energy', 'future']
-    which_ministy = self.minstry_clicked()
-    which_region = self.region_clicked()
-    if which_ministy == 'future':
-      self.continue_with_future(cid, which_ministy, which_region )
-#    print('IN btn_submit_role_clicked')
-    save_ok = self.save_player_choice(cid, which_ministy, which_region)
+    save_ok = self.save_player_choice(cid, which_ministry, which_region)
     if save_ok:
       which_region_long  = anvil.server.call('get_reg_long_names', which_region)
       wrx = reg.index(which_region)
-      which_ministy_long = anvil.server.call('get_ministry_long', which_ministy)
-      wmx = tas.index(which_ministy)
+      which_ministy_long = anvil.server.call('get_ministry_long', which_ministry)
+      wmx = tas.index(which_ministry)
       your_game_id = cid + "-" + str(wrx) + str(wmx)
       msgid = "\nYour personal Game ID is:\n" + your_game_id + "\nPlease make a note of it!"
       msg = ("Congratulations, you have been confirmed as the Minister " + which_ministy_long + " in " + which_region_long + '.' + msgid)
@@ -502,17 +513,14 @@ class HomeForm(HomeFormTemplate):
       else:
         self.label_aa.visible = False
 #        slots = self.task.get_state()['plots']
-        rows = app_tables.plots.search(pers_game_id=your_game_id)
+#        rows = app_tables.plots.search(pers_game_id=your_game_id)
         slots = [{key: r[key] for key in ["title", "subtitle", "cap", "fig"]} for r in app_tables.plots.search(pers_game_id=your_game_id)]
         self.repeating_plots_panel.items = slots
-        self.pol_card.visible = True
-        pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministy, 2025, cid)
-#      print(pol_list)
-        app_tables.globs.delete_all_rows()
-        app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministy, 
-                               reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
-        self.pol_repeat.items = pol_list
-        anvil.server.call('put_budget', 2025, cid)
+      if which_ministry == 'future':
+        self.do_future(cid, which_ministry, which_region )
+      else:
+        self.do_non_future(cid, which_ministry, which_region )      
+#    print('IN btn_submit_role_clicked')
 
   def rb_la2_clicked(self, **event_args):
     global cid

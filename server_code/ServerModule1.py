@@ -318,7 +318,6 @@ def make_png(df, row, pyidx, end_yr, my_title):
     if int(row['id']) in [21]:  # pH  |
         ymin = plot_min
         ymax = plot_max
-
     abc = app_tables.regions.get(pyidx=pyidx)
 #    sql = ("SELECT * FROM regions WHERE pyidx = %s")
 #    conn = connect()
@@ -544,3 +543,31 @@ def get_policy_budgets(reg, ta, yr, cid):
 #  print(pol_list)
   return pol_list
 
+@anvil.server.callable
+def get_cost_info_for_future(reg, ta, yr, cid):
+#  regnames = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
+#  single_tas = ['energy', 'poverty', 'inequality', 'food', 'empowerment']
+#  reg = regnames[random.randint(0, len(regnames) - 1)]
+#  ta = single_tas[random.randint(0, len(single_tas) - 1)]
+#    single_ta = 'empowerment'
+#  print(reg)
+  row_globs = app_tables.globs.get()
+  ta = ta.capitalize()
+#  print(ta)
+#  budget = 999
+#  print(budget)
+  pol_list = []
+  pols = app_tables.policies.search(ta=ta)
+#  print(pols)
+  for pol in pols:
+    print(pol)
+    pol_name = pol['name']
+#    print(pol_name)
+    pol_expl = pol['expl']
+    pol_tltl = pol['tltl']
+    pol_gl = pol['gl']
+    pol_abbr = pol['abbreviation']
+    fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl, 'pol_abbr' : pol_abbr}
+    pol_list.append(fdz)
+#  print(pol_list)
+  return pol_list

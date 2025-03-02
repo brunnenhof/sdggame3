@@ -471,13 +471,14 @@ class HomeForm(HomeFormTemplate):
     self.pol_repeat.items = pol_list
     anvil.server.call('put_budget', 2025, cid)
 
-  def do_future(self, which_ministry, which_region):
+  def do_future(self, cid, which_ministry, which_region):
     self.card_fut.visible = True
-    fut_pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministry, 2025, cid)
+    self.fut_submit_all_pols.visible = False
+    fut_pol_list = anvil.server.call('get_cost_info_for_future', which_region, which_ministry, 2025, cid)
 #      print(pol_list)
-    app_tables.globs.delete_all_rows()
-    app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministry, 
-        reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
+#    app_tables.globs.delete_all_rows()
+#    app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministry, 
+#        reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
     self.fut_repeat_panel.items = fut_pol_list
 #    anvil.server.call('put_budget', 2025, cid)
     

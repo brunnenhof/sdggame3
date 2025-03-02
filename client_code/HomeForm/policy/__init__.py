@@ -54,7 +54,6 @@ class policy(policyTemplate):
     print (row)
     row['wert'] = float(self.slider_1.value)
     # now I need to get the percentage
-    forms = self.get_components()
 #    forms = self.repeating_panel.get_components()
     pct_pov = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Poverty', reg=reg, runde=runde)]
     pct_ineq = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Inequality', reg=reg, runde=runde)]
@@ -90,7 +89,6 @@ class policy(policyTemplate):
         pct_shown = str(int(pct_of_budget))
       else:
         pct_shown = round(pct_of_budget, 1)
-      forms[8].text = str(pct_shown)
       self.budget_constraint.foreground = 'red'
     else:
       if pct_of_budget > 1:
@@ -98,10 +96,6 @@ class policy(policyTemplate):
       else:
         pct_shown = round(pct_of_budget, 1)
       self.budget_constraint.text = pct_shown
-      forms[8].text = str(pct_shown)
-      for form in forms:
-        aa = form.item[]
-        a=2
       self.budget_constraint.foreground = 'green'
     a=2
 

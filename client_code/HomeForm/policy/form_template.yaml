@@ -73,6 +73,6 @@ components:
       padding: ['0', null, null, null]
   type: Label
 container:
-  properties: {col_widths: '{"GTFCPY":45,"JCGGMW":15,"KGFQRN":55,"LPUTHS":5,"VRGYDO":20,"WVSZVN":50,"PVAPIA":10}'}
+  properties: {col_widths: '{"GTFCPY":45,"JCGGMW":15,"KGFQRN":50,"LPUTHS":10,"VRGYDO":20,"WVSZVN":50,"PVAPIA":10}'}
   type: ColumnPanel
 is_package: true

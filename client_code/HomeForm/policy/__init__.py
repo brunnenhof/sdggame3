@@ -24,7 +24,17 @@ class policy(policyTemplate):
     lb = app_tables.budget.search(reg=reg, game_id=cid, yr=yr)
     print(lb)
     a = 2
-    
+
+  def calc_cost(self, pct, tltl, gl, maxc):
+    cost = 0
+    for i in range(0, len(pct)):
+      nw = pct[i] - tltl[i]
+      nb = 0
+      nt = gl[i] - tltl[i]
+      pct_of_range = nw / (nt - nb)
+      cost += maxc * pct_of_range
+    return cost
+
   def slider_1_change_end(self, **event_args):
     global budget
     row = app_tables.globs.get()
@@ -44,6 +54,8 @@ class policy(policyTemplate):
     print (row)
     row['wert'] = float(self.slider_1.value)
     # now I need to get the percentage
+    forms = self.get_components()
+#    forms = self.repeating_panel.get_components()
     pct_pov = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Poverty', reg=reg, runde=runde)]
     pct_ineq = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Inequality', reg=reg, runde=runde)]
     pct_emp = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Empowerment', reg=reg, runde=runde)]
@@ -51,29 +63,46 @@ class policy(policyTemplate):
     pct_ener = [r['wert'] for r in app_tables.games.search(game_id=cid, ta='Energy', reg=reg, runde=runde)]
     tltl_pov = [r['tltl'] for r in app_tables.policies.search(ta='Poverty')]
     gl_pov = [r['gl'] for r in app_tables.policies.search(ta='Poverty')]
+    tltl_emp = [r['tltl'] for r in app_tables.policies.search(ta='Empowerment')]
+    gl_emp = [r['gl'] for r in app_tables.policies.search(ta='Empowerment')]
+    tltl_ineq = [r['tltl'] for r in app_tables.policies.search(ta='Inequality')]
+    gl_ineq = [r['gl'] for r in app_tables.policies.search(ta='Inequality')]
+    tltl_food = [r['tltl'] for r in app_tables.policies.search(ta='Food')]
+    gl_food = [r['gl'] for r in app_tables.policies.search(ta='Food')]
+    tltl_ener = [r['tltl'] for r in app_tables.policies.search(ta='Energy')]
+    gl_ener = [r['gl'] for r in app_tables.policies.search(ta='Energy')]
     lb = app_tables.budget.get(reg=reg, game_id=cid, yr=yr)
     bud = lb['Bud_all_TA']
     max_cost_pov = lb['Cost_poverty']
-    cost_pov = 0
-    for i in range(0, len(pct_pov)):
-      nw = pct_pov[i] - tltl_pov[i]
-      nb = 0
-      nt = gl_pov[i] - tltl_pov[i]
-      pct_of_range = nw / (nt - nb)
-      cost_pov += max_cost_pov * pct_of_range
-    total_cost = cost_pov
+    max_cost_food = lb['Cost_food']
+    max_cost_ener = lb['Cost_energy']
+    max_cost_ineq = lb['Cost_inequality']
+    max_cost_emp = lb['Cost_empowerment']
+    cost_pov = self.calc_cost(pct_pov, tltl_pov, gl_pov, max_cost_pov)
+    cost_emp = self.calc_cost(pct_emp, tltl_emp, gl_emp, max_cost_emp)
+    cost_ineq = self.calc_cost(pct_ineq, tltl_ineq, gl_ineq, max_cost_ineq)
+    cost_food = self.calc_cost(pct_food, tltl_food, gl_food, max_cost_food)
+    cost_ener = self.calc_cost(pct_ener, tltl_ener, gl_ener, max_cost_ener)    
+    total_cost = cost_pov + cost_emp + cost_ener + cost_food + cost_ineq
     pct_of_budget = total_cost / bud * 100
-    self.budget_constraint.text = pct_of_budget
     if pct_of_budget > 100:
       if pct_of_budget > 101:
-        pct_shown = int(pct_of_budget)
+        pct_shown = str(int(pct_of_budget))
       else:
         pct_shown = round(pct_of_budget, 1)
-      self.budget_feedback.text = 'You are using ' + str(pct_shown) + '% of your regional budget!'
-      self.budget_feedback.foreground = 'red'
+      forms[8].text = str(pct_shown)
+      self.budget_constraint.foreground = 'red'
     else:
-      self.budget_feedback.text = 'You are using' + str(pct_of_budget) + '% of your regional budget!'
-      self.budget_feedback.foreground = 'green'
+      if pct_of_budget > 1:
+        pct_shown = str(int(pct_of_budget))
+      else:
+        pct_shown = round(pct_of_budget, 1)
+      self.budget_constraint.text = pct_shown
+      forms[8].text = str(pct_shown)
+      for form in forms:
+        aa = form.item[]
+        a=2
+      self.budget_constraint.foreground = 'green'
     a=2
 
   

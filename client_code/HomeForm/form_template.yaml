@@ -564,10 +564,6 @@ components:
       name: fut_invest_pct
       properties: {bold: true}
       type: form:dep_pm2g5wpt33sld:_Components.Text
-    - layout_properties: {grid_position: 'VGIRSB,BWPKMX'}
-      name: fut_repeat_panel
-      properties: {item_template: HomeForm.budget_for_fut}
-      type: RepeatingPanel
     - layout_properties: {grid_position: 'XINHCW,AJIWBQ'}
       name: fut_submit_all_pols
       properties: {align: center, icon: 'mi:file_save', text: Submit all policies for the current round}

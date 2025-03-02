@@ -461,7 +461,7 @@ class HomeForm(HomeFormTemplate):
       return False
     return True
 
-  def do_non_future(self, which_ministry, which_region):
+  def do_non_future(self, cid, which_ministry, which_region):
     self.pol_card.visible = True
     pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministry, 2025, cid)
 #      print(pol_list)

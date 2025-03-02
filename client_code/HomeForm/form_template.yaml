@@ -520,6 +520,62 @@ components:
     name: pol_card
     properties: {role: outlined-card, visible: false}
     type: ColumnPanel
+  - components:
+    - layout_properties: {grid_position: 'FSCZJY,MKZQWR'}
+      name: fut_info
+      properties:
+        content: "As Minister for the Future, you see the big picture. You also see how much your ministerial colleagues in your region plan to invest in total. \nIt is **your** task to keep the **total regional investment** within the budget. If *total investment* is **below** 100 % of the budget, all is well. If it is **above** 100 % of your budget, you need to advise your ministerial colleagues to reduce some of their investments. This is a difficult task where your moderating skills are needed. Good luck!\nMoney amounts are in constant (2025) Giga $ per year. A 'Giga' is 1,000,000,000 US Americans call this a Billion, others a Milliarde."
+      type: RichText
+    - components:
+      - layout_properties: {grid_position: 'VZLTNB,JBJPHD'}
+        name: fut_bud_label
+        properties: {text: 'Your total regional budget: '}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'NJLUVB,RMUBKG'}
+        name: fut_bud_lab2
+        properties:
+          spacing:
+            padding: [null, null, null, null]
+          style: body
+          text: 'The total investment plans of all your ministerial colleagues:'
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'HZEAKF,WGLBOH'}
+        name: fut_bud_lab3
+        properties:
+          scale: medium
+          spacing:
+            margin: [null, null, null, null]
+            padding: ['0', null, null, null]
+          text: 'Investment as % of budget:'
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      layout_properties: {grid_position: 'BPQRXX,IFHJWU'}
+      name: column_panel_2
+      properties: {}
+      type: ColumnPanel
+    - layout_properties: {grid_position: 'BPQRXX,HCCRAK NXPCUD,OZRVYQ'}
+      name: fut_bud_amount
+      properties: {bold: true}
+      type: form:dep_pm2g5wpt33sld:_Components.Text
+    - layout_properties: {grid_position: 'BPQRXX,HCCRAK BYJMVS,AHSTHZ'}
+      name: fut_invest
+      properties: {bold: true}
+      type: form:dep_pm2g5wpt33sld:_Components.Text
+    - layout_properties: {grid_position: 'BPQRXX,HCCRAK YZZSFW,MLMCZQ'}
+      name: fut_invest_pct
+      properties: {bold: true}
+      type: form:dep_pm2g5wpt33sld:_Components.Text
+    - layout_properties: {grid_position: 'VGIRSB,BWPKMX'}
+      name: fut_repeat_panel
+      properties: {item_template: HomeForm.budget_for_fut}
+      type: RepeatingPanel
+    - layout_properties: {grid_position: 'XINHCW,AJIWBQ'}
+      name: fut_submit_all_pols
+      properties: {align: center, icon: 'mi:file_save', text: Submit all policies for the current round}
+      type: form:dep_pm2g5wpt33sld:_Components.Button
+    layout_properties: {grid_position: 'MPMWKG,QVVTHF'}
+    name: card_fut
+    properties: {col_widths: '{"IFHJWU":35,"HCCRAK":25}', role: outlined-card, visible: false}
+    type: ColumnPanel
   layout_properties: {slot: default}
   name: content_panel
   properties: {col_widths: '{}'}

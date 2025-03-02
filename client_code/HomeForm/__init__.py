@@ -461,12 +461,20 @@ class HomeForm(HomeFormTemplate):
       return False
     return True
 
+  def continue_with_non_future(self):
+    pass
+
+  def continue_with_future(self):
+    pass
+    
   def submit_role_click(self, **event_args):
     global cid, your_game_id, budget
     reg = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
     tas = ['poverty', 'inequality', 'empowerment', 'food', 'energy', 'future']
     which_ministy = self.minstry_clicked()
     which_region = self.region_clicked()
+    if which_ministy == 'future':
+      self.continue_with_future(cid, which_ministy, which_region )
 #    print('IN btn_submit_role_clicked')
     save_ok = self.save_player_choice(cid, which_ministy, which_region)
     if save_ok:

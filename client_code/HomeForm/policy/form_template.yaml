@@ -5,7 +5,7 @@ components:
   type: Label
 - layout_properties: {grid_position: 'HCXOQF,WVSZVN'}
   name: pol_expl
-  properties: {background: 'theme:e4aorange light', font_size: 12}
+  properties: {background: 'theme:e4aorange light', font_size: 12, height: 69}
   type: TextArea
 - layout_properties: {grid_position: 'HCXOQF,PVAPIA'}
   name: pol_abbr
@@ -52,19 +52,7 @@ components:
       padding: ['0', null, null, null]
     spacing_above: none
   type: Label
-- layout_properties: {grid_position: 'ZIDADX,KGFQRN'}
-  name: budget_msg1
-  properties: {align: right, text: 'With this slider setting (and all the other slider settings from your region, you are using '}
-  type: Label
-- layout_properties: {grid_position: 'ZIDADX,LPUTHS'}
-  name: budget_constraint
-  properties: {align: center, bold: true, font_size: 20}
-  type: Label
-- layout_properties: {grid_position: 'ZIDADX,VRGYDO'}
-  name: budget_msg2
-  properties: {text: '% of your regional investment budget'}
-  type: Label
 container:
-  properties: {col_widths: '{"GTFCPY":45,"JCGGMW":15,"KGFQRN":50,"LPUTHS":10,"VRGYDO":20,"WVSZVN":50,"PVAPIA":10}'}
+  properties: {col_widths: '{"GTFCPY":45,"JCGGMW":15,"LPUTHS":10,"WVSZVN":50,"PVAPIA":10}'}
   type: ColumnPanel
 is_package: true

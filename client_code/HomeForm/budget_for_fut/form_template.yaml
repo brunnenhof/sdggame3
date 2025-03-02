@@ -1,0 +1,13 @@
+components:
+- layout_properties: {grid_position: 'MTFIKD,NQAKHZ'}
+  name: rep_bud_fut_label
+  properties: {align: right}
+  type: form:dep_pm2g5wpt33sld:_Components.Text
+- layout_properties: {grid_position: 'MTFIKD,QFAVMT'}
+  name: rep_bud_fut_amount
+  properties: {}
+  type: form:dep_pm2g5wpt33sld:_Components.Text
+container:
+  properties: {col_widths: '{"NQAKHZ":40,"QFAVMT":20}'}
+  type: ColumnPanel
+is_package: true

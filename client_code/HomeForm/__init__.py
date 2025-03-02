@@ -478,7 +478,7 @@ class HomeForm(HomeFormTemplate):
     app_tables.globs.delete_all_rows()
     app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministry, 
         reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
-    self.pol_repeat.items = fut_pol_list
+    self.fut_repeat_panel.items = fut_pol_list
 #    anvil.server.call('put_budget', 2025, cid)
     
   def submit_role_click(self, **event_args):
@@ -505,7 +505,7 @@ class HomeForm(HomeFormTemplate):
       self.your_ta.text = temp
 #      title, sub, fig, cap = anvil.server.call('load_plots', which_region, which_ministy)
       self.plot_card.visible = True
-      self.task = anvil.server.call('launch_put_plots_for_slots', your_game_id, which_region, which_ministy)
+      self.task = anvil.server.call('launch_put_plots_for_slots', your_game_id, which_region, which_ministry)
       self.label_aa.visible = True
 #      make something visible
       while not self.task.is_completed():

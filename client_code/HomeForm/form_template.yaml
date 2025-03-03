@@ -653,9 +653,61 @@ components:
         name: XtaxCom_lab
         properties: {align: right}
         type: form:dep_pm2g5wpt33sld:_Components.Text
-      - layout_properties: {grid_position: 'RSBATO,OMENDG DJDKIL,RIVYTM'}
-        name: tot_ineq_lab
-        properties: {align: right, bold: true, text: Total investment plans against inequality}
+      - layout_properties: {grid_position: 'RSBATO,OMENDG UFZJWV,EMJHEW'}
+        name: text_6
+        properties: {bold: true, text: Food and Agriculture}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG FBDCHP,ZKKDQA'}
+        name: FWRP_lab
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG RDGKIM,JFQBOS'}
+        name: RMDR_lab
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG YPIJPQ,XHCUJL'}
+        name: RIPLGF_lab
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG SRAZUJ,EKMUWV'}
+        name: FC_lab
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG WPVPJD,KDZHXV'}
+        name: REFOREST_lab
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG DVGOOI,WFLQTM'}
+        name: text_13
+        properties: {align: right, bold: true, text: Total investment plans for food and agriculture}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG NTHNUW,YIZVHC'}
+        name: text_7
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG SCELHH,NUNWVL'}
+        name: text_8
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG LJHYSL,HMSTZV'}
+        name: text_9
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG LZTIQA,FHHKAN'}
+        name: text_10
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG UFVBOV,TRWYXI'}
+        name: text_11
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG NTHKMF,PDWUMT'}
+        name: text_15
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,OMENDG OVLYFJ,OURNLC'}
+        name: text_16
+        properties: {}
         type: form:dep_pm2g5wpt33sld:_Components.Text
       - layout_properties: {grid_position: 'RSBATO,XVUKFI IPDJBO,NWDCXH'}
         name: ExPS_value
@@ -744,6 +796,82 @@ components:
       - layout_properties: {grid_position: 'RSBATO,XVUKFI QYMWEK,UQNNGI'}
         name: tot_ineq_value
         properties: {bold: true}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI HHERNL,QREXMO'}
+        name: text_5
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI KZANIF,HLPGNM'}
+        name: FEHC_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI OLWWXS,IXKDKG'}
+        name: XtaxRateEmp_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI BGPLQN,RSJBDK'}
+        name: SGMP_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI NCEBBQ,NGIOMT'}
+        name: tot_emp_value
+        properties: {bold: true}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI CCKJWI,TEPCGE'}
+        name: text_14
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI ZDMTJF,EWPLEX'}
+        name: FWRP_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI IHAQFQ,QHXBVC'}
+        name: RMDR_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI VHJWYD,VBJKXL'}
+        name: RIPLGF_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI JWGXMD,BVVRTY'}
+        name: FC_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI LDKFMN,FHFXRV'}
+        name: REFOREST_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI QQHJCU,EFUEQP'}
+        name: tot_food_value
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI CHEWTS,BPAWMM'}
+        name: text_17
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI CBAVTF,LSRRKE'}
+        name: text_18
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI XLWNLL,CNNHHC'}
+        name: text_19
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI RRGYBY,KYQKCR'}
+        name: text_20
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI HNNCVU,QMXLVX'}
+        name: text_21
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI XOBFUD,HFBVEJ'}
+        name: text_22
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'RSBATO,XVUKFI SPZONM,QUVPHZ'}
+        name: text_23
+        properties: {}
         type: form:dep_pm2g5wpt33sld:_Components.Text
       layout_properties: {grid_position: 'ZYIVGV,LUACXI'}
       name: column_panel_3

@@ -470,7 +470,7 @@ class HomeForm(HomeFormTemplate):
 
   def do_future(self, cid, which_ministry, which_region):
     self.card_fut.visible = True
-    f_bud_by_ta, fut_pov_list, fut_ineq_list, fut_emp_list, fut_food_list, fut_ener_list = self.put_policy_investments()
+    f_bud_by_ta, fut_pov_list, fut_ineq_list, fut_emp_list, fut_food_list, fut_ener_list, within_budget = self.put_policy_investments()
     self.fut_submit_all_pols.visible = False
     self.pov_rep_panel.visible = True
     self.tot_inv_pov.text = round(f_bud_by_ta['cpov'], 2)
@@ -483,6 +483,9 @@ class HomeForm(HomeFormTemplate):
     self.emp_rep_panel.items = fut_emp_list
     self.food_rep_panel.items = fut_food_list
     self.ener_rep_panel.items = fut_ener_list
+    if within_budget:
+      self.fut_submit_all_pols.visible = True
+    return within_budget
     
   def submit_role_click(self, **event_args):
     global cid, your_game_id, budget
@@ -523,8 +526,10 @@ class HomeForm(HomeFormTemplate):
       app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministry, 
         reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
       anvil.server.call('put_budget', 2025, cid)
+      within_budget = False
       if which_ministry == 'future':
-        self.do_future(cid, which_ministry, which_region )
+        within_budget = self.do_future(cid, which_ministry, which_region )
+        self.redo_fut_numbers()
       else:
         self.do_non_future(cid, which_ministry, which_region )      
 #    print('IN btn_submit_role_clicked')
@@ -622,6 +627,7 @@ class HomeForm(HomeFormTemplate):
     pct_of_budget = total_cost / bud * 100
     self.fut_bud_amount.text = round(bud, 2)
     self.fut_invest.text = round(total_cost, 2)
+    within_budget = False
     if pct_of_budget > 100:
       if pct_of_budget > 101:
         pct_shown = str(int(pct_of_budget))
@@ -632,6 +638,7 @@ class HomeForm(HomeFormTemplate):
       self.fut_invest_pct.foreground = 'red'
       self.fut_submit_all_pols.visible = False
     else:
+      within_budget = True
       if pct_of_budget > 1:
         pct_shown = str(int(pct_of_budget))
       else:
@@ -647,7 +654,7 @@ class HomeForm(HomeFormTemplate):
     emp_list = self.calc_cost_home_ta(pct_emp, tltl_emp, gl_emp, max_cost_emp, 'emp')
     food_list = self.calc_cost_home_ta(pct_food, tltl_food, gl_food, max_cost_food, 'food')
     ener_list = self.calc_cost_home_ta(pct_ener, tltl_ener, gl_ener, max_cost_ener, 'ener')
-    return costs_by_ta, pov_list, ineq_list, emp_list, food_list, ener_list
+    return costs_by_ta, pov_list, ineq_list, emp_list, food_list, ener_list, within_budget
 
 #    pols = app_tables.policies.search(ta=ta)
 #    for pol in pols:

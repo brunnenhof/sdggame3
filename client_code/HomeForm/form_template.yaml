@@ -524,7 +524,7 @@ components:
     - layout_properties: {grid_position: 'FSCZJY,MKZQWR'}
       name: fut_info
       properties:
-        content: "As Minister for the Future, you see the big picture. You also see how much your ministerial colleagues in your region plan to invest in total. \nIt is **your** task to keep the **total regional investment** within the budget. If *total investment* is **below** 100 % of the budget, all is well. If it is **above** 100 % of your budget, you need to advise your ministerial colleagues to reduce some of their investments. This is a difficult task where your moderating skills are needed. Good luck!\nMoney amounts are in constant (2025) Giga $ per year. A 'Giga' is 1,000,000,000 US Americans call this a Billion, others a Milliarde."
+        content: "As Minister for the Future, you see the big picture. You also see how much your ministerial colleagues in your region plan to invest in total to improve the lives of your people and the health of the planet. \nIt is **your** task to keep the **total regional investment** within the budget. If *total investment* is **below** 100 % of the budget, all is well. Although if you invest too little, things may get worse, much worse possibly!\nIf it is **above** 100 % of your budget, you need to advise your ministerial colleagues to reduce some of their investments. This is a difficult task where your moderating skills are needed. Good luck!\nMoney amounts are in constant (2025) Giga $ per year. A 'Giga' is 1,000,000,000 -----  US Americans call this a Billion, others all this a Milliarde."
       type: RichText
     - components:
       - layout_properties: {grid_position: 'VZLTNB,JBJPHD'}

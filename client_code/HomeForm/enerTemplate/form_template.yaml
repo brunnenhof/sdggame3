@@ -1,0 +1,11 @@
+components:
+- layout_properties: {grid_position: 'UCFCAX,HYZDBV'}
+  name: pol_ener_name
+  properties: {align: right}
+  type: form:dep_pm2g5wpt33sld:_Components.Text
+- layout_properties: {grid_position: 'UCFCAX,ISSTUC'}
+  name: pol_ener_amount
+  properties: {}
+  type: form:dep_pm2g5wpt33sld:_Components.Text
+container: {type: ColumnPanel}
+is_package: true

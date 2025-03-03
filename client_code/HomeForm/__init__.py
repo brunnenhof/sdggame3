@@ -470,10 +470,19 @@ class HomeForm(HomeFormTemplate):
 
   def do_future(self, cid, which_ministry, which_region):
     self.card_fut.visible = True
-    fut_pol_list = self.put_policy_investments()
+    f_bud_by_ta, fut_pov_list, fut_ineq_list, fut_emp_list, fut_food_list, fut_ener_list = self.put_policy_investments()
     self.fut_submit_all_pols.visible = False
     self.pov_rep_panel.visible = True
-    self.pov_rep_panel.items = fut_pol_list
+    self.tot_inv_pov.text = round(f_bud_by_ta['cpov'], 2)
+    self.tot_inv_ineq.text = round(f_bud_by_ta['cineq'], 2)
+    self.tot_inv_emp.text = round(f_bud_by_ta['cemp'], 2)
+    self.tot_inv_food.text = round(f_bud_by_ta['cfood'], 2)
+    self.tot_inv_ener.text = round(f_bud_by_ta['cener'], 2)
+    self.pov_rep_panel.items = fut_pov_list
+    self.ineq_rep_panel.items = fut_ineq_list
+    self.emp_rep_panel.items = fut_emp_list
+    self.food_rep_panel.items = fut_food_list
+    self.ener_rep_panel.items = fut_ener_list
     
   def submit_role_click(self, **event_args):
     global cid, your_game_id, budget
@@ -551,6 +560,14 @@ class HomeForm(HomeFormTemplate):
     # get_names
     if ta == 'pov':
       names = [r['name'] for r in app_tables.policies.search(ta='Poverty')]
+    elif ta == 'ineq':
+      names = [r['name'] for r in app_tables.policies.search(ta='Inequality')]
+    elif ta == 'emp':
+      names = [r['name'] for r in app_tables.policies.search(ta='Empowerment')]
+    elif ta == 'food':
+      names = [r['name'] for r in app_tables.policies.search(ta='Food')]
+    elif ta == 'ener':
+      names = [r['name'] for r in app_tables.policies.search(ta='Energy')]
     
     slots = []
     for i in range(0, len(pct)):
@@ -599,7 +616,8 @@ class HomeForm(HomeFormTemplate):
     cost_emp = self.calc_cost_home_tot(pct_emp, tltl_emp, gl_emp, max_cost_emp)
     cost_ineq = self.calc_cost_home_tot(pct_ineq, tltl_ineq, gl_ineq, max_cost_ineq)
     cost_food = self.calc_cost_home_tot(pct_food, tltl_food, gl_food, max_cost_food)
-    cost_ener = self.calc_cost_home_tot(pct_ener, tltl_ener, gl_ener, max_cost_ener)    
+    cost_ener = self.calc_cost_home_tot(pct_ener, tltl_ener, gl_ener, max_cost_ener)  
+    costs_by_ta = {'cpov' : cost_pov, 'cfood' : cost_food, 'cemp': cost_emp, 'cineq' : cost_ineq, 'cener': cost_ener}
     total_cost = cost_pov + cost_emp + cost_ener + cost_food + cost_ineq
     pct_of_budget = total_cost / bud * 100
     self.fut_bud_amount.text = round(bud, 2)
@@ -625,8 +643,11 @@ class HomeForm(HomeFormTemplate):
     self.fut_invest_pct.text = pct_shown
     
     pov_list = self.calc_cost_home_ta(pct_pov, tltl_pov, gl_pov, max_cost_pov, 'pov')
-    return pov_list
-    a= 2
+    ineq_list = self.calc_cost_home_ta(pct_ineq, tltl_ineq, gl_ineq, max_cost_ineq, 'ineq')
+    emp_list = self.calc_cost_home_ta(pct_emp, tltl_emp, gl_emp, max_cost_emp, 'emp')
+    food_list = self.calc_cost_home_ta(pct_food, tltl_food, gl_food, max_cost_food, 'food')
+    ener_list = self.calc_cost_home_ta(pct_ener, tltl_ener, gl_ener, max_cost_ener, 'ener')
+    return costs_by_ta, pov_list, ineq_list, emp_list, food_list, ener_list
 
 #    pols = app_tables.policies.search(ta=ta)
 #    for pol in pols:

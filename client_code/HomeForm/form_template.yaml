@@ -524,7 +524,7 @@ components:
     - layout_properties: {grid_position: 'FSCZJY,MKZQWR'}
       name: fut_info
       properties:
-        content: "As Minister for the Future, you see the big picture. You also see how much your ministerial colleagues in your region plan to invest in total to improve the lives of your people and the health of the planet. \nIt is **your** task to keep the **total regional investment** within the budget. If *total investment* is **below** 100 % of the budget, all is well. Although if you invest too little, things may get worse, much worse possibly!\nIf it is **above** 100 % of your budget, you need to advise your ministerial colleagues to reduce some of their investments. This is a difficult task where your moderating skills are needed. Good luck!\nMoney amounts are in constant (2025) Giga $ per year. A 'Giga' is 1,000,000,000 -----  US Americans call this a Billion, others all this a Milliarde."
+        content: "As Minister for the Future, you see the big picture. You also see how much your ministerial colleagues in your region plan to invest in total to improve the lives of your people and the health of the planet. \nIt is **your** task to keep the **total regional investment** within the budget. If *total investment* is **below** 100 % of the budget, all is well. Although if you invest too little, things may get worse, much worse possibly!\nIf it is **above** 100 % of your budget, you need to advise your ministerial colleagues to reduce some of their investments. This is a difficult task where your moderating skills are needed. Good luck!\nMoney amounts are in constant (2025) Giga $ per year. A 'Giga' is 1,000,000,000 -----  US Americans call this a Billion, others call this a Milliarde."
       type: RichText
     - components:
       - layout_properties: {grid_position: 'VZLTNB,JBJPHD'}
@@ -584,12 +584,116 @@ components:
       type: ColumnPanel
     - layout_properties: {grid_position: 'GNLXHX,IQDOYH'}
       name: text_3
-      properties: {align: right, bold: true, text: Total investment plans against poverty}
+      properties: {align: right, bold: true, text: Regional investment plans against poverty}
       type: form:dep_pm2g5wpt33sld:_Components.Text
     - layout_properties: {grid_position: 'GNLXHX,VXOBYK'}
       name: tot_inv_pov
       properties: {bold: true}
       type: form:dep_pm2g5wpt33sld:_Components.Text
+    - layout_properties: {grid_position: 'JTBOZM,KZHQOJ'}
+      name: divider_3
+      properties: {}
+      type: form:dep_pm2g5wpt33sld:_Components.Divider
+    - components:
+      - layout_properties: {grid_position: 'YULPYW,FJUIKO'}
+        name: text_4
+        properties: {bold: true, text: Inequality}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'EUBROS,MAIDLE'}
+        name: ineq_rep_panel
+        properties: {item_template: HomeForm.ineq_temlate}
+        type: RepeatingPanel
+      layout_properties: {grid_position: 'NHYXGZ,GZGJUM'}
+      name: card_ineq_fut
+      properties: {role: outlined-card}
+      type: ColumnPanel
+    - layout_properties: {grid_position: 'SYNLEB,NBEDWL'}
+      name: text_5
+      properties: {align: right, bold: true, text: Regional investment plans against inequality}
+      type: form:dep_pm2g5wpt33sld:_Components.Text
+    - layout_properties: {grid_position: 'SYNLEB,XUDPNG'}
+      name: tot_inv_ineq
+      properties: {}
+      type: form:dep_pm2g5wpt33sld:_Components.Text
+    - layout_properties: {grid_position: 'DLUXXT,GTYFIY'}
+      name: divider_4
+      properties: {}
+      type: form:dep_pm2g5wpt33sld:_Components.Divider
+    - components:
+      - layout_properties: {grid_position: 'CSRVFE,IXTOUL'}
+        name: text_6
+        properties: {bold: true, text: Empowerment}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'QKTSHQ,PZEFZW'}
+        name: emp_rep_panel
+        properties: {item_template: HomeForm.ineq_temlate}
+        type: RepeatingPanel
+      - layout_properties: {grid_position: 'DQCIGS,NXTNUM'}
+        name: text_9
+        properties: {align: right, bold: true, text: Regional investment plans for empowerment}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'DQCIGS,KRJVXI'}
+        name: tot_inv_emp
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      layout_properties: {grid_position: 'OJQIKH,XEQORF'}
+      name: card_emp_fut
+      properties: {role: outlined-card}
+      type: ColumnPanel
+    - layout_properties: {grid_position: 'ACIATT,UJHTYQ'}
+      name: divider_5
+      properties: {}
+      type: form:dep_pm2g5wpt33sld:_Components.Divider
+    - components:
+      - layout_properties: {grid_position: 'RJLBML,CTDLNK'}
+        name: text_7
+        properties: {bold: true, text: Food and Agriculture}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'FEFJGT,OPZYLI'}
+        name: food_rep_panel
+        properties: {item_template: HomeForm.ineq_temlate}
+        type: RepeatingPanel
+      - layout_properties: {grid_position: 'WKJQTF,EONVFD'}
+        name: text_10
+        properties: {align: right, bold: true, text: Regional investment plans for food and agriculture}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'WKJQTF,UVAPIP'}
+        name: tot_inv_food
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      layout_properties: {grid_position: 'JOZVXZ,RQJQNK'}
+      name: card_food_fut
+      properties: {role: outlined-card}
+      type: ColumnPanel
+    - layout_properties: {grid_position: 'UMTUUW,KIKGBR'}
+      name: divider_6
+      properties: {}
+      type: form:dep_pm2g5wpt33sld:_Components.Divider
+    - components:
+      - layout_properties: {grid_position: 'YZPWKC,IXOTIR'}
+        name: text_8
+        properties: {bold: true, text: Energy}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'XYJEVD,UGWBQC'}
+        name: ener_rep_panel
+        properties: {item_template: HomeForm.ineq_temlate}
+        type: RepeatingPanel
+      - layout_properties: {grid_position: 'TAISYW,JBEYVP'}
+        name: text_11
+        properties: {align: right, bold: true, text: Regional investment plans for energy}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      - layout_properties: {grid_position: 'TAISYW,PSKKBY'}
+        name: tot_inv_ener
+        properties: {}
+        type: form:dep_pm2g5wpt33sld:_Components.Text
+      layout_properties: {grid_position: 'MZKHFQ,RHYYXX'}
+      name: card_ener_fut
+      properties: {role: outlined-card}
+      type: ColumnPanel
+    - layout_properties: {grid_position: 'GSQDKC,IGKGDO'}
+      name: divider_2
+      properties: {}
+      type: form:dep_pm2g5wpt33sld:_Components.Divider
     - layout_properties: {grid_position: 'XINHCW,AJIWBQ'}
       name: fut_submit_all_pols
       properties: {align: center, icon: 'mi:file_save', text: Submit all policies for the current round}

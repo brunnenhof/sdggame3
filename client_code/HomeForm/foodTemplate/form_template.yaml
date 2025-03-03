@@ -1,0 +1,11 @@
+components:
+- layout_properties: {grid_position: 'UFZMAA,BMKIYE'}
+  name: pol_food_name
+  properties: {align: right}
+  type: form:dep_pm2g5wpt33sld:_Components.Text
+- layout_properties: {grid_position: 'UFZMAA,IKMLVF'}
+  name: pol_food_amount
+  properties: {}
+  type: form:dep_pm2g5wpt33sld:_Components.Text
+container: {type: ColumnPanel}
+is_package: true

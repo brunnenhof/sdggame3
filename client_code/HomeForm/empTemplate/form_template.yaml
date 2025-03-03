@@ -1,0 +1,11 @@
+components:
+- layout_properties: {grid_position: 'CNBMGX,PZBZBY'}
+  name: pol_emp_name
+  properties: {align: right}
+  type: form:dep_pm2g5wpt33sld:_Components.Text
+- layout_properties: {grid_position: 'CNBMGX,DISYXY'}
+  name: pol_emp_amount
+  properties: {}
+  type: form:dep_pm2g5wpt33sld:_Components.Text
+container: {type: ColumnPanel}
+is_package: true

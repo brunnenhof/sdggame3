@@ -465,22 +465,15 @@ class HomeForm(HomeFormTemplate):
     self.pol_card.visible = True
     pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministry, 2025, cid)
 #      print(pol_list)
-    app_tables.globs.delete_all_rows()
-    app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministry, 
-        reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
     self.pol_repeat.items = pol_list
-    anvil.server.call('put_budget', 2025, cid)
+
 
   def do_future(self, cid, which_ministry, which_region):
     self.card_fut.visible = True
-    self.fut_submit_all_pols.visible = False
     fut_pol_list = self.put_policy_investments()
-#      print(pol_list)
-#    app_tables.globs.delete_all_rows()
-#    app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministry, 
-#        reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
+    self.fut_submit_all_pols.visible = False
+    self.pov_rep_panel.visible = True
     self.pov_rep_panel.items = fut_pol_list
-#    anvil.server.call('put_budget', 2025, cid)
     
   def submit_role_click(self, **event_args):
     global cid, your_game_id, budget
@@ -517,6 +510,10 @@ class HomeForm(HomeFormTemplate):
 #        rows = app_tables.plots.search(pers_game_id=your_game_id)
         slots = [{key: r[key] for key in ["title", "subtitle", "cap", "fig"]} for r in app_tables.plots.search(pers_game_id=your_game_id)]
         self.repeating_plots_panel.items = slots
+      app_tables.globs.delete_all_rows()
+      app_tables.globs.add_row(game_id_pers=your_game_id,ta=which_ministry, 
+        reg=which_region,runde=1, game_id=cid,updated=datetime.datetime.now())
+      anvil.server.call('put_budget', 2025, cid)
       if which_ministry == 'future':
         self.do_future(cid, which_ministry, which_region )
       else:
@@ -562,7 +559,7 @@ class HomeForm(HomeFormTemplate):
         nt = gl[i] - tltl[i]
         pct_of_range = nw / (nt - nb)
         cost = round(maxc * pct_of_range, 2)
-        slot = {'pol_name' : names[i], 'pol_amt': cost}
+        slot = {'pol_name' : names[i], 'pol_amount': cost}
         slots.append(slot)
     return slots
 
@@ -628,6 +625,7 @@ class HomeForm(HomeFormTemplate):
     self.fut_invest_pct.text = pct_shown
     
     pov_list = self.calc_cost_home_ta(pct_pov, tltl_pov, gl_pov, max_cost_pov, 'pov')
+    return pov_list
     a= 2
 
 #    pols = app_tables.policies.search(ta=ta)

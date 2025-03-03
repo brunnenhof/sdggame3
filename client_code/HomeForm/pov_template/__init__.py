@@ -11,5 +11,5 @@ class pov_template(pov_templateTemplate):
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
     self.pol_name.text = self.item['pol_name']
-    self.pol_amount.text = self.item['pol_amt']
+    self.pol_amount.text = self.item['pol_amount']
 

@@ -504,14 +504,13 @@ class HomeForm(HomeFormTemplate):
       msg = ("Congratulations, you have been confirmed as the Minister " + which_ministy_long + " in " + which_region_long + '.' + msgid)
       alert(msg)
       self.choose_role2.visible = False
-      self.info_rnd_1_card.visible = True
       self.cplot.visible = True
+      self.info_rnd_1_card.visible = True
       self.your_personal_gameID.text = 'Your personal Game ID is: ' + your_game_id
       self.your_region.text = which_region_long
       temp = 'Minister ' + which_ministy_long
       self.your_ta.text = temp
 #      title, sub, fig, cap = anvil.server.call('load_plots', which_region, which_ministy)
-      self.plot_card.visible = True
       self.task = anvil.server.call('launch_put_plots_for_slots', your_game_id, which_region, which_ministry)
       self.label_aa.visible = True
 #      make something visible
@@ -519,8 +518,7 @@ class HomeForm(HomeFormTemplate):
         self.label_aa.text = 'Generating plots and decision sheets ...'
       else:
         self.label_aa.visible = False
-#        slots = self.task.get_state()['plots']
-#        rows = app_tables.plots.search(pers_game_id=your_game_id)
+        self.plot_card.visible = True
         slots = [{key: r[key] for key in ["title", "subtitle", "cap", "fig"]} for r in app_tables.plots.search(pers_game_id=your_game_id)]
         self.repeating_plots_panel.items = slots
       app_tables.globs.delete_all_rows()
@@ -532,7 +530,6 @@ class HomeForm(HomeFormTemplate):
         within_budget = self.do_future(cid, which_ministry, which_region )
       else:
         self.do_non_future(cid, which_ministry, which_region )      
-#    print('IN btn_submit_role_clicked')
 
   def rb_la2_clicked(self, **event_args):
     global cid
@@ -625,7 +622,7 @@ class HomeForm(HomeFormTemplate):
     costs_by_ta = {'cpov' : cost_pov, 'cfood' : cost_food, 'cemp': cost_emp, 'cineq' : cost_ineq, 'cener': cost_ener}
     total_cost = cost_pov + cost_emp + cost_ener + cost_food + cost_ineq
     pct_of_budget = total_cost / bud * 100
-    self.fut_bud_amount.text = round(bud, 2)
+    self.fut_bud_amount.text = round(bud, 0)
     self.fut_invest.text = round(total_cost, 2)
     within_budget = False
     if pct_of_budget > 100:
@@ -670,6 +667,13 @@ class HomeForm(HomeFormTemplate):
 
   def refresh_numbers_click(self, **event_args):
     """This method is called when the component is clicked."""
+    global cid
+    lcid = cid
+    row = app_tables.globs.get()
+    cid = row['game_id']
+    which_ministry = row['ta']
+    which_region = row['reg']
+    self.do_future(cid, which_ministry, which_region)
     pass
 
   def submit_numbers_click(self, **event_args):

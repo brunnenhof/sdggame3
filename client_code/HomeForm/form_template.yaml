@@ -532,6 +532,7 @@ components:
           You are responsible to better the lives of your people. In the graphs below things are good if the line is in the **green** zone, if they are in the **red** zone, you need to worry - social unrest, and worse, is just around the corner!
           Study all your indicators, see how they develop over the years, discuss with colleagues, first in your region, but also in the other regions.
           When you are ready, scroll down to the decisions you need to take as minister that hopefully improve the lives of your citizens in the next round.
+        visible: true
       type: RichText
     layout_properties: {grid_position: 'SGNONP,YFQQDD'}
     name: info_rnd_1_card
@@ -593,15 +594,10 @@ components:
             padding: ['0', null, null, null]
           text: 'Investment as % of budget:'
         type: form:dep_pm2g5wpt33sld:_Components.Text
-      layout_properties: {grid_position: 'BPQRXX,IFHJWU BNQFDB,XJHHAR'}
+      layout_properties: {grid_position: 'BPQRXX,IFHJWU'}
       name: column_panel_2
       properties: {}
       type: ColumnPanel
-    - event_bindings: {click: refresh_numbers_click}
-      layout_properties: {grid_position: 'BPQRXX,IFHJWU AEKBTE,AVPJJH'}
-      name: refresh_numbers
-      properties: {align: center, background_color: darkgreen, icon: 'mi:refresh', text: Refresh Numbers}
-      type: form:dep_pm2g5wpt33sld:_Components.Button
     - layout_properties: {grid_position: 'BPQRXX,HCCRAK NXPCUD,OZRVYQ'}
       name: fut_bud_amount
       properties: {bold: true}
@@ -614,8 +610,13 @@ components:
       name: fut_invest_pct
       properties: {bold: true}
       type: form:dep_pm2g5wpt33sld:_Components.Text
+    - event_bindings: {click: refresh_numbers_click}
+      layout_properties: {grid_position: 'SLWZBL,JELDLK'}
+      name: refresh_numbers
+      properties: {align: center, background_color: darkgreen, icon: 'mi:refresh', text: Refresh Numbers}
+      type: form:dep_pm2g5wpt33sld:_Components.Button
     - event_bindings: {click: submit_numbers_click}
-      layout_properties: {grid_position: 'BPQRXX,HCCRAK FOZKTW,MXNGAM'}
+      layout_properties: {grid_position: 'SLWZBL,ZFLHHQ'}
       name: submit_numbers
       properties: {align: center, background_color: '#FFA421', icon: 'mi:save_alt', text: Submit Numbers, text_color: 'theme:Secondary', visible: false}
       type: form:dep_pm2g5wpt33sld:_Components.Button

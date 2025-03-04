@@ -243,6 +243,7 @@ class HomeForm(HomeFormTemplate):
   def cp_submit_game_id_click(self, **event_args):
     # I just clicked the button to join a new game
     global cid
+    self.info_rnd_1_card.visible = True
     cid = self.cp_id_holder.text
     if cid == '':
       alert("You must enter a Game ID in the format LLLLL-XXX-XXX")
@@ -484,7 +485,6 @@ class HomeForm(HomeFormTemplate):
     self.food_rep_panel.items = fut_food_list
     self.ener_rep_panel.items = fut_ener_list
     if within_budget:
-      self.fut_submit_all_pols.visible = True
       self.submit_numbers.visible = True
     return within_budget
     
@@ -646,7 +646,7 @@ class HomeForm(HomeFormTemplate):
       self.fut_invest.foreground = 'green'
       self.fut_invest_pct.foreground = 'green'
       self.fut_bud_amount.foreground = 'green'
-      self.fut_submit_all_pols.visible = True
+      self.submit_numbers.visible = True
     self.fut_invest_pct.text = pct_shown
     
     pov_list = self.calc_cost_home_ta(pct_pov, tltl_pov, gl_pov, max_cost_pov, 'pov')

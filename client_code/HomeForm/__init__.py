@@ -243,7 +243,6 @@ class HomeForm(HomeFormTemplate):
   def cp_submit_game_id_click(self, **event_args):
     # I just clicked the button to join a new game
     global cid
-    self.info_rnd_1_card.visible = True
     cid = self.cp_id_holder.text
     if cid == '':
       alert("You must enter a Game ID in the format LLLLL-XXX-XXX")
@@ -505,6 +504,7 @@ class HomeForm(HomeFormTemplate):
       msg = ("Congratulations, you have been confirmed as the Minister " + which_ministy_long + " in " + which_region_long + '.' + msgid)
       alert(msg)
       self.choose_role2.visible = False
+      self.info_rnd_1_card.visible = True
       self.cplot.visible = True
       self.your_personal_gameID.text = 'Your personal Game ID is: ' + your_game_id
       self.your_region.text = which_region_long

@@ -133,7 +133,7 @@ db_schema:
     - admin_ui: {order: 3, width: 200}
       name: updated
       type: datetime
-    - admin_ui: {order: 4, width: 200}
+    - admin_ui: {order: 4, width: 121}
       name: next_step_p
       type: number
     - admin_ui: {order: 5, width: 200}
@@ -156,7 +156,7 @@ db_schema:
     - admin_ui: {order: 1, width: 200}
       name: pol_abbr
       type: string
-    - admin_ui: {order: 2, width: 200}
+    - admin_ui: {order: 2, width: 94}
       name: runde
       type: number
     - admin_ui: {order: 3, width: 200}

@@ -470,8 +470,8 @@ class HomeForm(HomeFormTemplate):
 
   def do_future(self, cid, which_ministry, which_region):
     self.card_fut.visible = True
+    self.submit_numbers.visible = False
     f_bud_by_ta, fut_pov_list, fut_ineq_list, fut_emp_list, fut_food_list, fut_ener_list, within_budget = self.put_policy_investments()
-    self.fut_submit_all_pols.visible = False
     self.pov_rep_panel.visible = True
     self.tot_inv_pov.text = round(f_bud_by_ta['cpov'], 2)
     self.tot_inv_ineq.text = round(f_bud_by_ta['cineq'], 2)
@@ -485,6 +485,7 @@ class HomeForm(HomeFormTemplate):
     self.ener_rep_panel.items = fut_ener_list
     if within_budget:
       self.fut_submit_all_pols.visible = True
+      self.submit_numbers.visible = True
     return within_budget
     
   def submit_role_click(self, **event_args):
@@ -529,7 +530,6 @@ class HomeForm(HomeFormTemplate):
       within_budget = False
       if which_ministry == 'future':
         within_budget = self.do_future(cid, which_ministry, which_region )
-        self.redo_fut_numbers()
       else:
         self.do_non_future(cid, which_ministry, which_region )      
 #    print('IN btn_submit_role_clicked')
@@ -667,6 +667,16 @@ class HomeForm(HomeFormTemplate):
 #      pol_abbr = pol['abbreviation']
 #      fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl, 'pol_abbr' : pol_abbr}
 #      pol_list.append(fdz)
+
+  def refresh_numbers_click(self, **event_args):
+    """This method is called when the component is clicked."""
+    pass
+
+  def submit_numbers_click(self, **event_args):
+    """This method is called when the component is clicked."""
+    c = confirm("Please confirm your decision to submit the policy choices of your team of regional ministers.")
+    print(c)
+    pass
  
 
 

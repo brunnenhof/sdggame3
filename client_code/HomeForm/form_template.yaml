@@ -206,6 +206,17 @@ components:
     properties: {background: '#e8f4d5', role: outlined-card, visible: false}
     type: ColumnPanel
   - components:
+    - layout_properties: {grid_position: 'WBNEEO,QOLTRL'}
+      name: text_12
+      properties:
+        bold: true
+        font_size: 16
+        spacing:
+          padding: [null, null, '12', null]
+        style: label
+        text: Player Game Board
+        text_color: theme:Secondary
+      type: form:dep_pm2g5wpt33sld:_Components.Text
     - event_bindings: {click: btn_join_new_click}
       layout_properties: {grid_position: 'OWDMAD,ZSGADJ'}
       name: btn_join_new
@@ -221,6 +232,18 @@ components:
     properties: {background: '#f7d7df', role: outlined-card, visible: false}
     type: ColumnPanel
   - components:
+    - layout_properties: {grid_position: 'RXFKWQ,QIQABK'}
+      name: text_13
+      properties:
+        bold: true
+        font_size: 16
+        icon_size: 16
+        spacing:
+          margin: [null, null, '12', null]
+        style: label
+        text: Player Game Board
+        text_color: theme:Secondary
+      type: form:dep_pm2g5wpt33sld:_Components.Text
     - layout_properties: {grid_position: 'RTGUQO,GBQOMB'}
       name: label_1
       properties: {text: 'If the Game ID is correct, click the submit button. If not, correct the ID first and then click on the submit button'}
@@ -239,6 +262,17 @@ components:
     properties: {background: '#f7d7df', role: outlined-card, visible: false}
     type: ColumnPanel
   - components:
+    - layout_properties: {grid_position: 'EUAHTL,KSTVWK'}
+      name: text_14
+      properties:
+        bold: true
+        font_size: 16
+        spacing:
+          margin: [null, null, '12', null]
+        style: label
+        text: Player Game Board
+        text_color: theme:Secondary
+      type: form:dep_pm2g5wpt33sld:_Components.Text
     - components:
       - layout_properties: {grid_position: 'TAQPLZ,CEIKFE GXDIXG,SMYDPZ'}
         name: label_4
@@ -458,6 +492,17 @@ components:
     properties: {role: outlined-card, visible: false}
     type: ColumnPanel
   - components:
+    - layout_properties: {grid_position: 'LUXGFC,ABYUXM'}
+      name: text_15
+      properties:
+        bold: true
+        font_size: 16
+        spacing:
+          margin: [null, null, '10', null]
+        style: label
+        text: Player Game Board
+        text_color: theme:Secondary
+      type: form:dep_pm2g5wpt33sld:_Components.Text
     - layout_properties: {grid_position: 'CJIMQI,GPNTJP'}
       name: your_region
       properties: {align: center, background: 'theme:e4agreen light', bold: true, foreground: 'theme:e4ared', text: Your region}
@@ -524,7 +569,7 @@ components:
     - layout_properties: {grid_position: 'FSCZJY,MKZQWR'}
       name: fut_info
       properties:
-        content: "As Minister for the Future, you see the big picture. You also see how much your ministerial colleagues in your region plan to invest in total to improve the lives of your people and the health of the planet. \nIt is **your** task to keep the **total regional investment** within the budget. If *total investment* is **below** 100 % of the budget, all is well. Although if you invest too little, things may get worse, much worse possibly!\nIf it is **above** 100 % of your budget, you need to advise your ministerial colleagues to reduce some of their investments. This is a difficult task where your moderating skills are needed. Good luck!\nMoney amounts are in constant (2025) Giga $ per year. A 'Giga' is 1,000,000,000 -----  US Americans call this a Billion, others call this a Milliarde."
+        content: "As Minister for the Future, you see the big picture. You also see how much your ministerial colleagues in your region plan to invest in total to improve the lives of your people and the health of the planet. \nIt is **your** task to keep the **total regional investment** within the budget. If *total investment* is **below** 100 % of the budget, all is well. Although if you invest too little, things may get worse, much worse possibly!\nIf it is **above** 100 % of your budget, you need to advise your ministerial colleagues to reduce some of their investments. This is a difficult task where your moderating skills are needed. Good luck!\nAs your ministerial colleagues decide on their investment plans, click on the **Refresh Numbers** button to see the most up to date choices of your colleagues.\nWhen you are all ready, **you**, as Minister for the Future, submit the policy choices from all your colleagues - **be sure to get all their OKs** before you hit the *Submit* button! (*Note:* if the Submit button does not show, it is because your region is above the the budget.\nMoney amounts are in constant (2025) Giga $ per year. A 'Giga' is 1,000,000,000 -----  US Americans call this a Billion, others call this a Milliarde."
       type: RichText
     - components:
       - layout_properties: {grid_position: 'VZLTNB,JBJPHD'}
@@ -548,10 +593,15 @@ components:
             padding: ['0', null, null, null]
           text: 'Investment as % of budget:'
         type: form:dep_pm2g5wpt33sld:_Components.Text
-      layout_properties: {grid_position: 'BPQRXX,IFHJWU'}
+      layout_properties: {grid_position: 'BPQRXX,IFHJWU BNQFDB,XJHHAR'}
       name: column_panel_2
       properties: {}
       type: ColumnPanel
+    - event_bindings: {click: refresh_numbers_click}
+      layout_properties: {grid_position: 'BPQRXX,IFHJWU AEKBTE,AVPJJH'}
+      name: refresh_numbers
+      properties: {align: center, background_color: darkgreen, icon: 'mi:refresh', text: Refresh Numbers}
+      type: form:dep_pm2g5wpt33sld:_Components.Button
     - layout_properties: {grid_position: 'BPQRXX,HCCRAK NXPCUD,OZRVYQ'}
       name: fut_bud_amount
       properties: {bold: true}
@@ -564,6 +614,11 @@ components:
       name: fut_invest_pct
       properties: {bold: true}
       type: form:dep_pm2g5wpt33sld:_Components.Text
+    - event_bindings: {click: submit_numbers_click}
+      layout_properties: {grid_position: 'BPQRXX,HCCRAK FOZKTW,MXNGAM'}
+      name: submit_numbers
+      properties: {align: center, background_color: '#FFA421', icon: 'mi:save_alt', text: Submit Numbers, text_color: 'theme:Secondary', visible: false}
+      type: form:dep_pm2g5wpt33sld:_Components.Button
     - layout_properties: {grid_position: 'BPJPFA,NOLCBC'}
       name: divider_1
       properties: {}
@@ -690,17 +745,9 @@ components:
       name: tot_inv_ener
       properties: {}
       type: form:dep_pm2g5wpt33sld:_Components.Text
-    - layout_properties: {grid_position: 'GSQDKC,IGKGDO'}
-      name: divider_2
-      properties: {}
-      type: form:dep_pm2g5wpt33sld:_Components.Divider
-    - layout_properties: {grid_position: 'XINHCW,AJIWBQ'}
-      name: fut_submit_all_pols
-      properties: {align: center, icon: 'mi:file_save', text: Submit all policies for the current round}
-      type: form:dep_pm2g5wpt33sld:_Components.Button
     layout_properties: {grid_position: 'MPMWKG,QVVTHF'}
     name: card_fut
-    properties: {col_widths: '{"IFHJWU":35,"HCCRAK":25}', role: outlined-card, visible: true}
+    properties: {col_widths: '{"IFHJWU":35,"HCCRAK":25}', role: outlined-card, visible: false}
     type: ColumnPanel
   layout_properties: {slot: default}
   name: content_panel

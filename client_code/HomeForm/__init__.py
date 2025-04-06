@@ -596,7 +596,7 @@ class HomeForm(HomeFormTemplate):
     pass
 
   def btn_log_in_gm_click(self, **event_args):
-    
+    alert("enter password")
     pass
  
 

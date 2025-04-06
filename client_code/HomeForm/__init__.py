@@ -58,68 +58,9 @@ class HomeForm(HomeFormTemplate):
     """This method is called when the user presses Enter in this text box"""
     pass
 
-  def load_csv_file_into_db(self, file, server, **event_args):
-    text = file.get_bytes()
-    text_str = text.decode('utf-8')
-#    print(type(text_str))
-    tsplit = text_str.splitlines(keepends=False)
-#    print(type(tsplit))
-    anvil.server.call(server, tsplit)
-    alert('The file has been uploaded and saved to table')
-    
-  def load_sdg_var_change(self, file, server):
-    text = file.get_bytes()
-    text_str = text.decode('utf-8')
-#    print(type(text_str))
-    tsplit = text_str.splitlines(keepends=False)
-#    print(type(tsplit))
-    anvil.server.call('upload_sdg_var_change', tsplit)
-    alert('The file has been uploaded and saved to table')
-
-#  def upload_sdg_var_change(self, file, **event_args):
-#    text = file.get_bytes()
-#    tsplit = text.splitlines(keepends=False)
-#    anvil.server.call('upload_sdg_var_change', tsplit)
-#    alert('The file has been uploaded and saved to table')
-
-  def load_sdg_change(self, file, **event_args):
-    self.load_csv_file_into_db(file, 'upload_sdg_change')
-#    self.load_csv_file_into_db(self, file, 'upload_sdg_change')
-
-  def Load_runto_change(self, file, **event_args):
-    self.load_csv_file_into_db(file, 'upload_runto_change')
-
-  def load_regions_change(self, file, **event_args):
-      self.load_csv_file_into_db(file, 'upload_regions_change')
-
-  def load_policies_change(self, file, **event_args):
-      self.load_csv_file_into_db(file, 'upload_policies_change')
-
-  def load_ministries_change(self, file, **event_args):
-      self.load_csv_file_into_db(file, 'upload_ministries_change')
-
-  def load_games_info_change(self, file, **event_args):
-      self.load_csv_file_into_db(file, 'upload_game_info_change')
-
-  def load_games_change(self, file, **event_args):
-      self.load_csv_file_into_db(file, 'upload_games_change')
-
   def btn_continue_game_click(self, **event_args):
     """This method is called when the button is clicked"""
     alert(title="ToDo", content="does not yet work :(")
-
-  def btn_log_in_gm_click(self, **event_args):
-    self.card_holder_top.visible = False
-    self.gm_login_card.visible = True
-    
-  def gm_login_box_pressed_enter(self, **event_args):
-    if self.gm_login_box.text == 'gol':
-      self.gm_login_card.visible = False
-      self.card_holder_gm.visible = True
-    else:
-      gm_pw = alert("Sorry, wrong password.", buttons=['Try again', 'Cancel'])
-      if gm_pw == 'Cancel':
-        self.gm_login_card.visible = False
 
   def generate_custom_id(self):
     global cid
@@ -537,10 +478,6 @@ class HomeForm(HomeFormTemplate):
     self.label_5.visible = True
     self.set_minis_invisible()
     self.set_ministries_visible(cid, 'la')
-
-  def fill_fr2_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    pass
 
   def kick_in_pol_repeat_click(self, **event_args):
     self.pol_card.visible = True

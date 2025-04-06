@@ -6,7 +6,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import json
 import webbrowser
-from ..apg import apg
+from ..game_mistress_pw import game_mistress_pw
 import random
 import string
 import datetime
@@ -596,7 +596,12 @@ class HomeForm(HomeFormTemplate):
     pass
 
   def btn_log_in_gm_click(self, **event_args):
-    alert("enter password")
+    editing_form = game_mistress_pw(Item = self.item)
+    gpw = alert(content=editing_form, large=True, buttons=['OK', 'Cancel'])
+    self.refresh_data_bindings()
+    if gpw == 'OK':
+      alert("you pressed OKiDOKi")
+    
     pass
  
 

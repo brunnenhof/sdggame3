@@ -1,0 +1,12 @@
+components:
+- layout_properties: {grid_position: 'EKHMAD,PVRMLC'}
+  name: admin_pw_label
+  properties: {text: Enter the code to start a new game}
+  type: Label
+- event_bindings: {}
+  layout_properties: {grid_position: 'FPTOXK,FOQGVA'}
+  name: admin_pw_entry
+  properties: {placeholder: type in the code here, tooltip: Some explanation here}
+  type: TextBox
+container: {type: ColumnPanel}
+is_package: false

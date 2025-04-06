@@ -27,36 +27,12 @@ class HomeForm(HomeFormTemplate):
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
     self.card_holder_top.visible = True
-    self.card_holder_admin.visible = False
-#    self.pol_card.visible = True
-#    self.pol_repeat.visible = True
-#    anvil.server.call('get_policy_budgets', '1', '2', 2025)
 
   def btn_thanks_click(self, **event_args):
     alert(content="... to our Alpha testers, the students in course SW101 at the Realschule Baesweiler during April 2024 taught by René Langohr, and all the beta testers.", title="Thank you", large=True)
 
   def btn_help_click(self, **event_args):    
     webbrowser.open_new("http://sdggamehelp.blue-way.net")
-
-  def btn_admin_click(self, **event_args):
-    self.admin_pw_box.visible=True
-    self.label_enter_pw.visible=True
-    """This method is called when the button is clicked"""
-    pass
-
-  def admin_pw_box_pressed_enter(self, **event_args):
-#    alert(title="You entered ", content=self.admin_pw_box.text, large=True, buttons=['OK', 'Cancel'])
-    ###
-    # ToDo put the password into server code !!
-    ###
-    if self.admin_pw_box.text == 'golly':
-      self.card_holder_admin.visible = True
-      self.card_holder_top.visible = False
-    else:
-      alert("Wrong password. Sorry")
-      
-    """This method is called when the user presses Enter in this text box"""
-    pass
 
   def btn_continue_game_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -617,6 +593,10 @@ class HomeForm(HomeFormTemplate):
     """This method is called when the component is clicked."""
     c = confirm("Please confirm your decision to submit the policy choices of your team of regional ministers.")
     print(c)
+    pass
+
+  def btn_log_in_gm_click(self, **event_args):
+    
     pass
  
 

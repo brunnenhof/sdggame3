@@ -97,6 +97,12 @@ class HomeForm(HomeFormTemplate):
       txt = 'Role assignments are set up ... Now tell your players to join game ' + cid + ' and log in to their roles. You need to wait until all players have submitted their decisions for round 1, 2025 to 2040'
       self.label_role_assign.text = txt
       self.label_role_assign.visible = True
+      fdz = anvil.server.call('all_logged_in', cid)
+      #slots = [{key: r[key] for key in ["title", "subtitle", "cap", "fig"]} for r in app_tables.plots.search(pers_game_id=your_game_id)]
+      self.rep_nli.items = fdz
+      #self.repeating_plots_panel.items = slots
+ 
+      self.card_all_logged_in.visible = True
     else:
       alert("Something went wrong setting up the game info")
 

@@ -661,6 +661,22 @@ components:
     name: card_fut
     properties: {col_widths: '{"IFHJWU":35,"HCCRAK":25}', role: outlined-card, visible: false}
     type: ColumnPanel
+  - components:
+    - layout_properties: {grid_position: 'EMNSFF,LQAXKU'}
+      name: text_16
+      properties:
+        text: |-
+          Below are all of your players who have not yet logged in. Ask if they need help logging in to their role.
+          This list is updated automatically as your players log in ...
+      type: form:dep_pm2g5wpt33sld:_Components.Text
+    - layout_properties: {grid_position: 'BIQCAR,VNETKI'}
+      name: rep_nli
+      properties: {item_template: HomeForm.rep_not_logged_in}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'NBDION,VTGDQW'}
+    name: card_all_logged_in
+    properties: {role: outlined-card}
+    type: ColumnPanel
   layout_properties: {slot: default}
   name: content_panel
   properties: {col_widths: '{}'}

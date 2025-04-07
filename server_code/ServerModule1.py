@@ -376,14 +376,16 @@ def which_round(cid):
       return 'a problem', npbhp
 
 @anvil.server.callable
-def all_looged_in():
+def all_logged_in(cid):
     cid = pers_game_id[:-3]
-    app_tables.plots.delete_all_rows(pers_game_id = pers_game_id)
-    runde, npbhp = which_round(cid)
-    print(runde)
-    print(npbhp)
-    # runde = 1
-
+    rows = app_tables.fr2.search(gameID=cid, free=False)
+    nlin = []
+    for row in rows:
+      reg = row['region']
+      mini = row['ta']
+      fdz = {'game_id' : cid, 'reg' : reg, 'ministry' : mini}
+      nlin.append(fdz)
+    return fdz
   
 @anvil.server.background_task
 def put_plots_for_slots(pers_game_id, region, single_ta):

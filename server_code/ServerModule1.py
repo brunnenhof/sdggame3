@@ -362,11 +362,18 @@ def get_plots_for_slots(region, single_ta):
 
 @anvil.server.callable
 def which_round(cid):
-  row = app_tables.games_info.get(game_id=cid)
+  row = app_tables.games_info.get(game_id=cid)c
+  nxgm = row['next_step_gm']
+  npbhp = row['npbhp']
+  nxp = row['next_step_p']
+  closed = row['closed']
+  if closed:
+    return 'Game is closed', npbhp
+  else:
+    if nxgm == 1 and nxp = None:
+      return 1, npbhp
   print('in which_round ... row: ' )
   print(row)
-  
-  
   
 @anvil.server.background_task
 def put_plots_for_slots(pers_game_id, region, single_ta):

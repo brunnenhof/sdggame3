@@ -349,20 +349,6 @@ db_schema:
       type: number
     server: full
     title: sdg_vars
-  table_15:
-    client: none
-    columns:
-    - admin_ui: {order: 0, width: 200}
-      name: game_id
-      type: string
-    - admin_ui: {order: 1, width: 200}
-      name: reg
-      type: string
-    - admin_ui: {order: 2, width: 200}
-      name: ministry
-      type: string
-    server: full
-    title: Table 15
 dependencies:
 - dep_id: dep_pm2g5wpt33sld
   resolution_hints: {app_id: 4UK6WHQ6UX7AKELK, name: Material 3 Theme, package_name: m3}

@@ -301,6 +301,8 @@ def make_png(df, row, pyidx, end_yr, my_title):
 @timeitt
 def build_plot(var_row, regidx, cap):
   global fcol_in_mdf, mdf
+  # find out for which round
+  
   var_l = var_row['vensim_name']
   var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
   varx = var_row['id']

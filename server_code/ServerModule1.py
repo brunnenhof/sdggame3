@@ -362,7 +362,7 @@ def get_plots_for_slots(region, single_ta):
 
 @anvil.server.callable
 def which_round(cid):
-  row = app_tables.games_info.get(game_id=cid)c
+  row = app_tables.games_info.get(game_id=cid)
   nxgm = row['next_step_gm']
   npbhp = row['npbhp']
   nxp = row['next_step_p']
@@ -377,7 +377,7 @@ def which_round(cid):
 
 @anvil.server.callable
 def all_logged_in(cid):
-    cid = pers_game_id[:-3]
+#    cid = pers_game_id[:-3]
     rows = app_tables.fr2.search(gameID=cid, free=False)
     nlin = []
     for row in rows:

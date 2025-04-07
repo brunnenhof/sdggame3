@@ -370,19 +370,26 @@ def which_round(cid):
   if closed:
     return 'Game is closed', npbhp
   else:
-    if nxgm == 1 and nxp = None:
+    if nxgm == 1 and nxp == None:
       return 1, npbhp
-  print('in which_round ... row: ' )
-  print(row)
+    else:
+      return 'a problem', npbhp
+
+@anvil.server.callable
+def all_looged_in():
+    cid = pers_game_id[:-3]
+    app_tables.plots.delete_all_rows(pers_game_id = pers_game_id)
+    runde, npbhp = which_round(cid)
+    print(runde)
+    print(npbhp)
+    # runde = 1
+
   
 @anvil.server.background_task
 def put_plots_for_slots(pers_game_id, region, single_ta):
     global fcol_in_mdf, mdf
-    cid = pers_game_id[:-3]
-    app_tables.plots.delete_all_rows(pers_game_id = pers_game_id)
-    runde = which_round(cid)
-    # runde = 1
-    mdf = read_mdf25('mdf2025.npy')
+  # generate a dictionary of 
+    mdf = read_mdf25('mdf_play.npy')
     fcol_in_mdf = read_fcol_in_mdf()
     print(region + ' ' + single_ta)
     regrow = app_tables.regions.get(abbreviation=region)

@@ -375,17 +375,23 @@ def which_round(cid):
     else:
       return 'a problem', npbhp
 
+def make_long_reg(reg):
+  pass
+
+def make_long_ta(ta):
+  pass
+  
 @anvil.server.callable
 def all_logged_in(cid):
 #    cid = pers_game_id[:-3]
-    rows = app_tables.fr2.search(gameID=cid, free=False)
+    rows = app_tables.fr2.search(gameID=cid, free=True)
     nlin = []
     for row in rows:
       reg = row['region']
       mini = row['ta']
-      fdz = {'game_id' : cid, 'reg' : reg, 'ministry' : mini}
+      fdz = {'game_id' : cid, 'nli_reg' : reg, 'nli_ministry' : mini}
       nlin.append(fdz)
-    return fdz
+    return nlin
   
 @anvil.server.background_task
 def put_plots_for_slots(pers_game_id, region, single_ta):

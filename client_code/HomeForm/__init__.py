@@ -58,6 +58,16 @@ class HomeForm(HomeFormTemplate):
     self.btn_continue_game.visible = False
     self.gm_reg_selection_card.visible = True
 
+  def check_all_logged_in(self, cid):
+    fdz = anvil.server.call('all_logged_in', cid)
+    self.timer_all_logged_in.interval = 5
+    if self.timer_all_logged_in_tick():
+      while not fdz:  #  fdz is NOT empty
+        self.rep_nli.items = fdz
+    else:
+      self.timer_all_logged_in.interval =0
+    return fdz
+
   def button_submit_not_played_click(self, **event_args):
     """This method is called when the button is clicked"""
     global cid
@@ -97,14 +107,21 @@ class HomeForm(HomeFormTemplate):
       txt = 'Role assignments are set up ... Now tell your players to join game ' + cid + ' and log in to their roles. You need to wait until all players have submitted their decisions for round 1, 2025 to 2040'
       self.label_role_assign.text = txt
       self.label_role_assign.visible = True
-      fdz = anvil.server.call('all_logged_in', cid)
-      #slots = [{key: r[key] for key in ["title", "subtitle", "cap", "fig"]} for r in app_tables.plots.search(pers_game_id=your_game_id)]
-      self.rep_nli.items = fdz
-      #self.repeating_plots_panel.items = slots
- 
+
       self.card_all_logged_in.visible = True
-    else:
-      alert("Something went wrong setting up the game info")
+      fdz = anvil.server.call('all_logged_in', cid)
+      self.rep_nli.items = fdz
+      while fdz:
+        time.sleep(5)
+        fdz = anvil.server.call('all_logged_in', cid)
+        if fdz:
+          self.rep_nli.items = fdz
+
+#      fdz = anvil.server.call('all_logged_in', cid)
+      #slots = [{key: r[key] for key in ["title", "subtitle", "cap", "fig"]} for r in app_tables.plots.search(pers_game_id=your_game_id)]
+#        self.rep_nli.items = fdz
+      self.card_all_logged_in.visible = False
+      # show next card
 
   def btn_poc_click(self, **event_args):
     alert("Neither the user interface nor the server code is elegant nor efficient. Contact us if you can help making either or all better.",
@@ -464,7 +481,7 @@ class HomeForm(HomeFormTemplate):
   def kick_in_pol_repeat_click(self, **event_args):
     self.pol_card.visible = True
     budget, pol_list = anvil.server.call('get_policy_budgets', '1', '2', 2025)
-    print(pol_list)
+#    print(pol_list)
     self.pol_repeat.items = pol_list
 
   def calc_cost_home_tot(self, pct, tltl, gl, maxc):
@@ -615,6 +632,10 @@ class HomeForm(HomeFormTemplate):
         alert("Wrong code")
     else:
         alert("You cancelled")
+
+  def timer_all_logged_in_tick(self, **event_args):
+    """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+    pass
  
 
 

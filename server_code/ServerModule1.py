@@ -376,10 +376,14 @@ def which_round(cid):
       return 'a problem', npbhp
 
 def make_long_reg(reg):
-  pass
+  row = app_tables.regions.get(abbreviation=reg)
+  long_reg = row['name']
+  return long_reg
 
 def make_long_ta(ta):
-  pass
+  row = app_tables.ministries.get(mini=ta)
+  long_ta = row['ministry']
+  return long_ta
   
 @anvil.server.callable
 def all_logged_in(cid):
@@ -387,8 +391,8 @@ def all_logged_in(cid):
     rows = app_tables.fr2.search(gameID=cid, free=True)
     nlin = []
     for row in rows:
-      reg = row['region']
-      mini = row['ta']
+      reg = make_long_reg(row['region'])
+      mini = make_long_ta(row['ta'])
       fdz = {'game_id' : cid, 'nli_reg' : reg, 'nli_ministry' : mini}
       nlin.append(fdz)
     return nlin

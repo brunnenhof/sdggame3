@@ -299,10 +299,14 @@ def make_png(df, row, pyidx, end_yr, my_title):
 #    a = 2
 
 @timeitt
-def build_plot(var_row, regidx, cap):
+def build_plot(var_row, regidx, cap, cid):
   global fcol_in_mdf, mdf
   # find out for which round
-  
+  runde_row = app_tables.games_info.get(game_id=cid)
+  if runde_row['next_step_gm'] == 1 and runde_row['next_step_p'] is None:
+    runde = 1
+  else:
+    print('In build_plot: We dont know which runde')
   var_l = var_row['vensim_name']
   var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
   varx = var_row['id']
@@ -412,6 +416,7 @@ def dec_sub(cid):  # DECisions SUBmitted
 @anvil.server.background_task
 def put_plots_for_slots(pers_game_id, region, single_ta):
     global fcol_in_mdf, mdf
+    cid = pers_game_id[:-3]
   # generate a dictionary of 
     mdf = read_mdf25('mdf_play.npy')
     fcol_in_mdf = read_fcol_in_mdf()
@@ -425,7 +430,7 @@ def put_plots_for_slots(pers_game_id, region, single_ta):
     long, farbe = get_reg_x_name_colx(region)
     vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
     for var_row in vars_info_rows:
-      fdz = build_plot(var_row, regidx, cap)
+      fdz = build_plot(var_row, regidx, cap, cid)
       app_tables.plots.add_row(pers_game_id=pers_game_id, title=fdz['title'], subtitle=fdz['subtitle'],
                               fig=fdz['fig'], cap=cap)
 

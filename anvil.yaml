@@ -173,6 +173,17 @@ db_schema:
       type: datetime
     server: full
     title: globs
+  mdf_play_vars:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: var_name
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: col_idx
+      type: number
+    server: full
+    title: mdf_play_vars
   ministries:
     client: search
     columns:

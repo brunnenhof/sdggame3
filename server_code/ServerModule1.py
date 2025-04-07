@@ -360,10 +360,21 @@ def get_plots_for_slots(region, single_ta):
     anvil.server.task_state['plots'] = plot_list
 #    return plot_list
 
+@anvil.server.callable
+def which_round(cid):
+  row = app_tables.games_info.get(game_id=cid)
+  print('in which_round ... row: ' )
+  print(row)
+  
+  
+  
 @anvil.server.background_task
 def put_plots_for_slots(pers_game_id, region, single_ta):
     global fcol_in_mdf, mdf
+    cid = pers_game_id[:-3]
     app_tables.plots.delete_all_rows(pers_game_id = pers_game_id)
+    runde = which_round(cid)
+    # runde = 1
     mdf = read_mdf25('mdf2025.npy')
     fcol_in_mdf = read_fcol_in_mdf()
     print(region + ' ' + single_ta)

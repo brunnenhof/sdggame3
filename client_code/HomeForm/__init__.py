@@ -599,10 +599,16 @@ class HomeForm(HomeFormTemplate):
     editing_form = game_mistress_pw(Item = self.item)
     gpw = alert(content=editing_form, large=True, buttons=['OK', 'Cancel'])
     self.refresh_data_bindings()
+    print(f"hhh {editing_form.admin_pw_entry.text}")
     if gpw == 'OK':
-      alert("you pressed OKiDOKi")
-    
-    pass
+      rtn = editing_form.admin_pw_entry.text
+      if rtn == 'yep':
+        self.card_holder_gm.visible = True
+        self.card_holder_top.visible = False
+      else:
+        alert("Wrong code")
+    else:
+        alert("You cancelled")
  
 
 

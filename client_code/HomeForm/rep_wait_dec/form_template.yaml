@@ -1,0 +1,7 @@
+components:
+- layout_properties: {grid_position: 'FKKTYQ,ZTWJVB'}
+  name: rwd_reg
+  properties: {align: center}
+  type: form:dep_pm2g5wpt33sld:_Components.Text
+container: {type: ColumnPanel}
+is_package: true

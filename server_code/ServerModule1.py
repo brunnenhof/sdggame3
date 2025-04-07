@@ -396,6 +396,16 @@ def all_logged_in(cid):
       fdz = {'game_id' : cid, 'nli_reg' : reg, 'nli_ministry' : mini}
       nlin.append(fdz)
     return nlin
+
+@anvil.server.callable
+def dec_sub(cid):  # DECisions SUBmitted
+    rows = app_tables.fr2.search(gameID=cid, free=True)
+    rwd = []
+    for row in rows:
+      reg = make_long_reg(row['region'])
+      fdz2 = {'game_id' : cid, 'rwd_reg' : reg}
+      rwd.append(fdz2)
+    return rwd
   
 @anvil.server.background_task
 def put_plots_for_slots(pers_game_id, region, single_ta):

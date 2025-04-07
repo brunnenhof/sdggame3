@@ -116,11 +116,23 @@ class HomeForm(HomeFormTemplate):
         fdz = anvil.server.call('all_logged_in', cid)
         if fdz:
           self.rep_nli.items = fdz
+          
+      if not fdz:  #  meaning all players have logged in, the game mistress is now waiting for the decisions to be submitted
+        self.card_all_logged_in.visible = False
+        self.card_waiting_for_all_pol_submissions.visible = True
+        fdz2 = anvil.server.call('dec_sub', cid)
+        self.rep_wait_decisions.items = fdz2
+        while fdz2:
+          time.sleep(15)
+          fdz2 = anvil.server.call('dec_sub', cid)
+          if fdz2:
+            self.rep_wait_decisions.items = fdz2
+    
+      pass
 
 #      fdz = anvil.server.call('all_logged_in', cid)
       #slots = [{key: r[key] for key in ["title", "subtitle", "cap", "fig"]} for r in app_tables.plots.search(pers_game_id=your_game_id)]
 #        self.rep_nli.items = fdz
-      self.card_all_logged_in.visible = False
       # show next card
 
   def btn_poc_click(self, **event_args):

@@ -667,7 +667,7 @@ components:
       properties:
         text: |-
           Below are all of your players who have not yet logged in. Ask if they need help logging in to their role.
-          This list is updated automatically every 5th second until all players have logged in ...
+          This list is updated automatically every 20th second until all players have logged in ...
       type: form:dep_pm2g5wpt33sld:_Components.Text
     - layout_properties: {grid_position: 'BIQCAR,VNETKI'}
       name: rep_nli

@@ -178,7 +178,7 @@ def read_fcol_in_mdf():
     fcol_in_mdf = json.load(ff)
   return fcol_in_mdf
 
-@timeitt
+#@timeitt
 def read_mdfplay25(datei, runde):
   print('APRIL IN read_mdfplay25 loading: ' + datei)
   f = data_files[datei]
@@ -206,7 +206,7 @@ def pick(ys, x, y):
             o.append(np.nan)
     return o
 
-@timeitt
+#@timeitt
 def make_png(df, row, pyidx, end_yr, my_title):
     fig, ax = plt.subplots()
     pct = row['pct']
@@ -242,7 +242,7 @@ def make_png(df, row, pyidx, end_yr, my_title):
     yps_int = []
     for i in range(0, len(yr_picks)):
         yps_int.append(int(yr_picks[i]))
-    print('IN make_png yr_picks: ')
+#    print('IN make_png yr_picks: ')
     ys = pick(yps_int, x, y)
     plt.scatter(x, ys, color=my_colhex, s=300, alpha=0.55)
     if int(row['lowerbetter']) == 1:
@@ -292,19 +292,20 @@ def build_plot(var_row, regidx, cap, cid, runde):
   var_l = var_row['vensim_name']
   var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
   varx = var_row['id']
+  print('starting new plot ...')
+  print('... build plot 298 var_l: ' + var_l)
   rowx = app_tables.mdf_play_vars.get(var_name=var_l)
-  print('APRIL build plot: ' + var_l)
+  print('--- build plot 300 rowx: on next line')
+  print (rowx)
   idx = rowx['col_idx']
+  print(idx)
   if varx in[19, 21, 22, 35]: # global variable
-#    idx = fcol_in_mdf[var_l]
     lx = idx # find location of variable in mdf
   else:
-#    idx = fcol_in_mdf[var_l]
     lx = idx + regidx # find location of variable in mdf with reg offset
-#    row = get_row_from_varl(var_l)
-  print('IN build_plot 323, idx: ' + str(idx) + ' varl: ' + var_l)
   dfv = mdf_play[:, [0, lx]]
-  print(dfv)
+  dfv_pd = pd.DataFrame(dfv)
+  print(dfv_pd)
   cur_title = 'ETI-' + str(int(var_row['sdg_nbr'])) + ': ' +var_row['sdg']
   cur_sub = var_row['indicator']
   cur_fig = make_png(dfv, var_row, regidx, yr, cur_sub)
@@ -404,7 +405,6 @@ def put_plots_for_slots(pers_game_id, region, single_ta):
       yr = 2025
     else:
       print('In put_plots_for_slots: We dont know which runde')
-
   # generate a dictionary of 
     print(region + ' ----- ' + single_ta)
     regrow = app_tables.regions.get(abbreviation=region)
@@ -416,15 +416,14 @@ def put_plots_for_slots(pers_game_id, region, single_ta):
     long, farbe = get_reg_x_name_colx(region)
     vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
     for var_row in vars_info_rows:
-      
       fdz = build_plot(var_row, regidx, cap, cid, runde)
       app_tables.plots.add_row(pers_game_id=pers_game_id, title=fdz['title'], subtitle=fdz['subtitle'],
                               fig=fdz['fig'], cap=cap)
 
-@timeitt
+#@timeitt
 @anvil.server.callable
 def put_budget(yr, cid):
-  
+  print('IN put_budget ...')
   app_tables.budget.delete_all_rows()
   regs = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
   if yr == 2025:
@@ -439,13 +438,14 @@ def put_budget(yr, cid):
   idx = rowx['col_idx']
   for i in range(0,10):
     ba.append(mdf_bud[rx, idx + i])
+  print('IN put_budget ... ba ')
   print(ba)
-
   cpov = []
   rowx = app_tables.mdf_play_vars.get(var_name='Cost_per_regional_poverty_policy')
   idx = rowx['col_idx']
   for i in range(10):
     cpov.append(mdf_bud[rx, idx + i]) # poverty
+  print('IN put_budget ... cpov ')
   print(cpov)
   
   cineq = [] 
@@ -453,24 +453,32 @@ def put_budget(yr, cid):
   idx = rowx['col_idx']
   for i in range(10):
     cineq.append(mdf_bud[rx, idx + i]) # inequality
+  print('IN put_budget ... cineq ')
+  print(cineq)
   
   cemp = []
   rowx = app_tables.mdf_play_vars.get(var_name='Cost_per_regional_empowerment_policy')
   idx = rowx['col_idx']
   for i in range(10):
     cemp.append(mdf_bud[rx, idx + i]) # empowerment
+  print('IN put_budget ... cemp ')
+  print(cemp)
   
   cfood = []
   rowx = app_tables.mdf_play_vars.get(var_name='Cost_per_regional_food_policy')
   idx = rowx['col_idx']
   for i in range(10):
     cfood.append(mdf_bud[rx, idx + i]) # food
+  print('IN put_budget ... cfood ')
+  print(cfood)
   
   cener = []
   rowx = app_tables.mdf_play_vars.get(var_name='Cost_per_regional_energy_policy')
   idx = rowx['col_idx']
   for i in range(10):
     cener.append(mdf_bud[rx, idx + i]) # energy
+  print('IN put_budget ... cener ')
+  print(cener)
 
   for i in range(0,10):
     row = app_tables.budget.add_row(yr=yr, game_id=cid,reg=regs[i], runde=runde, Bud_all_TA=ba[i],

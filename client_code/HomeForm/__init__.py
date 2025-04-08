@@ -102,7 +102,7 @@ class HomeForm(HomeFormTemplate):
       fdz = anvil.server.call('all_logged_in', cid)
       self.rep_nli.items = fdz
       while fdz:
-        time.sleep(5)
+        time.sleep(20)
         fdz = anvil.server.call('all_logged_in', cid)
         if fdz:
           self.rep_nli.items = fdz
@@ -113,8 +113,8 @@ class HomeForm(HomeFormTemplate):
         fdz2 = anvil.server.call('dec_sub', cid)
         self.rep_wait_decisions.items = fdz2
         while fdz2:
-          time.sleep(15)
-          fdz2 = anvil.server.call('dec_sub', cid)
+          time.sleep(60)
+          fdz2 = anvil.server.call('dec_sub', cid)  # # DECisions SUBmitted
           if fdz2:
             self.rep_wait_decisions.items = fdz2
     

@@ -176,10 +176,10 @@ db_schema:
   mdf_play_vars:
     client: none
     columns:
-    - admin_ui: {order: 0, width: 200}
+    - admin_ui: {order: 0, width: 321}
       name: var_name
       type: string
-    - admin_ui: {order: 1, width: 200}
+    - admin_ui: {order: 1, width: 69}
       name: col_idx
       type: number
     server: full

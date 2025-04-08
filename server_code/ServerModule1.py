@@ -283,7 +283,7 @@ def make_png(df, row, pyidx, end_yr, my_title):
     plt.box(False)
     return anvil.mpl_util.plot_image()
 
-@timeitt
+#@timeitt
 def build_plot(var_row, regidx, cap, cid, runde):
   # find out for which round
   if runde == 1:
@@ -406,7 +406,7 @@ def put_plots_for_slots(pers_game_id, region, single_ta):
       print('In put_plots_for_slots: We dont know which runde')
 
   # generate a dictionary of 
-    print(region + ' ' + single_ta)
+    print(region + ' ----- ' + single_ta)
     regrow = app_tables.regions.get(abbreviation=region)
     regidx = int(regrow['pyidx'])
     my_time = time.localtime()
@@ -416,6 +416,7 @@ def put_plots_for_slots(pers_game_id, region, single_ta):
     long, farbe = get_reg_x_name_colx(region)
     vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
     for var_row in vars_info_rows:
+      
       fdz = build_plot(var_row, regidx, cap, cid, runde)
       app_tables.plots.add_row(pers_game_id=pers_game_id, title=fdz['title'], subtitle=fdz['subtitle'],
                               fig=fdz['fig'], cap=cap)

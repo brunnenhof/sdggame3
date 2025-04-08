@@ -58,16 +58,6 @@ class HomeForm(HomeFormTemplate):
     self.btn_continue_game.visible = False
     self.gm_reg_selection_card.visible = True
 
-  def check_all_logged_in(self, cid):
-    fdz = anvil.server.call('all_logged_in', cid)
-    self.timer_all_logged_in.interval = 5
-    if self.timer_all_logged_in_tick():
-      while not fdz:  #  fdz is NOT empty
-        self.rep_nli.items = fdz
-    else:
-      self.timer_all_logged_in.interval =0
-    return fdz
-
   def button_submit_not_played_click(self, **event_args):
     """This method is called when the button is clicked"""
     global cid
@@ -645,10 +635,6 @@ class HomeForm(HomeFormTemplate):
     else:
         alert("You cancelled")
 
-  def timer_all_logged_in_tick(self, **event_args):
-    """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-    pass
- 
 
 
 

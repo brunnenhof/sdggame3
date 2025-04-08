@@ -184,7 +184,9 @@ def read_mdfplay25(datei, runde):
   f = data_files[datei]
   mdf_play = np.load(f)
   if runde == 1:
-    mdf_play = mdf_play[:, [320, 1440]]
+    mdf_play = mdf_play[320:1440, :]
+  elif runde == 2:
+    mdf_play = mdf_play[320:1920, :]
   return mdf_play
 
 def pick(ys, x, y):
@@ -230,34 +232,19 @@ def make_png(df, row, pyidx, end_yr, my_title):
         ymin = plot_min
         ymax = plot_max
     abc = app_tables.regions.get(pyidx=pyidx)
-#    sql = ("SELECT * FROM regions WHERE pyidx = %s")
-#    conn = connect()
-#    with conn.cursor() as cur:
-#        cur.execute(sql, [pyidx])
-#        abc = cur.fetchone()
     my_colhex = abc['colhex']
     my_lab = abc['name']
     plt.plot(x, y, color=my_colhex, linewidth=2.5, label=my_lab)
-#    plt.title(my_title)
-#    plt.show()
-    # now plot the thick dots
-    # get the year picks
     runto_row = app_tables.runto.get(end_year=end_yr)
-#    sql = ("SELECT * FROM runto WHERE end_year = %s")
-#    conn = connect()
-#    with conn.cursor() as cur:
-#        cur.execute(sql, [end_yr])
-#        runto_row = cur.fetchone()
     yr_picks_str = runto_row['yr_picks']
     yps = yr_picks_str.replace("'", "")
     yr_picks = yps.split(' ')
     yps_int = []
     for i in range(0, len(yr_picks)):
         yps_int.append(int(yr_picks[i]))
-#    print('IN make_png yr_picks: ')
+    print('IN make_png yr_picks: ')
     ys = pick(yps_int, x, y)
     plt.scatter(x, ys, color=my_colhex, s=300, alpha=0.55)
-#    plt.show()
     if int(row['lowerbetter']) == 1:
         grn_min = row['ymin']  # 8
         grn_max = row['green']  # vars_df.iloc[varx, 4]
@@ -281,7 +268,6 @@ def make_png(df, row, pyidx, end_yr, my_title):
         grn_max = row['ymax']  # vars_df.iloc[varx, 9]
         yel_min = red_max
         yel_max = grn_min
-
     plt.ylim(ymin, ymax)
     xmin = 1990
     xmax = end_yr
@@ -295,24 +281,19 @@ def make_png(df, row, pyidx, end_yr, my_title):
         ax.add_patch(plt.Polygon(poly_coords, color='yellow', alpha=opa))
     plt.grid(color='gainsboro', linestyle='-', linewidth=.5)
     plt.box(False)
-#    plt.show()
     return anvil.mpl_util.plot_image()
-#    a = 2
 
 @timeitt
-def build_plot(var_row, regidx, cap, cid):
+def build_plot(var_row, regidx, cap, cid, runde):
   # find out for which round
-  runde_row = app_tables.games_info.get(game_id=cid)
-  if runde_row['next_step_gm'] == 1 and runde_row['next_step_p'] is None:
-    runde = 1
+  if runde == 1:
     yr = 2025
-  else:
-    print('In build_plot: We dont know which runde')
   mdf_play = read_mdfplay25('mdf_play.npy', runde)
   var_l = var_row['vensim_name']
   var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
   varx = var_row['id']
   rowx = app_tables.mdf_play_vars.get(var_name=var_l)
+  print('APRIL build plot: ' + var_l)
   idx = rowx['col_idx']
   if varx in[19, 21, 22, 35]: # global variable
 #    idx = fcol_in_mdf[var_l]
@@ -321,11 +302,12 @@ def build_plot(var_row, regidx, cap, cid):
 #    idx = fcol_in_mdf[var_l]
     lx = idx + regidx # find location of variable in mdf with reg offset
 #    row = get_row_from_varl(var_l)
-  print('IN build_plot, idx: ' + str(idx) + ' varl: ' + var_l)
+  print('IN build_plot 323, idx: ' + str(idx) + ' varl: ' + var_l)
   dfv = mdf_play[:, [0, lx]]
+  print(dfv)
   cur_title = 'ETI-' + str(int(var_row['sdg_nbr'])) + ': ' +var_row['sdg']
   cur_sub = var_row['indicator']
-  cur_fig = make_png(dfv, var_row, regidx, 2025, cur_sub)
+  cur_fig = make_png(dfv, var_row, regidx, yr, cur_sub)
   fdz = {'title' : cur_title, 'subtitle' : cur_sub, 'fig' : cur_fig, 'cap' : cap}
   return fdz
 
@@ -335,40 +317,36 @@ def launch_put_plots_for_slots(pers_game_id, region, single_ta):
   task = anvil.server.launch_background_task('put_plots_for_slots', pers_game_id, region, single_ta)
   return task
 
-@anvil.server.background_task
-def get_plots_for_slots(region, single_ta):
-    global fcol_in_mdf, mdf
-#    anvil.server.task_state['progress'] = 42
-    mdf = read_mdfplay25('mdf2025.npy',1)
-    fcol_in_mdf = read_fcol_in_mdf()
-  # region as 'nn' single ta as 'poverty', etc
-    print(region + ' ' + single_ta)
-    regrow = app_tables.regions.get(abbreviation=region)
-#    sql = ("SELECT * FROM regions WHERE abbreviation = %s")
-#    conn = connect()
-#    with conn.cursor() as cur:
-#      cur.execute(sql, [region])
-#      row = cur.fetchone()
-#    regrow = row
-    regidx = int(regrow['pyidx'])
-    my_time = time.localtime()
-    my_time_formatted = time.strftime("%a %d %b %G", my_time)
-    foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
-    cap = foot1 + ' on ' + my_time_formatted
-    long, farbe = get_reg_x_name_colx(region)
+#@anvil.server.background_task
+#def get_plots_for_slots(region, single_ta):
+#  # region as 'nn' single ta as 'poverty', etc
+#    print(region + ' ' + single_ta)
+#    regrow = app_tables.regions.get(abbreviation=region)
+##    sql = ("SELECT * FROM regions WHERE abbreviation = %s")
+##    conn = connect()
+##    with conn.cursor() as cur:
+##      cur.execute(sql, [region])
+##      row = cur.fetchone()
+##    regrow = row
+#    regidx = int(regrow['pyidx'])
+#    my_time = time.localtime()
+#    my_time_formatted = time.strftime("%a %d %b %G", my_time)
+#    foot1 = 'mov240906 mppy GAME e4a 10reg.mdl'
+#    cap = foot1 + ' on ' + my_time_formatted
+#    long, farbe = get_reg_x_name_colx(region)
 #  print(region + '  ' + long)
 #  print('    ' + single_ta)
-    vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
-    plot_list = []
-    for var_row in vars_info_rows:
-      fdz = build_plot(var_row, regidx, cap)
-      plot_list.append(fdz)
-      print ('Printin type(fdz) fdz type(plot_list)')
-      print (type(fdz))
-      print(fdz)
-      print(type(plot_list))
-    anvil.server.task_state['plots'] = plot_list
-#    return plot_list
+#    vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
+#    plot_list = []
+#    for var_row in vars_info_rows:
+#      fdz = build_plot(var_row, regidx, cap, 99)
+#      plot_list.append(fdz)
+#      print ('Printin type(fdz) fdz type(plot_list)')
+#      print (type(fdz))
+#      print(fdz)
+#      print(type(plot_list))
+#    anvil.server.task_state['plots'] = plot_list
+##    return plot_list
 
 @anvil.server.callable
 def which_round(cid):
@@ -420,6 +398,12 @@ def dec_sub(cid):  # DECisions SUBmitted
 @anvil.server.background_task
 def put_plots_for_slots(pers_game_id, region, single_ta):
     cid = pers_game_id[:-3]
+    runde_row = app_tables.games_info.get(game_id=cid)
+    if runde_row['next_step_gm'] == 1 and runde_row['next_step_p'] is None:
+      runde = 1
+      yr = 2025
+    else:
+      print('In put_plots_for_slots: We dont know which runde')
 
   # generate a dictionary of 
     print(region + ' ' + single_ta)
@@ -432,48 +416,60 @@ def put_plots_for_slots(pers_game_id, region, single_ta):
     long, farbe = get_reg_x_name_colx(region)
     vars_info_l, vars_info_rows = get_all_vars_for_ta(single_ta)
     for var_row in vars_info_rows:
-      fdz = build_plot(var_row, regidx, cap, cid)
+      fdz = build_plot(var_row, regidx, cap, cid, runde)
       app_tables.plots.add_row(pers_game_id=pers_game_id, title=fdz['title'], subtitle=fdz['subtitle'],
                               fig=fdz['fig'], cap=cap)
 
 @timeitt
 @anvil.server.callable
 def put_budget(yr, cid):
+  
   app_tables.budget.delete_all_rows()
   regs = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
-  fcol_in_mdf = read_fcol_in_mdf()
-  mdf = read_mdfplay25('mdf_play.npy', 1)
   if yr == 2025:
-    rx = 1441 - 321
+    rx = 1440 - 321
     runde = 1
   else:
     print("Forgot to add reading later mdfs")
+
+  mdf_bud = read_mdfplay25('mdf_play.npy', runde)
   ba = []
-  idx = fcol_in_mdf['Budget_for_all_TA_per_region']
+  rowx = app_tables.mdf_play_vars.get(var_name='Budget_for_all_TA_per_region')
+  idx = rowx['col_idx']
   for i in range(0,10):
-    ba.append(mdf[rx, idx + i])
+    ba.append(mdf_bud[rx, idx + i])
   print(ba)
+
   cpov = []
-  idx = fcol_in_mdf['Cost_per_regional_poverty_policy']
+  rowx = app_tables.mdf_play_vars.get(var_name='Cost_per_regional_poverty_policy')
+  idx = rowx['col_idx']
   for i in range(10):
-    cpov.append(mdf[rx, idx + i]) # poverty
+    cpov.append(mdf_bud[rx, idx + i]) # poverty
   print(cpov)
+  
   cineq = [] 
-  idx = fcol_in_mdf['Cost_per_regional_inequality_policy']
+  rowx = app_tables.mdf_play_vars.get(var_name='Cost_per_regional_inequality_policy')
+  idx = rowx['col_idx']
   for i in range(10):
-    cineq.append(mdf[rx, idx + i]) # inequality
+    cineq.append(mdf_bud[rx, idx + i]) # inequality
+  
   cemp = []
-  idx = fcol_in_mdf['Cost_per_regional_empowerment_policy']
+  rowx = app_tables.mdf_play_vars.get(var_name='Cost_per_regional_empowerment_policy')
+  idx = rowx['col_idx']
   for i in range(10):
-    cemp.append(mdf[rx, idx + i]) # empowerment
+    cemp.append(mdf_bud[rx, idx + i]) # empowerment
+  
   cfood = []
-  idx = fcol_in_mdf['Cost_per_regional_food_policy']
+  rowx = app_tables.mdf_play_vars.get(var_name='Cost_per_regional_food_policy')
+  idx = rowx['col_idx']
   for i in range(10):
-    cfood.append(mdf[rx, idx + i]) # food
+    cfood.append(mdf_bud[rx, idx + i]) # food
+  
   cener = []
-  idx = fcol_in_mdf['Cost_per_regional_energy_policy']
+  rowx = app_tables.mdf_play_vars.get(var_name='Cost_per_regional_energy_policy')
+  idx = rowx['col_idx']
   for i in range(10):
-    cener.append(mdf[rx, idx + i]) # energy
+    cener.append(mdf_bud[rx, idx + i]) # energy
 
   for i in range(0,10):
     row = app_tables.budget.add_row(yr=yr, game_id=cid,reg=regs[i], runde=runde, Bud_all_TA=ba[i],
@@ -482,58 +478,34 @@ def put_budget(yr, cid):
   
 @anvil.server.callable
 def get_policy_budgets(reg, ta, yr, cid):
-#  regnames = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
-#  single_tas = ['energy', 'poverty', 'inequality', 'food', 'empowerment']
-#  reg = regnames[random.randint(0, len(regnames) - 1)]
-#  ta = single_tas[random.randint(0, len(single_tas) - 1)]
-#    single_ta = 'empowerment'
-#  print(reg)
   row_globs = app_tables.globs.get()
   ta = ta.capitalize()
-#  print(ta)
-#  budget = 999
-#  print(budget)
   pol_list = []
   pols = app_tables.policies.search(ta=ta)
-#  print(pols)
   for pol in pols:
     print(pol)
     pol_name = pol['name']
-#    print(pol_name)
     pol_expl = pol['expl']
     pol_tltl = pol['tltl']
     pol_gl = pol['gl']
     pol_abbr = pol['abbreviation']
     fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl, 'pol_abbr' : pol_abbr}
     pol_list.append(fdz)
-#  print(pol_list)
   return pol_list
 
 @anvil.server.callable
 def get_cost_info_for_future(reg, ta, yr, cid):
-#  regnames = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
-#  single_tas = ['energy', 'poverty', 'inequality', 'food', 'empowerment']
-#  reg = regnames[random.randint(0, len(regnames) - 1)]
-#  ta = single_tas[random.randint(0, len(single_tas) - 1)]
-#    single_ta = 'empowerment'
-#  print(reg)
   row_globs = app_tables.globs.get()
   ta = ta.capitalize()
-#  print(ta)
-#  budget = 999
-#  print(budget)
   pol_list = []
   pols = app_tables.policies.search(ta=ta)
-#  print(pols)
   for pol in pols:
     print(pol)
     pol_name = pol['name']
-#    print(pol_name)
     pol_expl = pol['expl']
     pol_tltl = pol['tltl']
     pol_gl = pol['gl']
     pol_abbr = pol['abbreviation']
     fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl, 'pol_abbr' : pol_abbr}
     pol_list.append(fdz)
-#  print(pol_list)
   return pol_list

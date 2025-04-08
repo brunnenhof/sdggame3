@@ -179,12 +179,13 @@ def read_fcol_in_mdf():
   return fcol_in_mdf
 
 @timeitt
-def read_mdf25(datei):
-  global mdf
-  print('IN read_mdf25 loading ' + datei)
+def read_mdfplay25(datei, runde):
+  print('APRIL IN read_mdfplay25 loading: ' + datei)
   f = data_files[datei]
-  mdf = np.load(f)
-  return mdf
+  mdf_play = np.load(f)
+  if runde == 1:
+    mdf_play = mdf_play[:, [320, 1440]]
+  return mdf_play
 
 def pick(ys, x, y):
     o = []
@@ -300,25 +301,28 @@ def make_png(df, row, pyidx, end_yr, my_title):
 
 @timeitt
 def build_plot(var_row, regidx, cap, cid):
-  global fcol_in_mdf, mdf
   # find out for which round
   runde_row = app_tables.games_info.get(game_id=cid)
   if runde_row['next_step_gm'] == 1 and runde_row['next_step_p'] is None:
     runde = 1
+    yr = 2025
   else:
     print('In build_plot: We dont know which runde')
+  mdf_play = read_mdfplay25('mdf_play.npy', runde)
   var_l = var_row['vensim_name']
   var_l = var_l.replace(" ", "_") # vensim uses underscores not whitespace in variable name
   varx = var_row['id']
+  rowx = app_tables.mdf_play_vars.get(var_name=var_l)
+  idx = rowx['col_idx']
   if varx in[19, 21, 22, 35]: # global variable
-    idx = fcol_in_mdf[var_l]
+#    idx = fcol_in_mdf[var_l]
     lx = idx # find location of variable in mdf
   else:
-    idx = fcol_in_mdf[var_l]
+#    idx = fcol_in_mdf[var_l]
     lx = idx + regidx # find location of variable in mdf with reg offset
 #    row = get_row_from_varl(var_l)
   print('IN build_plot, idx: ' + str(idx) + ' varl: ' + var_l)
-  dfv = mdf[:, [0, lx]]
+  dfv = mdf_play[:, [0, lx]]
   cur_title = 'ETI-' + str(int(var_row['sdg_nbr'])) + ': ' +var_row['sdg']
   cur_sub = var_row['indicator']
   cur_fig = make_png(dfv, var_row, regidx, 2025, cur_sub)
@@ -335,7 +339,7 @@ def launch_put_plots_for_slots(pers_game_id, region, single_ta):
 def get_plots_for_slots(region, single_ta):
     global fcol_in_mdf, mdf
 #    anvil.server.task_state['progress'] = 42
-    mdf = read_mdf25('mdf2025.npy')
+    mdf = read_mdfplay25('mdf2025.npy',1)
     fcol_in_mdf = read_fcol_in_mdf()
   # region as 'nn' single ta as 'poverty', etc
     print(region + ' ' + single_ta)
@@ -376,7 +380,7 @@ def which_round(cid):
   if closed:
     return 'Game is closed', npbhp
   else:
-    if nxgm == 1 and nxp == None:
+    if nxgm == 1 and nxp is None:
       return 1, npbhp
     else:
       return 'a problem', npbhp
@@ -415,11 +419,9 @@ def dec_sub(cid):  # DECisions SUBmitted
   
 @anvil.server.background_task
 def put_plots_for_slots(pers_game_id, region, single_ta):
-    global fcol_in_mdf, mdf
     cid = pers_game_id[:-3]
+
   # generate a dictionary of 
-    mdf = read_mdf25('mdf_play.npy')
-    fcol_in_mdf = read_fcol_in_mdf()
     print(region + ' ' + single_ta)
     regrow = app_tables.regions.get(abbreviation=region)
     regidx = int(regrow['pyidx'])
@@ -440,7 +442,7 @@ def put_budget(yr, cid):
   app_tables.budget.delete_all_rows()
   regs = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
   fcol_in_mdf = read_fcol_in_mdf()
-  mdf = read_mdf25('mdf2025.npy')
+  mdf = read_mdfplay25('mdf_play.npy', 1)
   if yr == 2025:
     rx = 1441 - 321
     runde = 1

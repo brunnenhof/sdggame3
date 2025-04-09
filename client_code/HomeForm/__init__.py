@@ -404,14 +404,16 @@ class HomeForm(HomeFormTemplate):
       return False
     return True
 
-  def do_non_future(self, cid, which_ministry, which_region):
+  def do_non_future(self, cid, which_ministry, which_region, runde):
     self.pol_card.visible = True
-    pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministry, 2025, cid)
+    if runde == 1:
+      yr = 2025
+    pol_list = anvil.server.call('get_policy_budgets', which_region, which_ministry, yr, cid)
 #      print(pol_list)
     self.pol_repeat.items = pol_list
 
 
-  def do_future(self, cid, which_ministry, which_region):
+  def do_future(self, cid, which_ministry, which_region, runde):
     self.card_fut.visible = True
     self.submit_numbers.visible = False
     f_bud_by_ta, fut_pov_list, fut_ineq_list, fut_emp_list, fut_food_list, fut_ener_list, within_budget = self.put_policy_investments()
@@ -428,12 +430,16 @@ class HomeForm(HomeFormTemplate):
     self.ener_rep_panel.items = fut_ener_list
     if within_budget:
       self.submit_numbers.visible = True
+    else:
+      self.submit_numbers.visible = False
     return within_budget
     
   def submit_role_click(self, **event_args):
     global cid, your_game_id, budget
     which_ministry = self.minstry_clicked()
     which_region = self.region_clicked()
+    row = app_tables.games_info.get(game_id=cid)
+    runde = row['next_step_gm']
     reg = ['us', 'af', 'cn', 'me', 'sa', 'la', 'pa', 'ec', 'eu', 'se']
     tas = ['poverty', 'inequality', 'empowerment', 'food', 'energy', 'future']
     save_ok = self.save_player_choice(cid, which_ministry, which_region)
@@ -474,9 +480,9 @@ class HomeForm(HomeFormTemplate):
       anvil.server.call('put_budget', 2025, cid)
       within_budget = False
       if which_ministry == 'future':
-        within_budget = self.do_future(cid, which_ministry, which_region )
+        within_budget = self.do_future(cid, which_ministry, which_region, runde )
       else:
-        self.do_non_future(cid, which_ministry, which_region )      
+        self.do_non_future(cid, which_ministry, which_region , runde)      
 
   def rb_la2_clicked(self, **event_args):
     global cid
@@ -527,11 +533,10 @@ class HomeForm(HomeFormTemplate):
 
   def put_policy_investments(self, **event_args):
     global budget
-    row = app_tables.globs.get()
-    cid = row['game_id']
-    ta = row['ta'].capitalize()
-    reg = row['reg']
-    runde = row['runde']
+    cid = client_globs.my_game_id
+    ta = client_globs.my_ministry.capitalize()
+    reg = client_globs.my_reg
+    runde = client_globs.current_round
     if runde == 1:
       yr = 2025
     pov_list = []
@@ -579,7 +584,7 @@ class HomeForm(HomeFormTemplate):
       self.fut_submit_all_pols.visible = False
     else:
       within_budget = True
-      if pct_of_budget > 1:
+      if pct_of_budget > 10:
         pct_shown = str(int(pct_of_budget))
       else:
         pct_shown = round(pct_of_budget, 1)
@@ -596,27 +601,14 @@ class HomeForm(HomeFormTemplate):
     ener_list = self.calc_cost_home_ta(pct_ener, tltl_ener, gl_ener, max_cost_ener, 'ener')
     return costs_by_ta, pov_list, ineq_list, emp_list, food_list, ener_list, within_budget
 
-#    pols = app_tables.policies.search(ta=ta)
-#    for pol in pols:
-#      print(pol)
-#      pol_name = pol['name']
-#    print(pol_name)
-#      pol_expl = pol['expl']
-#      pol_tltl = pol['tltl']
-#      pol_gl = pol['gl']
-#      pol_abbr = pol['abbreviation']
-#      fdz = {'pol_name' : pol_name, 'pol_expl' : pol_expl, 'pol_tltl' : pol_tltl, 'pol_gl' : pol_gl, 'pol_abbr' : pol_abbr}
-#      pol_list.append(fdz)
-
   def refresh_numbers_click(self, **event_args):
     """This method is called when the component is clicked."""
-    global cid
-    lcid = cid
-    row = app_tables.globs.get()
-    cid = row['game_id']
-    which_ministry = row['ta']
-    which_region = row['reg']
-    self.do_future(cid, which_ministry, which_region)
+    client_globs.my_personal_game_id = your_game_id
+    runde = client_globs.current_round
+    cid = client_globs.my_game_id 
+    which_ministry =  client_globs.my_ministry
+    which_region = client_globs.my_reg
+    self.do_future(cid, which_ministry, which_region, runde)
     pass
 
   def submit_numbers_click(self, **event_args):

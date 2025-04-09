@@ -9,3 +9,4 @@ my_game_id = ''
 my_reg = ''
 my_ministry = ''
 my_personal_game_id = ''
+current_round = 1

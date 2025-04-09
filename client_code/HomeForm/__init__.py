@@ -446,6 +446,10 @@ class HomeForm(HomeFormTemplate):
       msgid = "\nYour personal Game ID is:\n" + your_game_id + "\nPlease make a note of it!"
       msg = ("Congratulations, you have been confirmed as the Minister " + which_ministy_long + " in " + which_region_long + '.' + msgid)
       alert(msg)
+      client_globs.my_personal_game_id = your_game_id
+      client_globs.my_game_id = cid
+      client_globs.my_reg = which_region
+      client_globs.my_ministry = which_ministry
       self.choose_role2.visible = False
       self.cplot.visible = True
       self.info_rnd_1_card.visible = True

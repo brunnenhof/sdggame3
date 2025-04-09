@@ -7,6 +7,7 @@ from anvil.tables import app_tables
 import json
 import webbrowser
 from ..game_mistress_pw import game_mistress_pw
+from .. import client_globs
 import random
 import string
 import datetime

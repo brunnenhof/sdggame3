@@ -98,6 +98,65 @@ db_schema:
       type: bool
     server: full
     title: fr2
+  game_status:
+    client: full
+    columns:
+    - admin_ui: {order: 1, width: 107}
+      name: game_id
+      type: string
+    - admin_ui: {order: 2, width: 168}
+      name: started_on
+      type: datetime
+    - admin_ui: {order: 3, width: 125}
+      name: updated
+      type: datetime
+    - admin_ui: {order: 4, width: 121}
+      name: next_step_p
+      type: number
+    - admin_ui: {order: 5, width: 136}
+      name: next_step_gm
+      type: number
+    - admin_ui: {order: 6, width: 90}
+      name: npbhp
+      type: string
+    - admin_ui: {order: 7, width: 112}
+      name: closed
+      type: bool
+    - admin_ui: {order: 8, width: 135}
+      name: current_round
+      type: number
+    - admin_ui: {order: 9, width: 200}
+      name: us_sub
+      type: bool
+    - admin_ui: {order: 10, width: 200}
+      name: af_sub
+      type: bool
+    - admin_ui: {order: 11, width: 200}
+      name: cn_sub
+      type: bool
+    - admin_ui: {order: 12, width: 200}
+      name: me_sub
+      type: bool
+    - admin_ui: {order: 13, width: 200}
+      name: sa_sub
+      type: bool
+    - admin_ui: {order: 14, width: 200}
+      name: la_sub
+      type: bool
+    - admin_ui: {order: 15, width: 200}
+      name: pa_sub
+      type: bool
+    - admin_ui: {order: 16, width: 200}
+      name: ec_sub
+      type: bool
+    - admin_ui: {order: 17, width: 200}
+      name: eu_sub
+      type: bool
+    - admin_ui: {order: 18, width: 200}
+      name: se_sub
+      type: bool
+    server: full
+    title: game_status
   games:
     client: full
     columns:
@@ -121,32 +180,6 @@ db_schema:
       type: string
     server: full
     title: games
-  games_info:
-    client: search
-    columns:
-    - admin_ui: {order: 1, width: 200}
-      name: game_id
-      type: string
-    - admin_ui: {order: 2, width: 200}
-      name: started_on
-      type: datetime
-    - admin_ui: {order: 3, width: 200}
-      name: updated
-      type: datetime
-    - admin_ui: {order: 4, width: 121}
-      name: next_step_p
-      type: number
-    - admin_ui: {order: 5, width: 200}
-      name: next_step_gm
-      type: number
-    - admin_ui: {order: 6, width: 200}
-      name: npbhp
-      type: string
-    - admin_ui: {order: 7, width: 200}
-      name: closed
-      type: bool
-    server: full
-    title: games_info
   globs:
     client: full
     columns:

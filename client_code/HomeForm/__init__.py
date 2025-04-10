@@ -36,9 +36,27 @@ class HomeForm(HomeFormTemplate):
     webbrowser.open_new("http://sdggamehelp.blue-way.net")
 
   def btn_continue_game_click(self, **event_args):
-    """This method is called when the button is clicked"""
     alert(title="ToDo", content="does not yet work :(")
 
+  def update_client_globs(self, cid, cid_pers, reg, mini, step):
+    client_globs.my_game_id = cid
+    client_globs.my_reg = reg
+    client_globs.my_ministry = mini
+    client_globs.my_personal_game_id = cid_pers
+    client_globs.current_round = step
+    msg = cid + ' ' + cid_pers + ' ' + reg + ' ' + mini + ' ' + str(step)
+    Notification(msg,
+             title="Saving client_globs",
+             style="success").show()
+
+  def read_client_globs(self):
+    cid = client_globs.my_game_id
+    reg = client_globs.my_reg
+    mini = client_globs.my_ministry
+    cid_pers = client_globs.my_personal_game_id
+    step = client_globs.current_step
+    return cid, cid_pers, reg, mini, step
+    
   def generate_custom_id(self):
     global cid
     cid = ''.join(random.choices(string.ascii_uppercase, k=5))
@@ -452,10 +470,7 @@ class HomeForm(HomeFormTemplate):
       msgid = "\nYour personal Game ID is:\n" + your_game_id + "\nPlease make a note of it!"
       msg = ("Congratulations, you have been confirmed as the Minister " + which_ministy_long + " in " + which_region_long + '.' + msgid)
       alert(msg)
-      client_globs.my_personal_game_id = your_game_id
-      client_globs.my_game_id = cid
-      client_globs.my_reg = which_region
-      client_globs.my_ministry = which_ministry
+      self.update_client_globs(cid, your_game_id, which_region, which_ministry, 1)
       self.choose_role2.visible = False
       self.cplot.visible = True
       self.info_rnd_1_card.visible = True
@@ -533,8 +548,8 @@ class HomeForm(HomeFormTemplate):
 
   def put_policy_investments(self, **event_args):
     global budget
-    cid = client_globs.my_game_id
-    ta = client_globs.my_ministry.capitalize()
+    cid, cid_pers, reg, ta, runde = self.read_client_globs()
+    ta = ta.capitalize()
     reg = client_globs.my_reg
     runde = client_globs.current_round
     if runde == 1:
@@ -603,12 +618,8 @@ class HomeForm(HomeFormTemplate):
 
   def refresh_numbers_click(self, **event_args):
     """This method is called when the component is clicked."""
-    client_globs.my_personal_game_id = your_game_id
-    runde = client_globs.current_round
-    cid = client_globs.my_game_id 
-    which_ministry =  client_globs.my_ministry
-    which_region = client_globs.my_reg
-    self.do_future(cid, which_ministry, which_region, runde)
+    cid, cid_pers, reg, ta, runde = self.read_client_globs()
+    self.do_future(cid, ta, reg, runde)
     pass
 
   def submit_numbers_click(self, **event_args):

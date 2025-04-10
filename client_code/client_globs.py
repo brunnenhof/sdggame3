@@ -4,9 +4,10 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 ############
 ######      I am storing here client specific variables
+######      which meansI can access these vars on every cient form
 ###########
 my_game_id = ''
 my_reg = ''
 my_ministry = ''
 my_personal_game_id = ''
-current_round = 1
+current_step = 1

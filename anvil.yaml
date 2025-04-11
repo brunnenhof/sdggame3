@@ -393,6 +393,11 @@ db_schema:
       type: number
     server: full
     title: sdg_vars
+  status:
+    client: none
+    columns: []
+    server: full
+    title: status
 dependencies:
 - dep_id: dep_pm2g5wpt33sld
   resolution_hints: {app_id: 4UK6WHQ6UX7AKELK, name: Material 3 Theme, package_name: m3}

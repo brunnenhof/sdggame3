@@ -19,7 +19,7 @@ unique_ids:
     HomeForm.rep_wait_dec: '1744038832794988192598675.4291'
     game_mistress_pw: '1739207251416899969611125.8557'
   modules:
-    client_globs: '1744190079485331857470616.6519'
+    my_globs: '1744190079485331857470616.6519'
   scripts: {}
   server_modules:
     ServerModule1: '173926669447094049095954.76619'

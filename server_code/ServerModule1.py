@@ -32,6 +32,7 @@ def set_roles(game_id):
   
 @anvil.server.callable
 def generate_id():
+  print('IN generate_id')
   cid = ''.join(random.choices(string.ascii_uppercase, k=3))
   a = random.randint(10, 99)
   cid = cid + '-' + str(a) 

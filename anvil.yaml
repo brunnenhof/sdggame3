@@ -282,11 +282,6 @@ db_schema:
       type: number
     server: full
     title: sdg_vars
-  status:
-    client: none
-    columns: []
-    server: full
-    title: status
   status_2:
     client: full
     columns:

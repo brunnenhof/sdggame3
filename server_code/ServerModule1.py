@@ -42,7 +42,6 @@ def generate_id():
     d = random.randint(10, 99)
     cid = cid + '-' + str(d) + '-' + str(a) 
   return f"{cid}"
-  
 
 def timeitt(f):
     def timed(*args, **kw):

@@ -630,7 +630,10 @@ class HomeForm(HomeFormTemplate):
       if rtn == '':
         self.card_holder_gm.visible = True
         self.card_holder_top.visible = False
+        print(rtn)
+        print('ln 634')
         game_id = anvil.server.call('generate_id')
+        print('ln 636')
     # for all regs being played !!!
         app_tables.status.add_row(game_id=game_id,closed=0,current_gm=0,current_p=0,roles_avail = 1)
         anvil.server.call('set_roles', game_id)

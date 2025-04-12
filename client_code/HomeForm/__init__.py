@@ -7,7 +7,7 @@ from anvil.tables import app_tables
 import json
 import webbrowser
 from ..game_mistress_pw import game_mistress_pw
-from .. import client_globs
+from .. import my_globs
 import random
 import string
 import datetime
@@ -39,33 +39,24 @@ class HomeForm(HomeFormTemplate):
     alert(title="ToDo", content="does not yet work :(")
 
   def update_client_globs(self, cid, cid_pers, reg, mini, step):
-    client_globs.my_game_id = cid
-    client_globs.my_reg = reg
-    client_globs.my_ministry = mini
-    client_globs.my_personal_game_id = cid_pers
-    client_globs.current_round = step
+    my_globs.my_game_id = cid
+    my_globs.my_reg = reg
+    my_globs.my_ministry = mini
+    my_globs.my_personal_game_id = cid_pers
+    my_globs.current_round = step
     msg = cid + ' ' + cid_pers + ' ' + reg + ' ' + mini + ' ' + str(step)
     Notification(msg,
              title="Saving client_globs",
              style="success").show()
 
   def read_client_globs(self):
-    cid = client_globs.my_game_id
-    reg = client_globs.my_reg
-    mini = client_globs.my_ministry
-    cid_pers = client_globs.my_personal_game_id
-    step = client_globs.current_step
+    cid = my_globs.my_game_id
+    reg = my_globs.my_reg
+    mini = my_globs.my_ministry
+    cid_pers = my_globs.my_personal_game_id
+    step = my_globs.current_step
     return cid, cid_pers, reg, mini, step
     
-  def generate_custom_id(self):
-    global cid
-    cid = ''.join(random.choices(string.ascii_uppercase, k=5))
-    a = random.randint(100, 999)
-    d = random.randint(100, 999)
-    cid = cid + '-' + str(d) + '-' + str(a) 
-    # cid = 'TEST'  #  while testing ...
-    return f"{cid}"
-
   def start_new_game_click(self, **event_args):
     """This method is called when the button is clicked"""
     global cid
@@ -398,17 +389,17 @@ class HomeForm(HomeFormTemplate):
 
   def minstry_clicked(self):
     if self.rb_pov.selected:
-      return 'poverty'
+      return 'pov'
     if self.rb_ineq.selected:
-      return 'inequality'
+      return 'ineq'
     if self.rb_emp.selected:
-      return 'empowerment'
+      return 'emp'
     if self.rb_foo.selected:
       return 'food'
     if self.rb_ene.selected:
-      return 'energy'
+      return 'ener'
     if self.rb_fut.selected:
-      return 'future'
+      return 'fut'
     return None  
   
   def save_player_choice(self, game_id, ministry, region):
@@ -635,13 +626,21 @@ class HomeForm(HomeFormTemplate):
     print(f"hhh {editing_form.admin_pw_entry.text}")
     if gpw == 'OK':
       rtn = editing_form.admin_pw_entry.text
-      if rtn == 'yep':
+      # ToDo set password
+      if rtn == '':
         self.card_holder_gm.visible = True
         self.card_holder_top.visible = False
+        game_id = anvil.server.call('generate_id')
+    # for all regs being played !!!
+        app_tables.status.add_row(game_id=game_id,closed=0,current_gm=0,current_p=0,roles_avail = 1)
+        anvil.server.call('set_roles', game_id)
+        alert("Roles set up")
       else:
-        alert("Wrong code")
+        alert("Sorry, wrong code")
     else:
-        alert("You cancelled")
+        alert("Oops, you cancelled")
+
+
 
 
 
